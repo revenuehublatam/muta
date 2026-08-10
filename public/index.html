@@ -1352,7 +1352,7 @@ function m2PieceAt(c,r){
 function m2Physics(dt){
   var b=M2.ball;if(!b)return;
   var L=m2Level(),cs=M2.cell,rr=cs*0.22;
-  b.vy+=0.32*dt;b.vy=Math.min(b.vy,cs*0.45);
+  b.vy+=cs*0.0089*dt;b.vy=Math.min(b.vy,cs*0.45);
   b.x+=b.vx*dt;b.y+=b.vy*dt;
   b.vx*=0.995;
   if(b.x<rr){b.x=rr;b.vx=Math.abs(b.vx)*0.5}
@@ -1361,13 +1361,13 @@ function m2Physics(dt){
   var p=m2PieceAt(c,r2);
   if(p){var top=r2*cs;
     if(p==='bloque'&&b.y+rr>top&&b.vy>0){b.y=top-rr;b.vy=0;b.vx*=0.9}
-    else if(p==='tramp'&&b.y+rr>top&&b.vy>0.5){b.y=top-rr;b.vy=-Math.max(Math.abs(b.vy)*0.92,7.4);
+    else if(p==='tramp'&&b.y+rr>top&&b.vy>0.5){b.y=top-rr;b.vy=-Math.max(Math.abs(b.vy)*0.92,cs*0.206);
       arcMq(b.x,b.y,45,10);blip(880,0.1,'sine',0.09);haptic(9)}
-    else if(p==='cintaR'&&b.y+rr>top&&b.vy>=0){b.y=top-rr;b.vy=0;b.vx=Math.min(b.vx+0.5*dt,4)}
-    else if(p==='cintaL'&&b.y+rr>top&&b.vy>=0){b.y=top-rr;b.vy=0;b.vx=Math.max(b.vx-0.5*dt,-4)}
-    else if(p==='rampaR'&&b.y+rr>top){b.y=top-rr*0.4;var sp=Math.max(Math.abs(b.vy)*0.75,2.4);b.vx=sp;b.vy=sp*0.55;
+    else if(p==='cintaR'&&b.y+rr>top&&b.vy>=0){b.y=top-rr;b.vy=0;b.vx=Math.min(b.vx+cs*0.0139*dt,cs*0.111)}
+    else if(p==='cintaL'&&b.y+rr>top&&b.vy>=0){b.y=top-rr;b.vy=0;b.vx=Math.max(b.vx-cs*0.0139*dt,-cs*0.111)}
+    else if(p==='rampaR'&&b.y+rr>top){b.y=top-rr*0.4;var sp=Math.max(Math.abs(b.vy)*0.75,cs*0.0667);b.vx=sp;b.vy=sp*0.55;
       if(Math.random()<0.3)arcMq(b.x,b.y,200,3)}
-    else if(p==='rampaL'&&b.y+rr>top){b.y=top-rr*0.4;var sp2=Math.max(Math.abs(b.vy)*0.75,2.4);b.vx=-sp2;b.vy=sp2*0.55;
+    else if(p==='rampaL'&&b.y+rr>top){b.y=top-rr*0.4;var sp2=Math.max(Math.abs(b.vy)*0.75,cs*0.0667);b.vx=-sp2;b.vy=sp2*0.55;
       if(Math.random()<0.3)arcMq(b.x,b.y,200,3)}}
   M2.trail.push({x:b.x,y:b.y,l:1});if(M2.trail.length>40)M2.trail.shift();
   /* meta */
