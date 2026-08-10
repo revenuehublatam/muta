@@ -5,7 +5,7 @@ const sessions=new Map();
 const scores=new Map();
 const rate=new Map();
 const TTL=70000;
-const games=new Set(['actual','atlas','cyclops','snake','blackhole','reactor']);
+const games=new Set(['actual','atlas','cyclops','snake','blackhole','reactor','laberinto']);
 const PUBLIC_DIR=process.env.MUTA_PUBLIC||'/app/public';
 const htmlPath=process.env.MUTA_HTML||path.join(PUBLIC_DIR,'index.html');
 const MIME={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.gif':'image/gif','.ico':'image/x-icon','.mp3':'audio/mpeg','.ogg':'audio/ogg','.wav':'audio/wav','.mp4':'video/mp4','.webm':'video/webm','.woff':'font/woff','.woff2':'font/woff2','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8','.wasm':'application/wasm','.glb':'model/gltf-binary'};
@@ -36,7 +36,7 @@ const server=http.createServer(async(req,res)=>{
     try{const data=JSON.parse(await readBody(req,500)||'{}'),id=String(data.id||'').slice(0,64);if(id){if(activePresence()>=5000&&!sessions.has(id))return json(res,429,{ok:0});sessions.set(id,Date.now())}return json(res,200,{ok:1})}catch(e){return json(res,400,{ok:0})}
   }
   if(req.method==='GET'&&url.pathname==='/leaderboard'){
-    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:17,storage:'temporal-memory',game,scores:top(game)});
+    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:18,storage:'temporal-memory',game,scores:top(game)});
   }
   if(req.method==='POST'&&url.pathname==='/score'){
     const ip=String(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').split(',')[0].trim();if(!allowed(ip))return json(res,429,{error:'Espera un momento antes de volver a guardar.'});
