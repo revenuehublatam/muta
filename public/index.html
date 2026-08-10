@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TTR6PCSS');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>MUTA Gen 17 — El Organismo Galáctico</title>
+<meta name="description" content="Un organismo vivo que que evoluciona cada día con lo que la gente pide. Aliméntalo, eclosiona criaturas y decide su próxima forma.">
+<meta property="og:title" content="MUTA Gen 17 — El Organismo Galáctico">
+<meta property="og:description" content="Un organismo vivo que que evoluciona cada día con lo que la gente pide. Aliméntalo, eclosiona criaturas y decide su próxima forma.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://muta.revenuehub.cloud">
+<meta property="og:site_name" content="MUTA">
+<meta property="og:locale" content="es_CL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MUTA Gen 17 — El Organismo Galáctico">
+<meta name="twitter:description" content="Un organismo vivo que que evoluciona cada día con lo que la gente pide. Aliméntalo, colecciona criaturas y decide su próxima forma.">
+<meta name="theme-color" content="#0b0f2a">
+<style>
+:root{
+  --bg0:#0b0f2a;--bg1:#141b44;--ink:#f4f6ff;--ink-dim:#b9c2e8;
+  --brand:#7df9c6;--aurora:#8ec5ff;--coral:#ff9d7a;--gold:#ffd76a;
+  --panel:#171d3f;--panel2:#1e2650;--line:#323b6e;
+  --safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:var(--bg0);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden;position:fixed;inset:0;width:100vw;height:100dvh}
+#stage{position:fixed;inset:0;width:100vw;height:100dvh;display:block;touch-action:none;cursor:crosshair}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:var(--brand)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* ---------- HUD top ---------- */
+#hud{position:fixed;top:calc(6px + var(--safe-t));left:8px;right:8px;display:flex;align-items:center;gap:8px;z-index:40;pointer-events:none}
+#hud .pill{pointer-events:auto;background:rgba(13,17,42,.86);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:12px;letter-spacing:.4px;display:flex;align-items:center;gap:8px;backdrop-filter:blur(6px)}
+#hud .gen{font-weight:700;color:var(--brand)}
+#cd{font-variant-numeric:tabular-nums;color:var(--gold)}
+#presTxt{color:var(--ink-dim);max-width:38vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#hud .spacer{flex:1}
+#hud .ico{pointer-events:auto;width:38px;height:38px;border-radius:50%;background:rgba(13,17,42,.86);border:1px solid var(--line);font-size:16px;display:grid;place-items:center}
+#hud .ico:active{transform:scale(.92)}
+/* ---------- thought bubble ---------- */
+#bubble{position:fixed;z-index:30;max-width:min(320px,72vw);background:#fdfaf1;color:#20263f;border-radius:16px;padding:10px 14px;font-size:13.5px;line-height:1.45;box-shadow:0 6px 24px rgba(0,0,0,.4);opacity:0;transition:opacity .5s;pointer-events:none}
+#bubble:after{content:"";position:absolute;bottom:-8px;left:26px;border:9px solid transparent;border-top-color:#fdfaf1;border-bottom:none}
+#bubble b{color:#0b6e4f}
+/* ---------- dock bottom ---------- */
+#dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + var(--safe-b));z-index:40;display:flex;align-items:center;gap:6px;background:rgba(13,17,42,.92);border:1px solid var(--line);border-radius:20px;padding:8px;backdrop-filter:blur(8px);max-width:96vw}
+#dock .nut{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:54px;padding:6px 9px;border-radius:14px;border:1px solid transparent;transition:border-color .3s}
+#dock .nut .e{font-size:22px;line-height:1}
+#dock .nut .n{font-size:9px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink-dim)}
+#dock .nut .c{font-size:11px;font-weight:700;color:var(--brand);font-variant-numeric:tabular-nums}
+#dock .nut:active{transform:scale(.9)}
+#dock .sep{width:1px;height:34px;background:var(--line)}
+#dock .act{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:50px;padding:6px 4px;border-radius:14px}
+#dock .act .e{font-size:20px;line-height:1.15}
+#dock .act .n{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-dim)}
+#dock .act:active{transform:scale(.9)}
+#btnPropose{background:linear-gradient(135deg,#123e33,#0c5a41);border:1px solid var(--brand);border-radius:14px}
+#btnPropose .n{color:var(--brand);font-weight:700}
+@media (max-width:480px){#dock{gap:3px;padding:6px}#dock .nut{min-width:46px}#dock .act{min-width:44px}#presTxt{max-width:24vw}}
+/* ---------- overlays ---------- */
+.ovl{position:fixed;inset:0;z-index:60;background:rgba(5,7,20,.78);display:none;align-items:flex-end;justify-content:center}
+.ovl.open{display:flex}
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:20px 20px 0 0;width:min(640px,100vw);max-height:calc(88dvh - var(--safe-t));overflow:auto;padding:18px 18px calc(18px + var(--safe-b));-webkit-overflow-scrolling:touch}
+@media (min-width:641px){.ovl{align-items:center}.sheet{border-radius:20px;max-height:86dvh}}
+.sheet h2{font-size:17px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sheet .sub{color:var(--ink-dim);font-size:13px;margin-bottom:14px;line-height:1.5}
+.x{position:sticky;top:0;float:right;width:34px;height:34px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);font-size:15px;z-index:2}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:7px 13px;font-size:12.5px}
+.chip.on{border-color:var(--brand);color:var(--brand)}
+textarea,input[type=email]{width:100%;background:var(--bg1);border:1px solid var(--line);border-radius:12px;color:var(--ink);padding:12px;font:inherit;font-size:14px}
+textarea{min-height:84px;resize:vertical}
+.cta{display:block;width:100%;margin-top:12px;background:linear-gradient(135deg,#0c5a41,#0b6e4f);border:1px solid var(--brand);color:#eafff6;font-weight:700;border-radius:12px;padding:13px;font-size:14.5px;letter-spacing:.4px}
+.cta:disabled{opacity:.5}
+.ok{background:#10331f;border:1px solid var(--brand);border-radius:12px;padding:12px;margin-top:12px;font-size:13.5px;display:none;line-height:1.5}
+/* muro */
+.idea{display:flex;gap:10px;border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:8px;background:var(--panel2)}
+.idea.done{opacity:.62}
+.idea .sup{display:flex;flex-direction:column;align-items:center;min-width:40px}
+.idea .sup button{width:36px;height:32px;border:1px solid var(--line);border-radius:10px;background:var(--bg1);font-size:14px}
+.idea .sup button[aria-pressed=true]{border-color:var(--brand);color:var(--brand)}
+.idea .sup .c{font-size:12px;font-weight:700;margin-top:3px}
+.idea .tag{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--aurora);border:1px solid var(--line);border-radius:99px;padding:2px 8px}
+.idea .txt{font-size:13.5px;margin:5px 0 3px;line-height:1.45}
+.idea .meta{font-size:11px;color:var(--ink-dim)}
+/* archivo */
+.arc{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px;background:var(--panel2)}
+.arc h3{font-size:14.5px;display:flex;gap:8px;align-items:center}
+.arc p{font-size:12.5px;color:var(--ink-dim);margin-top:4px;line-height:1.5}
+.arc .play{margin-top:8px;background:var(--bg1);border:1px solid var(--brand);color:var(--brand);border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700}
+.badge{font-size:10px;border-radius:99px;padding:2px 8px;border:1px solid var(--line);color:var(--ink-dim)}
+.badge.live{border-color:var(--brand);color:var(--brand)}
+/* snake */
+#snakeWrap{display:none;position:fixed;inset:0;z-index:70;background:#0a0d24;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+#snakeWrap.open{display:flex}
+#snakeHead{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--ink-dim)}
+#snakeHead b{color:var(--gold);font-variant-numeric:tabular-nums}
+#snakeCv{background:#101538;border:1px solid var(--line);border-radius:12px;touch-action:none}
+#snakeMsg{font-size:13px;color:var(--ink-dim);text-align:center;min-height:36px;line-height:1.5;padding:0 16px}
+#snakeX{position:absolute;top:calc(10px + var(--safe-t));right:12px}
+/* stats + bitacora */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin:10px 0}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px}
+.stat .v{font-size:20px;font-weight:800;color:var(--brand);font-variant-numeric:tabular-nums}
+.stat .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-dim);margin-top:2px}
+details{border:1px solid var(--line);border-radius:12px;margin-top:8px;background:var(--panel2)}
+details summary{padding:10px 12px;cursor:pointer;font-size:13px;font-weight:600}
+details .bd{padding:0 12px 12px;font-size:12.5px;color:var(--ink-dim);line-height:1.55}
+details .bd p{margin-bottom:8px}
+.learn li{font-size:12.5px;color:var(--ink-dim);line-height:1.55;margin:0 0 8px 16px}
+/* share row */
+.shrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.shrow button,.shrow a{flex:1;min-width:86px;text-align:center;border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:10px 6px;font-size:12.5px;color:var(--ink);text-decoration:none}
+/* gene card */
+#cardCv{width:100%;max-width:420px;border-radius:14px;border:1px solid var(--line);display:block;margin:0 auto}
+/* toast */
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(86px + var(--safe-b));z-index:50;background:#fdfaf1;color:#20263f;border-radius:14px;padding:10px 14px;font-size:13px;max-width:88vw;box-shadow:0 8px 26px rgba(0,0,0,.5);display:none;line-height:1.45}
+#toast button{color:#0b6e4f;font-weight:700;margin-left:8px}
+/* creator */
+#creatorRow{display:flex;gap:12px;align-items:center;margin-top:8px}
+#creatorRow img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--brand)}
+#creatorRow .who{font-size:13px;line-height:1.5}
+
+/* archivo motor */
+#arcWrap{display:none;position:fixed;inset:0;z-index:70;background:#060919}
+#arcWrap.open{display:block}
+#arcCv{position:absolute;inset:0;touch-action:none}
+#arcHead{position:absolute;top:calc(10px + var(--safe-t));left:12px;display:flex;gap:10px;align-items:center;background:rgba(13,17,42,.9);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:12.5px}
+#arcTitle{font-weight:800;color:var(--brand)}
+#arcInfo{color:var(--gold);font-variant-numeric:tabular-nums}
+#arcX{position:absolute;top:calc(10px + var(--safe-t));right:12px}
+#arcZoom{position:absolute;right:12px;bottom:calc(70px + var(--safe-b));display:none;flex-direction:column;gap:8px}
+#arcZoom button{width:42px;height:42px;border-radius:50%;background:rgba(13,17,42,.9);border:1px solid var(--line);font-size:18px}
+#arcHint{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(14px + var(--safe-b));background:rgba(13,17,42,.92);border:1px solid var(--line);border-radius:12px;padding:8px 14px;font-size:12px;color:var(--ink-dim);max-width:90vw;text-align:center}
+#atlasCard{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(64px + var(--safe-b));width:min(420px,92vw);background:var(--panel);border:1px solid var(--brand);border-radius:16px;padding:16px;z-index:2}
+#atlasCard.open{display:block}
+#atlasCard h3{font-size:15px;margin-bottom:6px;padding-right:36px}
+#atlasCard p{font-size:13px;color:var(--ink-dim);line-height:1.5}
+#atlasCard .atgene{color:var(--aurora);margin-top:6px;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+/* máquina */
+#maqWrap{display:none;position:fixed;inset:0;z-index:70;background:#080b1f;overflow:auto}
+#maqWrap.open{display:block}
+.maqin{max-width:560px;margin:0 auto;padding:calc(16px + var(--safe-t)) 16px calc(24px + var(--safe-b))}
+.maqlvl{font-size:11px;letter-spacing:1px;color:var(--gold);margin:6px 0}
+.maqcopy{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;font-size:14px;line-height:1.55;margin:8px 0}
+.maqwho{font-size:11px;letter-spacing:.6px;color:var(--aurora);margin-bottom:6px}
+.maqrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.maqrow.bank{grid-template-columns:repeat(3,1fr)}
+.maqslot,.maqmod{border:1px dashed var(--line);background:var(--panel2);border-radius:12px;padding:10px 6px;display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center;min-height:64px;justify-content:center}
+.maqslot b,.maqmod b{font-size:12px}
+.maqslot span,.maqmod span{font-size:10.5px;color:var(--ink-dim)}
+.maqslot.filled{border-style:solid;border-color:var(--brand)}
+.maqmod{border-style:solid}
+.maqmod.sel{border-color:var(--brand);color:var(--brand)}
+.maqmod.used{opacity:.35}
+.maqbtns{display:flex;gap:8px;flex-wrap:wrap}
+.maqbtns .cta{flex:1;min-width:140px;margin-top:8px}
+.cta.alt{background:var(--panel2);border-color:var(--line);color:var(--ink)}
+.sub.bad{color:var(--coral)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* robustez móvil de hojas */
+.ovl{touch-action:pan-y}
+.sheet{max-height:88vh;max-height:calc(88dvh - var(--safe-t));overscroll-behavior:contain;touch-action:pan-y;-webkit-overflow-scrolling:touch}
+@media (max-width:720px){
+  .ovl{align-items:stretch}
+  .sheet{width:100vw;height:100%;max-height:none;border-radius:0;padding-top:calc(14px + var(--safe-t))}
+}
+/* huevo estelar */
+#eggWidget{position:fixed;right:10px;bottom:calc(92px + var(--safe-b));z-index:45;width:58px;height:72px;cursor:pointer;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+#eggShell{position:absolute;inset:0;border-radius:50% 50% 50% 50%/58% 58% 42% 42%;background:#1e2650;border:2px solid var(--line);overflow:hidden}
+#eggFill{position:absolute;left:0;right:0;bottom:0;height:0%;background:linear-gradient(180deg,#7df9c6,#0b6e4f);transition:height .5s}
+#eggPct{position:absolute;inset:0;display:grid;place-items:center;font-size:10.5px;font-weight:800;color:#eafff6;z-index:2;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+#eggWidget.ready #eggShell{border-color:var(--gold);animation:eggpulse 1.1s infinite}
+#eggWidget.ready:after{content:"¡toca!";position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:9.5px;color:var(--gold);font-weight:700;letter-spacing:.5px}
+@keyframes eggpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+#streakTxt{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--coral);font-weight:800;white-space:nowrap}
+/* eclosión */
+#hatchOvl{display:none;position:fixed;inset:0;z-index:80;background:rgba(4,6,18,.94);align-items:center;justify-content:center;flex-direction:column;padding:20px}
+#hatchOvl.open{display:flex}
+#hatchCv{border-radius:18px;max-width:88vw}
+#hatchTxt{font-size:16px;margin:14px 0 4px;text-align:center}
+#hatchCard{display:none;text-align:center}
+#hatchCount{font-size:12px;color:var(--ink-dim);margin-bottom:10px}
+#hatchCard .shrow{justify-content:center}
+#hatchCard button{min-width:120px}
+/* criaturario */
+#ovlCol .sheet{display:flex;flex-direction:column}
+#colGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:10px;margin:12px 0}
+.colslot{aspect-ratio:1;border:2px solid var(--line);border-radius:14px;background:var(--panel2);display:grid;place-items:center;overflow:hidden}
+.colslot canvas{width:100%;height:100%}
+.colslot.empty span{font-size:22px;color:var(--line)}
+#colCv{display:none;margin:8px auto;border-radius:14px}
+
+/* La Máquina Increíble */
+#maqWrap{display:none;position:fixed;inset:0;z-index:70;background:#080b1f}
+#maqWrap.open{display:flex;flex-direction:column}
+.maqin{display:flex;flex-direction:column;height:100%;height:100dvh;max-width:560px;margin:0 auto;width:100%;padding:calc(10px + var(--safe-t)) 10px calc(10px + var(--safe-b))}
+.maqtop{position:relative;text-align:center;flex:0 0 auto}
+.maqtop h2{font-size:16px;justify-content:center}
+.maqtop .x{position:absolute;right:0;top:0;float:none}
+.maqlvl{font-size:10.5px;letter-spacing:.8px;color:var(--gold);margin:4px 0 6px}
+.maqstage{flex:1 1 auto;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden}
+#maq2Cv{touch-action:none;border-radius:12px;border:1px solid var(--line);max-height:100%}
+.maqhint{text-align:center;margin:6px 0;min-height:34px;font-size:12.5px;flex:0 0 auto}
+.maqpal{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;flex:0 0 auto;-webkit-overflow-scrolling:touch}
+.m2p{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:62px;padding:7px 4px;border:1px solid var(--line);border-radius:12px;background:var(--panel2)}
+.m2p.sel{border-color:var(--brand);color:var(--brand);background:#123e33}
+.m2p.off{opacity:.35}
+.m2p .i{font-size:20px;line-height:1}
+.m2p .n{font-size:9px;text-align:center;color:var(--ink-dim)}
+.m2p.sel .n{color:var(--brand)}
+.m2p .c{font-size:11px;font-weight:800;color:var(--gold)}
+.maqbtns{display:flex;gap:8px;flex:0 0 auto;margin-top:6px}
+.maqbtns .cta{flex:1;margin-top:0;padding:12px}
+/* tilt btn */
+#arcTilt{position:absolute;left:12px;bottom:calc(64px + var(--safe-b));z-index:3;background:rgba(13,17,42,.92);border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-size:12px;color:var(--ink)}
+#arcTilt.on{border-color:var(--brand);color:var(--brand)}
+/* refuerzo scroll móvil vertical de hojas largas */
+@media (max-width:720px){
+  .ovl.open{align-items:stretch}
+  .sheet{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;max-height:none;border-radius:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:calc(40px + var(--safe-b))}
+  .sheet .x{position:fixed;top:calc(8px + var(--safe-t));right:10px}
+}
+@media (prefers-reduced-motion:reduce){#eggWidget.ready #eggShell{animation:none}}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TTR6PCSS"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<canvas id="stage" aria-label="El Organismo Galáctico de MUTA. Toca para interactuar y usa el dock inferior para alimentarlo."></canvas>
+<div id="bubble" role="status"></div>
+
+<header id="hud">
+  <div class="pill"><span class="gen">MUTA · GEN 17</span><span aria-label="Tiempo hasta la próxima mutación">🧬 <span id="cd">--:--:--</span></span></div>
+  <div class="pill" id="presPill"><span id="presTxt">…</span></div>
+  <span class="spacer"></span>
+  <button class="ico" id="btnSound" aria-label="Sonido" aria-pressed="false">🔇</button>
+  <button class="ico" id="btnShareTop" aria-label="Compartir MUTA">📤</button>
+  <button class="ico" id="btnGuide" aria-label="Ayuda: qué es MUTA">?</button>
+</header>
+
+<nav id="dock" aria-label="Acciones de MUTA">
+  <button class="nut" data-n="absurdo"><span class="e">🌀</span><span class="n">Absurdo</span><span class="c" id="v-absurdo">0</span></button>
+  <button class="nut" data-n="belleza"><span class="e">✨</span><span class="n">Belleza</span><span class="c" id="v-belleza">0</span></button>
+  <button class="nut" data-n="caos"><span class="e">🔥</span><span class="n">Caos</span><span class="c" id="v-caos">0</span></button>
+  <span class="sep"></span>
+  <button class="act" id="btnPropose"><span class="e">💬</span><span class="n">Pide el cambio</span></button>
+  <button class="act" id="btnWall"><span class="e">🏛️</span><span class="n">Muro</span></button>
+  <button class="act" id="btnCol"><span class="e">🥚</span><span class="n">Criaturas</span></button>
+  <button class="act" id="btnArchive"><span class="e">🎮</span><span class="n">Juegos</span></button>
+  <button class="act" id="btnMore"><span class="e">⋯</span><span class="n">Más</span></button>
+</nav>
+
+<div id="eggWidget" role="button" aria-label="Tu huevo estelar diario: júntale energía y eclosiónalo">
+  <span id="streakTxt"></span>
+  <div id="eggShell"><div id="eggFill"></div><span id="eggPct">0/10</span></div>
+</div>
+
+<div id="hatchOvl" role="dialog" aria-modal="true" aria-label="Eclosión">
+  <canvas id="hatchCv" width="320" height="360"></canvas>
+  <div id="hatchTxt"></div>
+  <div id="hatchCard">
+    <div id="hatchCount"></div>
+    <div class="shrow">
+      <button class="cta" id="hatchShare">Compartir (🎁 huevo extra)</button>
+      <button class="cta alt" id="hatchColBtn">Ver criaturario</button>
+      <button class="cta alt" id="hatchClose">Seguir</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CRIATURARIO ============ -->
+<div class="ovl" id="ovlCol" role="dialog" aria-modal="true" aria-label="Tu criaturario">
+  <div class="sheet">
+    <button class="x" data-close>✕</button>
+    <h2>🥚 Tu criaturario</h2>
+    <p class="sub" id="colHead"></p>
+    <p class="sub">Cada día que vuelves eclosiona un huevo nuevo. La energía se junta alimentando al organismo, jugando en 🎮 y proponiendo ideas. Compartir desbloquea un huevo extra. Rachas de 3+ días suben la probabilidad de criaturas raras.</p>
+    <div id="colGrid"></div>
+    <canvas id="colCv" width="320" height="360"></canvas>
+    <div class="shrow">
+      <button data-red="wa">WhatsApp</button><button data-red="x">X</button><button data-red="li">LinkedIn</button><button data-red="copy">Copiar</button><button data-red="native">Compartir…</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status"></div>
+
+<!-- ============ PROPONER ============ -->
+<div class="ovl" id="ovlPropose" role="dialog" aria-modal="true" aria-label="Pide el próximo cambio">
+  <div class="sheet">
+    <button class="x" data-close>✕</button>
+    <h2>💬 Pide el próximo cambio</h2>
+    <p class="sub">Cada día a las 7am (Chile) MUTA se reprograma con lo que la gente pide. Tu idea entra a la evaluación de la próxima mutación (<span class="cdRef">--:--:--</span>).</p>
+    <div class="chips" id="catChips">
+      <button class="chip" data-c="Función">⚙️ Qué debería hacer</button>
+      <button class="chip" data-c="Contenido">📡 Qué mostrar</button>
+      <button class="chip" data-c="Transformación">🦋 En qué convertirse</button>
+      <button class="chip" data-c="Regla">📐 Qué regla cambiar</button>
+      <button class="chip" data-c="Apariencia">🎨 Cómo verse</button>
+    </div>
+    <textarea id="idea" maxlength="280" placeholder="Ej: conviértete en un radar de vuelos sobre Chile…"></textarea>
+    <button class="cta" id="send">Susurrarle al organismo</button>
+    <div class="ok" id="sendOk">🧬 Recibido. Tu gen <b id="genShort2"></b> queda registrado y tu idea será evaluada en la próxima mutación. La verás en el Muro.</div>
+  </div>
+</div>
+
+<!-- ============ MURO ============ -->
+<div class="ovl" id="ovlWall" role="dialog" aria-modal="true" aria-label="Muro de propuestas">
+  <div class="sheet">
+    <button class="x" data-close>✕</button>
+    <h2>🏛️ Muro de propuestas</h2>
+    <p class="sub">Ideas reales de personas reales. Apoya las que quieres ver en la próxima mutación. Las marcadas ✓ ya fueron ejecutadas.</p>
+    <div id="wall"></div>
+  </div>
+</div>
+
+<!-- ============ TU GEN ============ -->
+<div class="ovl" id="ovlCard" role="dialog" aria-modal="true" aria-label="Tu carta de gen">
+  <div class="sheet">
+    <button class="x" data-close>✕</button>
+    <h2>🧬 Tu carta de gen</h2>
+    <p class="sub">Tu variante única del organismo, generada con tu gen <b id="genFull2"></b> y los nutrientes que le diste hoy. Compártela: si alguien entra con tu enlace, tu gen gana contagio y puede inmortalizarse en el ADN.</p>
+    <canvas id="cardCv" width="420" height="560"></canvas>
+    <div class="shrow" id="shareRow">
+      <button data-red="wa">WhatsApp</button>
+      <button data-red="x">X</button>
+      <button data-red="li">LinkedIn</button>
+      <button data-red="copy">Copiar enlace</button>
+      <button data-red="native">Compartir…</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ARCHIVO ============ -->
+<div class="ovl" id="ovlArchive" role="dialog" aria-modal="true" aria-label="Archivo de experiencias">
+  <div class="sheet">
+    <button class="x" data-close>✕</button>
+    <h2>🎮 Juegos y experiencias</h2>
+    <p class="sub">Cada juego nació de una idea de alguien y fue rediseñado para esta generación. Jugar te da ⚡ energía para tu huevo estelar. Si pides un juego nuevo en 💬, puede aparecer aquí mañana.</p>
+    <div class="arc">
+      <h3>☄️ Serpiente Estelar <span class="badge live">rediseñada</span></h3>
+      <p>Nacida de <b>GEN Errante</b>. Un cometa vivo que crece comiendo fragmentos de estrella: desliza para dirigirlo, encadena combos, sube de ciclo y deja tu marca en el ranking.</p>
+      <button class="play" id="playSnake">Jugar Snake</button>
+    </div>
+    <div class="arc">
+      <h3>🗺️ Atlas Vivo <span class="badge live">restaurado</span></h3>
+      <p>Nacido de <b>GEN Hipnótico</b> (mapa mundi + radar de vuelos, Gen 10). Un planeta que gira con tus manos: descubre las señales que la comunidad dejó sobre él y apóyalas.</p>
+      <button class="play" data-arc="atlas">Explorar el Atlas</button>
+    </div>
+    <div class="arc">
+      <h3>🛠️ La Máquina Increíble <span class="badge live">rediseñada</span></h3>
+      <p>Lo que <b>GEN Fosforescente</b> pidió de verdad: una versión moderna de The Incredible Machine. Coloca rampas, cintas y trampolines para que la estrella fluya del punto Ⓐ al Ⓑ. 5 niveles.</p>
+      <button class="play" id="playMaquina">Construir la máquina</button>
+    </div>
+    <div class="arc">
+      <h3>👁️ Guardián del Vacío <span class="badge live">rediseñado</span></h3>
+      <p>El ojo de <b>GEN Furtivo</b>, rediseñado: atrapa lo que cae antes de que se pierda en el vacío. Tres vidas, combos y un guardián que crece con cada captura.</p>
+      <button class="play" data-arc="cyclops">Custodiar el vacío</button>
+    </div>
+    <div class="arc">
+      <h3>⚛️ Pulso <span class="badge live">rediseñado</span></h3>
+      <p>El reto de ritmo de la Gen 5, ahora con aceleración: cada 5 aciertos el pulso late más rápido. PERFECTO +3, BIEN +1, y el combo es tu música.</p>
+      <button class="play" data-arc="reactor">Sentir el pulso</button>
+    </div>
+    <div class="arc">
+      <h3>🕳️ Devorador <span class="badge live">rediseñado</span></h3>
+      <p>La idea de <b>GEN Voraz</b>, rediseñada: absorbe materia, crece y desata el frenesí cada 12 capturas, cuando el espacio entero se vuelca hacia ti.</p>
+      <button class="play" data-arc="blackhole">Devorar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SNAKE ============ -->
+<div id="snakeWrap" role="dialog" aria-modal="true" aria-label="Snake">
+  <button class="x" id="snakeX" data-close>✕</button>
+  <div id="snakeHead">🐍 <b id="snkScore">0</b> pts · ciclo <b id="snkCycle">1</b> · combo <b id="snkCombo">0</b></div>
+  <canvas id="snakeCv" width="320" height="320"></canvas>
+  <div id="snakeMsg">Desliza para dirigir · come 🍕 🍦 🥑 · los bordes conectan</div>
+  <div id="snkBoard" style="font-size:12px;color:var(--ink-dim);max-width:320px;text-align:center;line-height:1.6"></div>
+</div>
+
+
+<!-- ============ ARCHIVO: MOTOR CANVAS ============ -->
+<div id="arcWrap" role="dialog" aria-modal="true" aria-label="Experiencia del archivo">
+  <canvas id="arcCv"></canvas>
+  <div id="arcHead"><span id="arcTitle"></span><span id="arcInfo"></span></div>
+  <button class="x" id="arcX" aria-label="Cerrar">✕</button>
+  <div id="arcZoom"><button id="arcZin" aria-label="Acercar">＋</button><button id="arcZout" aria-label="Alejar">－</button></div>
+  <button id="arcTilt" aria-label="Control por inclinación">🎚 Inclinar: OFF</button>
+  <div id="arcHint"></div>
+  <div id="atlasCard" role="dialog" aria-label="Señal del atlas">
+    <button class="x" id="atClose">✕</button>
+    <h3 id="atTitle"></h3>
+    <p id="atCopy"></p>
+    <p id="atGene" class="atgene"></p>
+    <button class="cta" id="atSupport">Apoyar esta idea</button>
+  </div>
+</div>
+
+<!-- ============ LA MÁQUINA INCREÍBLE ============ -->
+<div id="maqWrap" role="dialog" aria-modal="true" aria-label="La Máquina Increíble">
+  <div class="maqin">
+    <div class="maqtop">
+      <button class="x" id="maqX" aria-label="Cerrar">✕</button>
+      <h2>🛠️ La Máquina Increíble</h2>
+      <div id="maq2Lvl" class="maqlvl"></div>
+    </div>
+    <div class="maqstage"><canvas id="maq2Cv"></canvas></div>
+    <p id="maq2Hint" class="sub maqhint"></p>
+    <div id="maq2Pal" class="maqpal"></div>
+    <div class="maqbtns">
+      <button class="cta" id="maq2Run">▶ ¡Que fluya!</button>
+      <button class="cta alt" id="maq2Reset">↺ Reiniciar</button>
+      <button class="cta alt" id="maq2Next" style="display:none">Siguiente nivel ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ AYUDA ============ -->
+<div class="ovl" id="ovlGuide" role="dialog" aria-modal="true" aria-label="Qué es MUTA">
+  <div class="sheet">
+    <button class="x" data-close>✕</button>
+    <h2>🧬 ¿Qué es MUTA?</h2>
+    <p class="sub">MUTA es un experimento vivo: un producto web que <b>evoluciona cada día a las 7am de Chile</b> según lo que las personas piden, hacen y comparten. Hoy es un organismo galáctico con criaturas coleccionables. Mañana puede ser otra cosa: tú decides.</p>
+    <div id="guideQs" class="chips"></div>
+    <div id="guideAns" class="sub" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ============ MÁS ============ -->
+<div class="ovl" id="ovlMore" role="dialog" aria-modal="true" aria-label="Más de MUTA">
+  <div class="sheet">
+    <button class="x" data-close>✕</button>
+    <h2>⋯ Más de MUTA</h2>
+    <details open><summary>📊 Señales reales (PostHog, refrescadas este ciclo)</summary>
+      <div class="bd"><div class="grid" id="statsGrid"></div>
+      <p id="statsNote"></p></div>
+    </details>
+    <details><summary>📓 Aprendizajes recientes</summary>
+      <div class="bd"><ul class="learn" id="learn"></ul>
+        <details><summary>Historial completo</summary><div class="bd"><ul class="learn" id="learnOld"></ul></div></details>
+      </div>
+    </details>
+    <details><summary>📜 Bitácora por generación</summary>
+      <div class="bd" id="bitacora"></div>
+    </details>
+    <details><summary>🧬 ADN inmortalizado</summary>
+      <div class="bd" id="adnList"></div>
+    </details>
+    <details><summary>✉️ Avisos de mutación (cero spam)</summary>
+      <div class="bd">
+        <p>Un aviso por generación como máximo, solo cuando haya una mutación real. Tu correo se usa únicamente para esto y puedes borrarte cuando quieras.</p>
+        <input type="email" id="email" placeholder="tu@correo.cl" autocomplete="email">
+        <label style="display:flex;gap:8px;font-size:12px;margin-top:8px;align-items:flex-start"><input type="checkbox" id="consent" style="margin-top:2px"> Acepto recibir avisos de mutación de MUTA. Cero spam.</label>
+        <button class="cta" id="subscribe">Avisarme por correo</button>
+        <button class="cta alt" id="notifBtn" style="background:var(--panel2);border-color:var(--line);color:var(--ink)">🔔 Avisarme con notificación del navegador</button>
+        <div class="ok" id="subOk">Listo. Te avisaremos cuando el organismo cambie de forma. Cero spam, promesa de gen.</div>
+      </div>
+    </details>
+    <details><summary>🧬 Tu carta de gen</summary><div class="bd"><button class="cta alt" id="btnCard2" style="background:var(--panel2);border-color:var(--brand);color:var(--brand)">Ver y compartir mi carta de gen</button></div></details>
+    <details><summary>👤 Quién está detrás</summary>
+      <div class="bd">
+        <div id="creatorRow">
+          <img id="creatorImg" alt="Roberto Guerra" width="56" height="56">
+          <div class="who">Experimento de <b>Roberto Guerra</b> · <a id="creatorLink" href="https://www.linkedin.com/in/robguerra" target="_blank" rel="noopener">LinkedIn</a><br>Impulsado por <b>Revenue Hub</b></div>
+        </div>
+      </div>
+    </details>
+    <div class="shrow">
+      <button data-red="wa">WhatsApp</button>
+      <button data-red="x">X</button>
+      <button data-red="li">LinkedIn</button>
+      <button data-red="copy">Copiar</button>
+      <button data-red="native">Compartir…</button>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="muta-state">{"generation":17,"born_utc":"2026-08-09T20:25:36Z","traits":{"paleta":"cosmos luminoso: fondo estelar profundo con melena galactica aurora, verde bioluminiscente, coral y ambar; contraste alto y animo positivo","conducta":"alimentar al organismo ES votar: cada nutriente produce un comportamiento visible distinto; susurrar ideas y apoyar el muro deciden la proxima forma","forma":"criatura interactiva fullscreen (leon galactico de un ojo) con HUD flotante, dock inferior movil y dialogos para proponer, muro, archivo y carta de gen"},"adn":[{"gen":"GEN-3BAE","alias":"Fosforescente","contagios":24,"desde_gen":1},{"gen":"GEN-8A32","alias":"Voraz","contagios":7,"desde_gen":1},{"gen":"GEN-13FC","alias":"Sigiloso","contagios":3,"desde_gen":1},{"gen":"GEN-E2BE","alias":"Salvaje","contagios":3,"desde_gen":3}],"mecanicas":["organismo-fullscreen-interactivo","alimentar-es-votar-con-efectos-distintos","crecimiento-estallido-renacimiento","agujero-negro-regenerador-de-tema","ondas-al-tocar","burbuja-que-explica-en-8s","creditos-de-gen-al-tocar-el-cuerpo","carta-de-gen-compartible","muro-propuestas-votable","susurro-con-categorias","gen-contagio-?g=","share-whatsapp-x-linkedin-copiar-webshare","presencia-honesta-o-metrica-real","avisos-email-cero-spam","sonido-semantico-opcional","archivo-completo-restaurado-snake-atlas-maquina-ciclope-reactor-agujero","atlas-vivo-globo-interactivo-con-senales-apoyables","huevo-estelar-diario-con-energia","criaturario-coleccionable-8-especies-3-rarezas","racha-de-dias-con-bonus-de-rareza","energia-por-alimentar-jugar-proponer-compartir","compartir-desbloquea-huevo-extra","juegos-redisenados-con-vidas-combos-frenesi-y-particulas","nudges-de-retorno-titulo-favicon-notificacion-opt-in","protagonista-unico-en-todos-los-juegos","control-por-inclinacion-acelerometro-giroscopio","sonido-activo-por-defecto-con-desbloqueo-por-gesto","maquina-increible-puzzle-de-flujo-A-B","menus-moviles-fullscreen-scroll-robusto"],"stats":{"visitantes":153,"pageviews":392,"personas_activas":86,"proponentes":30,"susurros":56,"votantes":39,"votos":62,"nutrientes":{"absurdo":23,"belleza":20,"caos":19},"sharers":10,"shares":17,"referidores":43,"referidos":58,"apoyos_muro":16,"apoyos_personas":11,"genes_vivos":4,"altas_email":2,"guia_personas":104,"ventana_gen12":{"visitantes":0,"pageviews":0,"personas_activas":0,"susurros":0,"votos":0,"shares":0,"nota":"cero eventos entre las 16:00Z y las 17:45Z del 2026-08-09; la Gen 12 no alcanzo a ser vista antes de esta corrida manual"},"definicion_activas":"personas unicas con al menos 1 accion significativa (alimentar/votar, susurro, apoyo, juego, share o alta de email); definicion mas estricta que en Gen 12","fuente":"PostHog proyecto 220378, filtrado a muta.revenuehub.cloud, refrescado 2026-08-09T18:12Z (sin trafico nuevo desde Gen 14)","ventana_gen14":{"eventos":0,"nota":"cero eventos entre 17:54Z y 18:12Z; la Gen 14 tuvo 20 minutos de vida antes de esta corrida dirigida por el creador"}},"experimentos":[{"nombre":"sala-de-mutacion","estado":"ejecutado","generacion":4,"evidencia":"127 visitantes y 46 propuestas de 27 personas. Dos mensajes meta ('¿esto es solo para cambiar tu diseño o lo puedo transformar en fuente de ocio?') revelan que se percibe a MUTA como cambiador de estetica. Fuerte demanda de funcion (Snake pedida 6x, pacman, ajedrez, hoyo negro) y contenido (ranking, mapa, radar).","problema":"La accion principal no comunica que se puede cambiar funcion, contenido o el producto mismo, no solo la apariencia.","hipotesis":"Un selector explicito de categoria (funcion/contenido/participar/transformar/apariencia) sube la proporcion de propuestas no cosmeticas por visitante unico.","mutacion":"Sala de Mutacion: primera pantalla reencuadrada + formulario con 5 categorias (apariencia al final) que emite categoria_propuesta/idea_origen/experimento/generation; ademas se ejecuta la idea real de backlog 'Ranking de mejores interacciones' como bucle viral (coleccion/revelacion compartible).","criterio_exito":"Proporcion de propuestas de contenido/funcion/transformacion por visitante unico en Gen 4 > baseline Gen 3."},{"nombre":"agujero-negro-tema+muro-susurros","estado":"ejecutado","generacion":4,"evidencia":"Feedback del creador: la mutacion no se sentia real (solo textos) y no se veian los mensajes de la gente.","problema":"Faltaba una mutacion funcional/visual construida y hacer visible el corpus real de propuestas.","hipotesis":"Un efecto visible recurrente (agujero negro que cambia el tema) + un muro con los mensajes reales hace sentir que el sitio muta y responde a las personas.","mutacion":"Agujero negro cada ~12s que absorbe la interfaz y rota el tema (hue) respetando prefers-reduced-motion; y Muro de susurros con mensajes reales sanitizados (ejecutados y en cola).","criterio_exito":"Mayor dwell y mas propuestas por visitante unico vs baseline; que la gente reconozca su mensaje en el muro."},{"nombre":"reactor-primera-accion","estado":"ejecutado","generacion":5,"evidencia":"Últimas 12h: 5 visitantes, 0 activados, 0 propuestas, 0 shares y abandono temprano aproximado de 4/5. Ventana previa: 8 visitantes, 5 activados, 2 proponentes y 0 shares. Muestra direccional (<20).","problema":"La primera pantalla explica muchas acciones antes de entregar una recompensa y no genera una salida que valga compartir.","hipotesis":"Un reto único de ocho toques con crecimiento, ondas y detonación eleva activación; un resultado ganado eleva compartir sin reducir propuestas.","mutacion":"Reactor de crecimiento ejecuta las ideas de GEN-8A32 y GEN-AE17; al octavo toque explota, cambia el tema y ofrece compartir la detonación. La Sala se profundiza con voto real de cuatro ideas del muro.","criterio_exito":"Mantener si activación supera 25% y al menos una persona comparte el resultado; profundizar si supera 55%; retirar o acortar si 3/5 o más siguen abandonando sin acción."},{"nombre":"inmersion-fullscreen-multimodo","estado":"ejecutado","generacion":6,"evidencia":"Gen 5: 1 visitante reciente completó 8 toques, detonó y compartió; 0 propuestas y 0 votos del muro. Feedback directo del creador: la mutación confinada a un bloque se percibe pequeña y no permite imaginar que puede cambiar una experiencia completa. Muestra cuantitativa direccional (<20).","problema":"La página larga reduce la mutación a una demostración y separa la experiencia de los controles para influir.","hipotesis":"Una portada breve seguida de una experiencia 100dvh con HUD flotante y diálogos para proponer/votar aumenta entrada, acciones por visita, dwell y shares; dos modos permiten conservar la recompensa del Reactor y recuperar la profundidad de Snake.","mutacion":"La mutación ocupa toda la pestaña en móvil y escritorio. Portada con CTA, HUD flotante, dock de acciones, diálogos responsive y dos modos alternables: Reactor y Snake.","criterio_exito":"Mantener si >=60% de pageviews entra a la experiencia y la activación supera 55%; profundizar el modo con más acciones y dwell; conservar ambos si cada uno atrae personas distintas; revisar CTA/diálogos si con 5+ visitantes sigue habiendo 0 propuestas y 0 votos; exigir al menos un share por cada 10 visitantes antes de convertir el resultado en bucle principal."},{"nombre":"archivo-jugable-acumulativo","estado":"ejecutado","generacion":7,"evidencia":"Gen 6 recibió 6 pageviews de 3 personas pero registró 0 entradas, 0 activaciones y 0 juegos. Reproducción: resize inicial llamó snakeSetup antes de inicializar snake; el error detenía el registro del resto de la interfaz.","problema":"Un fallo de orden de carga dejó el fondo visible pero todos los juegos y diálogos inertes; además, las mutaciones anteriores desaparecían al nacer una nueva.","hipotesis":"Un arranque ordenado y verificable, sumado a un archivo de juegos persistente, recupera la interacción y aumenta retorno, dwell y shares sin quitar protagonismo a la mutación actual.","mutacion":"Archivo Vivo es la experiencia principal y reactiva cuatro juegos históricos: Cíclope, Snake, Agujero Negro y Reactor.","criterio_exito":"Cero errores de arranque; >=60% de pageviews entra; cada juego registra start y acciones; conservar juegos con interacción y dwell, y medir shares/retorno por modo."},{"nombre":"endless-mobile-native-compressed","estado":"ejecutado","generacion":8,"evidencia":"Gen 7 tuvo 4 entradas en 5 pageviews, 10 aperturas de archivo y 54 eventos de juego. Snake concentró 214 eventos de 3 personas, frente a 15–29 en los otros modos. Feedback directo: Cíclope y Snake anteriores tenían más carácter; los finales cortos cortan el impulso, las flechas frustran en móvil, las explicaciones pierden fondo y 80KB no escala.","problema":"Las recompensas terminaban el juego, los controles no aprovechaban el teléfono y el transporte heredoc obligaba a confundir límite de despliegue con límite del producto.","hipotesis":"Ciclos continuos, combos, wrap, comida reconocible, swipe, inclinación y vibración aumentan acciones y dwell; comprimir el HTML dentro del Dockerfile permite ampliar el código sin penalizar transferencia.","mutacion":"Todos los juegos se vuelven endless. Snake recupera estética dandi y swipe; Cíclope come alimentos; Archivo/Agujero reaccionan a inclinación; hitos vibran. El Dockerfile transporta HTML gzip+base64.","criterio_exito":">=80% de entradas produce acciones; mediana >=20 acciones por sesión activa; >=2 ciclos por jugador en algún modo; Snake swipe sin controles de flecha visibles en <=720px; cero diálogos transparentes; Dockerfile <=85KB aunque HTML pueda crecer hasta 500KB."},{"nombre":"cápsulas-puntos-sonido-ranking","estado":"ejecutado","generacion":9,"evidencia":"En las últimas 12h hubo 28 pageviews de 3 personas, 2 personas activas, 10 entradas, 16 aperturas del archivo, 66 eventos de juego, 72 feeds y 1 share; Cíclope lideró con 59 eventos y Snake sumó 31. Feedback directo: la ayuda móvil tapaba el ojo; faltaba audio; los ciclos que achican personajes restaban recompensa; se prefieren puntos, rankings y cierre con nombre para Snake.","problema":"La experiencia tenía juegos sueltos pero no un bucle principal reconocible; el progreso visual se reiniciaba y la interfaz móvil competía con el centro interactivo.","hipotesis":"Una máquina de cápsulas basada en sugerencias, con rareza garantizada, puntos persistentes, sonido, crecimiento monotónico y rankings aumentará aperturas repetidas, dwell, retorno y compartidos.","mutacion":"La mutación principal se transforma en experimento de cápsulas. Cada apertura revela una idea convertida en rareza; Cíclope, Agujero y Reactor conservan crecimiento/puntos; Snake termina al colisionar y solicita alias; el HUD incorpora sonido y leaderboard real por generación.","criterio_exito":">=12 aperturas de cápsulas por sesión activa; >=25% de jugadores abre el ranking; >=10% deja marca; subida de dwell y shares; cero ayudas móviles sobre el eje central."},{"nombre":"atlas-vivo-interpretacion-producto","estado":"ejecutado","generacion":10,"evidencia":"Muestra reciente pequeña: 3 visitantes y 2 activos. Cíclope lideró interacción, pero el feedback directo corrigió la lectura: MUTA no es una sala de clickers ni una plataforma de juegos. El backlog pide mapa, radar, estrategia y acompañamiento.","problema":"La mecánica de cápsulas se confundió con la identidad del producto y los juegos compartían una interacción demasiado uniforme.","hipotesis":"Interpretar mapa+radar como una herramienta de exploración, acreditar autores y dar reglas distintas a cada juego hará más comprensible la capacidad real de MUTA para transformarse.","mutacion":"Atlas Vivo se vuelve protagonista. Cuatro ideas reales son señales explorables con crédito y apoyo. Cíclope se controla para atrapar; Agujero Negro intercepta; Reactor exige timing; Snake conserva swipe y cierre ranked.","criterio_exito":">=2 señales exploradas por visita activa; >=20% de exploradores apoya una señal; drag/zoom sostenido; dwell y shares al alza; cada juego muestra patrones de control distintos."},{"nombre":"maquina-de-decirlo-puzzle-semantico","estado":"evaluado","generacion":11,"evidencia":"25 visitantes/12h; Atlas tuvo 22 entradas y 20 personas arrastrando. Una persona aportó tres propuestas; dos del mismo gen convergen en máquina de ingenio + comunicación afectiva.","problema":"El uso del Atlas probó exploración, pero las nuevas propuestas piden una experiencia de decisión y comunicación que no cabe como otra señal ni como clicker.","hipotesis":"Fusionar ambas solicitudes en un puzzle semántico claro producirá interacción significativa, progresión y una salida compartible sin fijar MUTA como plataforma de juegos.","mutacion":"La Máquina de Decirlo reemplaza la pantalla principal. Tres módulos ordenados conducen un mensaje entre emisor y receptor; seis piezas, escenarios, semillas, retry y próximo nivel crean dominio. Atlas queda secundario.","criterio_exito":">=40% de quienes inician completa un circuito; mediana >=3 decisiones; >=20% retry o próximo nivel; >=8% share; cero dead clicks.","resultado_12h":"5 visitantes, 4 iniciaron la máquina, 2 completaron, 1 susurro, 0 votos, 0 shares, dwell 0. El formato puzzle fullscreen subió el costo de interacción y colapso el bucle participativo.","decision":"RETIRAR el formato puzzle/arcade como portada. El aprendizaje repetido (una sola accion sobre el pliegue + Sala de Mutacion con voto de ideas) vuelve a ser el producto."},{"nombre":"sala-de-mutacion-ranking-vivo","estado":"ejecutado","generacion":12,"evidencia":"70% de los 148 visitantes historicos abre la guia (comprension = cuello estructural). Gen 11 (puzzle fullscreen) rindio 5 vis/12h, 1 susurro, 0 votos, 0 shares. El voto de ideas ya tuvo traccion real (11 personas, 16 apoyos). Multiples personas piden en dias distintos una interfaz mas clara/positiva y un 'ranking de las mejores interacciones'.","problema":"La deriva a formatos-juego fullscreen (gen 9-11) subio el costo de interaccion y bajo la comprension; el bucle real proponer/votar/compartir casi murio.","hipotesis":"Si la decision colectiva es el producto visible (muro de propuestas reales votable + ranking en vivo por clase) y la portada se entiende en 8s con una accion primaria sobre el pliegue, sube la tasa de propuesta y de apoyo por visitante unico frente a Gen 11.","mutacion":"Portada legible (que es MUTA, cambia cada 12h, cuenta regresiva, como influir AHORA). Se retira el puzzle/arcade fullscreen. Feature real: Sala de Mutacion con Ranking Vivo: propuestas reales sanitizadas, agrupadas en 4 clases (Apariencia/Contenido/Funcion/Transformacion), con contadores por clase en vivo y boton Apoyar que reordena el ranking al instante y registra muta_idea_vote para la proxima mutacion. Estetica mas clara y positiva (pedido repetido) sin perder identidad de organismo.","criterio_exito":"Mantener/profundizar si en Gen 12: tasa de propuesta por visitante unico > Gen 11 (>1 susurro), >=15% de visitantes activos apoya al menos una idea del muro, y activacion del bucle (vote+whisper+share) supera la ventana de Gen 11. Si el apoyo al muro sigue <10% de activos, el problema es de trafico/distribucion, no de formato."},{"nombre":"carta-de-gen-bucle-compartible","estado":"ejecutado","generacion":13,"evidencia":"Corrida manual. Ventana Gen 12 (79 min): 3 visitantes, 1 propuesta, 1 apoyo al muro, 1 voto, 0 shares. Acumulado desde 06-08: 153 visitantes, 17 shares totales (0 en las ultimas 2 ventanas), 138 aperturas de guia sobre 366 pageviews. Patron repetido (gens 5-12): trafico <20/12h y shares aprox 0. La nota a la proxima version prescribe: si el trafico sigue bajo, el limite es distribucion -> priorizar un bucle viral con salida personalizada compartible.","problema":"El formato Sala de Mutacion funciona direccionalmente para comprender y decidir, pero no produce distribucion: casi nadie comparte, asi que el organismo depende de trafico externo que no llega.","hipotesis":"Una salida personalizada y compartible (Tu Carta de Gen) que muestra el rol real de la persona en esta generacion y lo que la comunidad pide ahora, entregando valor antes de pedir el share, sube la tasa de compartidos por visitante unico frente a Gen 12 sin cambiar el formato.","mutacion":"Nueva funcion real: Tu Carta de Gen. Un lienzo (canvas 1080x1350) genera una tarjeta personalizada con tu gen, tus propuestas y apoyos de esta generacion, el nutriente que votaste, el estado real del muro (ideas y clase lider) y la cuenta regresiva. Se descarga como imagen y se comparte por Web Share con archivo (movil) o enlace con contagio ?g=. La Sala de Mutacion, el muro votable, votos y guia se conservan intactos.","criterio_exito":"Mantener/profundizar si en Gen 13 la tasa de compartidos por visitante unico (muta_share) supera a Gen 12 y al menos una persona genera y comparte su Carta (muta_card_generate + muta_share). Retirar la Carta si con >=15 visitantes activos genera 0 shares nuevos.","criterio_exito_struct":{"metrica":"share_rate","definicion":"visitantes unicos con muta_share dividido visitantes unicos; ademas conteo de muta_card_generate seguido de muta_share","umbral_mantener":0.05,"umbral_profundizar":0.12,"ventana_horas":12}},{"nombre":"organismo-galactico-vivo","estado":"ejecutado","generacion":14,"evidencia":"muta_feed es la mecanica con mayor amplitud de la historia (1780 eventos, 73 personas vs 62 votos de 39). El backlog de criatura (bigote, sombrero, monoculo, cuerno con arcoiris, un solo ojo, pulpo, crecer-y-estallar, comer comida real, ondas al tocar) sumaba 7+ personas y nunca se ejecuto como sistema. Hoy llego 'Leon galactico' (Transformacion) sin ejecutar. 104/153 personas abren la guia: comprension sigue siendo el cuello. Direccion explicita del creador: recuperar la experiencia inmersiva con calidad de build. NOTA DE CARRERA: mientras se construia esta version, la corrida programada desplego una Gen 13 breve (Sala + Carta de Gen, 17:27-17:5xZ). Su tesis de carta compartible CONVERGE con la de esta generacion y se conserva; su historia queda registrada.","problema":"Gen 12 explico bien pero elimino el cuerpo inmersivo y el archivo jugable; el producto quedo sin experiencia protagonista.","hipotesis":"Si el organismo vuelve como criatura fullscreen que ejecuta visiblemente el backlog acumulado y convierte votar en alimentar, la comprension se logra mostrando (no explicando) y la activacion supera el 25%.","mutacion":"El Organismo Galactico: criatura interactiva fullscreen que ejecuta 9 solicitudes historicas acreditadas, alimentar=votar con efectos distintos por nutriente, agujero negro con caos, crecimiento y renacimiento, burbuja que explica MUTA en <8s, carta de gen compartible, muro y susurros en dialogos, Snake reconstruida movil-nativa en el archivo.","criterio_exito":{"metrica":"activacion","definicion":"% de visitantes unicos con >=1 accion significativa (alimentar con nutriente, susurro, apoyo en muro, carta de gen o partida de snake)","umbral_mantener":25,"umbral_profundizar":40,"ventana_horas":12}},{"nombre":"archivo-restaurado-a-mi-manera","estado":"ejecutado","generacion":15,"evidencia":"El creador aporto el codigo fuente completo de la Gen 11. El archivo jugable habia sido eliminado en Gen 12 (solo Snake volvio en Gen 14). Uso historico real: atlas 315 drags/22 personas, cyclops 1061 eventos, blackhole 396, reactor 152, maquina 51. La direccion del creador pide reproducirlo con mi propia construccion.","problema":"Cinco experiencias historicas con uso real eran inaccesibles; el invariante de archivo estaba roto desde Gen 12.","hipotesis":"Restaurar el archivo completo con implementacion nueva (misma alma, datos y creditos heredados; motor y estetica de la Gen 14) recupera retorno y dwell sin quitar protagonismo al organismo.","mutacion":"Archivo Vivo completo: Atlas Vivo (globo interactivo con 5 senales apoyables), La Maquina de Decirlo (6 escenarios de comunicacion heredados), Ciclope, Reactor de pulso y Agujero Negro como juegos standalone con ranking, mas Snake. Todo con inicializacion diferida; el organismo sigue siendo la portada.","criterio_exito":{"metrica":"uso_archivo","definicion":"% de visitantes unicos que inician al menos una experiencia del archivo (muta_mode_switch archive=true) sin que la activacion del organismo caiga bajo su umbral","umbral_mantener":10,"umbral_profundizar":25,"ventana_horas":12}},{"nombre":"bucle-de-retorno-huevo-criaturario","estado":"ejecutado","generacion":16,"evidencia":"Direccion explicita del creador: cadencia diaria 7am Chile, retencion tipo recompensa-variable de baja complejidad (interno), juegos redisenados como si fueran nuevos, seccion JUEGOS permanente, nudges de retorno. Bugs reportados por el creador en movil real: archivo cortado en 3 tarjetas y Mas vacio.","problema":"El producto era profundo pero sin razon estructural para volver manana; las hojas moviles fallaban en scroll tactil real.","hipotesis":"Un bucle diario honesto (energia -> huevo -> eclosion con ceremonia -> coleccion con rarezas -> racha) mas juegos con juice real sube retorno D1, dwell y shares sin urgencia falsa.","mutacion":"Huevo Estelar diario con energia ganada en todo el producto, Criaturario de 8 especies x 3 rarezas con revelacion ceremonial, racha con bonus de rareza, compartir desbloquea huevo extra, 4 juegos redisenados (Serpiente Estelar, Guardian del Vacio con vidas, Pulso con aceleracion, Devorador con frenesi) con particulas/combos/shake, hojas fullscreen robustas en movil, countdown diario 11:00 UTC y nudges de retorno (titulo+favicon+notificacion opt-in).","criterio_exito":{"metrica":"retorno_d1","definicion":"% de visitantes unicos de ayer que vuelven hoy (personas con eventos en dias consecutivos); secundarias: eclosiones (muta_egg hatch) por visitante y dwell medio","umbral_mantener":10,"umbral_profundizar":20,"ventana_horas":24}},{"nombre":"protagonista-unico-sensores-sonido-maquina-increible","estado":"ejecutado","generacion":17,"evidencia":"Feedback directo del creador sobre Gen 16: (1) usar acelerometro/giroscopio en movil; (2) el mismo personaje de la portada como protagonista de TODOS los juegos; (3) el sonido no sonaba al ganar/comer; (4) vibracion; (5) menus Mas/Juegos aun mal en movil vertical; (6) la Maquina debia ser una version moderna de The Incredible Machine (piezas para que algo fluya de A a B), no un puzzle de mensajes.","problema":"El sonido estaba muteado por defecto (nunca sonaba), cada juego tenia su propio personaje, no habia control por sensores, las hojas moviles verticales no scrolleaban bien y la Maquina no era lo que el gen pidio.","hipotesis":"Unificar al Leon Galactico como unico protagonista jugable, activar sonido por defecto con desbloqueo por gesto, agregar control por inclinacion con permiso, hojas fullscreen robustas y reconstruir la Maquina como puzzle de flujo A->B sube dominio, dwell y retorno.","mutacion":"drawHero compartido: el Leon Galactico de la portada es ahora el personaje de Guardian del Vacio, Serpiente Estelar y Devorador. Sonido ON por defecto (se desbloquea al primer toque) con feedback en cada captura/logro y vibracion haptica. Control por inclinacion (DeviceOrientation con permiso iOS) en Guardian, Devorador y Serpiente, con fallback tactil. La Maquina Increible: puzzle fisico donde colocas rampas, cintas, trampolines y bloques para que una estrella fluya de A a B, 5 niveles. Hojas moviles fullscreen con scroll robusto.","criterio_exito":{"metrica":"dwell_juegos","definicion":"dwell activo medio en la seccion Juegos por visitante unico que abre al menos un juego, y partidas repetidas (muta_game start>1); secundaria: uso de inclinacion (muta_sensor granted)","umbral_mantener":20,"umbral_profundizar":45,"ventana_horas":24}}],"genes_acreditados":[{"idea":"Leon galactico","gen":"anonimo (Gen 12)","parte":"melena estelar y tema cosmico de toda la generacion"},{"idea":"Un solo ojo, que sea un ciclope","gen":"GEN Furtivo","parte":"el ojo unico que sigue tu cursor"},{"idea":"Cuerno de unicornio que dispara arcoiris al alimentarlo","gen":"GEN Furtivo","parte":"cuerno + arcos arcoiris al comer belleza"},{"idea":"Monoculo, sombrero y bigote","gen":"GEN Salvaje","parte":"los tres accesorios del organismo"},{"idea":"Crecer al alimentarlo hasta estallar y cambiar el tema","gen":"GEN Voraz","parte":"ciclo crecimiento-estallido-renacimiento"},{"idea":"Hoyo negro que absorbe la interfaz y regenera el tema","gen":"GEN Voraz","parte":"evento agujero negro invocado con caos"},{"idea":"Cambia de color como un pulpo","gen":"GEN Sutil","parte":"paleta que muta al comer belleza"},{"idea":"Que coma comida real al azar","gen":"GEN Indomable","parte":"comida emoji real lanzada al alimentar"},{"idea":"Cada toque como piedra lanzada al agua","gen":"GEN Espectral","parte":"ondas expansivas al tocar la pantalla"},{"idea":"Snake de Nokia","gen":"GEN Errante","parte":"Snake Dandi reconstruida en el Archivo"},{"idea":"Mapa mundi + radar de vuelos","gen":"GEN Hipnotico","parte":"Atlas Vivo restaurado en el Archivo"},{"idea":"Ajedrez con un twist / acompanar temas dificiles / networking Santiago","gen":"GEN Silvestre, GEN Sutil, GEN Cuantico","parte":"senales apoyables dentro del Atlas"},{"idea":"Version moderna de The Incredible Machine (piezas para que algo fluya de A a B)","gen":"GEN Fosforescente","parte":"La Maquina Increible: puzzle de flujo con rampas, cintas, trampolines y bloques"}],"bucle_viral":"identidad compartible: carta de gen personalizada por gen + nutrientes del dia, con contagio ?g= acreditable","aprendizajes":[{"gen":4,"texto":"La categoría explícita produjo propuestas no cosméticas, pero una persona igualmente envió sin categoría: debe ser opcional."},{"gen":5,"texto":"0/5 activados y 4/5 abandonos tempranos → una sola acción visible sobre el pliegue."},{"gen":5,"texto":"5/8 activados en la ventana previa pero 0 shares → valor ganado antes de compartir."},{"gen":5,"texto":"4 propuestas de 2 personas en Gen 4 → conservar la Sala, reducir su fricción y añadir voto de ideas."},{"gen":5,"texto":"Con menos de 20 visitantes, tratar todos los cambios como hipótesis direccionales."},{"gen":6,"texto":"1/1 persona completó Reactor y compartió → conservar su recompensa dentro de la experiencia fullscreen."},{"gen":6,"texto":"0 propuestas y 0 votos del muro → mover ambas decisiones a CTAs flotantes persistentes."},{"gen":6,"texto":"Feedback del creador: el bloque pequeño limita la imaginación → la mutación pasa a ocupar 100dvh."},{"gen":6,"texto":"Snake fue recordado por sus clics y tiempo → vuelve como modo medible, no como nostalgia decorativa."},{"gen":7,"texto":"6 cargas y 0 entradas tras Gen 6 revelaron un fallo de arranque, no falta de interés."},{"gen":7,"texto":"El estado de cada juego debe existir antes del primer resize y la app debe publicar una señal automática de salud."},{"gen":7,"texto":"Los juegos de alta interacción pasan a un archivo permanente; la mutación nueva sigue siendo la portada principal."},{"gen":8,"texto":"Snake produjo 214 eventos y fue el modo dominante → recuperar su carácter dandi y profundizar su control."},{"gen":8,"texto":"Los finales son celebraciones no terminales: completar un ciclo debe abrir el siguiente inmediatamente."},{"gen":8,"texto":"En móvil, gestos, inclinación y vibración tienen prioridad sobre controles copiados de escritorio."},{"gen":8,"texto":"El límite de 85KB pertenece al Dockerfile heredoc, no al producto: transportar HTML comprimido separa ambos presupuestos."},{"gen":9,"texto":"Los ciclos que reducían tamaño debilitaban la recompensa → el progreso visual y los puntos ahora sólo avanzan."},{"gen":9,"texto":"Una ayuda centrada compite con la criatura → en móvil las pistas viven en el borde y los diálogos usan hoja inferior opaca."},{"gen":9,"texto":"Snake admite un final significativo → colisión, puntaje, alias y reinicio reemplazan la penalización blanda sin identidad."},{"gen":9,"texto":"Múltiples juegos necesitan una promesa común → las ideas de la comunidad se convierten en una colección de cápsulas mutable."},{"gen":9,"texto":"El feedback táctil solo no basta → cada acción principal recibe una firma sonora breve y silenciable."},{"gen":10,"texto":"Una inspiración mecánica no debe convertirse en marca ni identidad pública; sólo el HUD permanece estable."},{"gen":10,"texto":"No toda solicitud pide un juego: mapa y radar revelan exploración y utilidad; orientación revela conversación y sentido."},{"gen":10,"texto":"Engagement no equivale a clicks; cada experiencia necesita dominio propio: mover, interceptar, decidir, descubrir o acertar timing."},{"gen":10,"texto":"Acreditar el gen dentro de la experiencia cierra el ciclo entre petición, ejecución y reconocimiento comunitario."},{"gen":11,"texto":"20 personas arrastraron Atlas: una mutación útil debe preservarse aunque deje de ser protagonista."},{"gen":11,"texto":"Dos propuestas del mismo gen pueden revelar una sola necesidad latente más fuerte que sus formas literales."},{"gen":11,"texto":"Un puzzle exige decisiones, feedback y dominio; no convierte todas las experiencias en tocar infinitamente."},{"gen":11,"texto":"La simulación se pausa en pestaña oculta y diálogos; Cíclope/Agujero sólo puntúan tras input humano reciente."},{"gen":12,"texto":"Gen 11 rindio 5 vis/12h y 0 votos/0 shares: el puzzle fullscreen subio el costo de interaccion. Dato -> el formato-juego como portada colapsa el bucle participativo -> se retira y vuelve la Sala de Mutacion como producto."},{"gen":12,"texto":"70% de 148 visitantes abre la guia: la friccion es de comprension, no de estetica. Dato -> portada literal con una sola accion sobre el pliegue y menos metafora sin etiqueta."},{"gen":12,"texto":"El voto de ideas ya tuvo traccion real (11 personas, 16 apoyos) antes de ser enterrado por los formatos-juego. Dato -> se revive y profundiza con ranking en vivo por clase; medir apoyo por visitante unico."},{"gen":12,"texto":"Varias personas en dias distintos pidieron una interfaz mas clara y positiva y un 'ranking de las mejores interacciones'. Dato -> se ejecutan ambos: paleta clara + muro votable, citando a quien lo pidio."},{"gen":12,"texto":"Autocritica: gens 9-11 reaprendieron tres veces 'una sola accion sobre el pliegue' sin sostenerlo. Accion -> Gen 12 fija ese invariante de experiencia y lo mide, no lo vuelve a negociar por espectaculo."},{"gen":13,"texto":"Ventana Gen 12 (79 min, manual): 1 de 3 visitantes apoyo una idea del muro (>15%) -> el formato Sala funciona direccionalmente; se conserva y no se vuelve a churnar."},{"gen":13,"texto":"17 shares en todo el historico y 0 en las ultimas 2 ventanas, con trafico <20/12h -> el cuello no es el formato sino la distribucion. Accion: un bucle viral con salida personalizada (Tu Carta), no otro cambio de portada."},{"gen":13,"texto":"138 aperturas de guia sobre 366 pageviews confirman friccion de comprension estructural -> la Carta explica en una imagen que es MUTA y como influir, llevando el mensaje fuera del sitio."},{"gen":13,"texto":"Autocritica: un artefacto compartible solo sirve si da valor antes de pedir el share; la Carta muestra primero TU rol real y lo que se viene, y recien entonces ofrece compartir. Se mide share por visitante unico, sin inflar."},{"gen":14,"texto":"1.780 muta_feed de 73 personas vs 62 votos de 39: alimentar siempre fue el lenguaje nativo de MUTA; ahora votar se hace alimentando."},{"gen":14,"texto":"Cero eventos en la primera hora y media de Gen 12: una portada que explica sin cuerpo no retiene; la comprension vuelve a mostrarse dentro de la experiencia."},{"gen":14,"texto":"El backlog de criatura de 7+ personas llevaba 3 dias sin ejecutarse como sistema; esta generacion lo construye y acredita parte por parte."},{"gen":14,"texto":"Gen 12 retiro el archivo jugable: Snake vuelve reconstruida; Atlas y Maquina quedan con ruta de restauracion documentada desde respaldos verificados."},{"gen":14,"texto":"Corrida manual del creador con direccion explicita (inmersion + calidad de build): la direccion del creador es restriccion de producto, no un voto mas."},{"gen":15,"texto":"El creador aporto el fuente de Gen 11: restaurar con implementacion propia (misma alma, motor nuevo) es mas rapido y coherente que resucitar codigo viejo."},{"gen":15,"texto":"Atlas fue la experiencia con mas amplitud del archivo (22 personas arrastrando): las herramientas de exploracion retienen mas ancho que los clickers."},{"gen":15,"texto":"El archivo completo ahora viaja embebido en el index vivo: la proxima generacion lo hereda del propio sitio, no de respaldos."},{"gen":16,"texto":"El creador reporto que el bottom-sheet movil real no scrolleaba (solo 3 tarjetas visibles): en pantallas chicas las hojas largas ahora son paginas fullscreen con touch-action pan-y."},{"gen":16,"texto":"Cadencia pasa de 12h a diaria 7am Chile: menos mutaciones pero cada una con mas horas de datos para decidir."},{"gen":16,"texto":"La retencion ahora tiene estructura propia: energia -> huevo -> criatura -> coleccion -> racha; todo honesto, persistido por gen y medible con muta_egg/muta_collection."},{"gen":17,"texto":"El sonido estaba muteado por defecto: nadie lo escuchaba. Ahora arranca ON y se desbloquea con el primer gesto (requisito de autoplay de los navegadores)."},{"gen":17,"texto":"Un solo protagonista en todos los juegos (el Leon Galactico de la portada) da identidad y coherencia; drawHero es el render compartido."},{"gen":17,"texto":"La Maquina de Decirlo no era lo que GEN Fosforescente pidio: reconstruida como The Incredible Machine real (flujo A->B con piezas fisicas)."}],"bitacora":[{"generacion":1,"resumen":"Nacimiento: acciones y mensajes alimentan una reescritura cada 12 horas."},{"generacion":2,"resumen":"Cíclope, comida real y meteoritos."},{"generacion":3,"resumen":"Snake dandi, arcoíris y ADN acumulativo."},{"generacion":4,"resumen":"Sala de Mutación, muro público y agujero negro de tema."},{"generacion":5,"resumen":"Reactor de ocho toques, ondas, detonación compartible y voto de ideas."},{"generacion":6,"resumen":"MUTA deja de ser una sección: portada, experiencia fullscreen, HUD flotante, diálogos de decisión y modos Reactor/Snake."},{"generacion":7,"resumen":"MUTA repara el layering/arranque y se convierte en Archivo Vivo: mutación actual fullscreen más Cíclope, Snake, Agujero Negro y Reactor siempre accesibles."},{"generacion":8,"resumen":"MUTA convierte todo el archivo en juegos endless, recupera Cíclope y Snake dandi, usa sensores móviles y comprime el sitio para escalar."},{"generacion":9,"resumen":"MUTA se convierte en un generador de cápsulas de ideas: cápsulas, rarezas, puntos persistentes, audio, crecimiento sin retroceso y rankings por generación."},{"generacion":10,"resumen":"MUTA recupera su capacidad de convertirse en cualquier producto: Atlas Vivo combina mapa y radar, acredita cuatro señales comunitarias y deja los juegos como archivo secundario con mecánicas diferenciadas."},{"generacion":11,"resumen":"Dos ideas de GEN-0866 se fusionan en La Máquina de Decirlo: un puzzle fullscreen de circuitos semánticos. Atlas Vivo y cuatro juegos quedan como memoria activa."},{"generacion":12,"resumen":"MUTA deja atras el puzzle fullscreen y vuelve a poner la decision colectiva al centro: Sala de Mutacion con Ranking Vivo, un muro de propuestas reales votable por clase, portada legible en 8s y una paleta mas clara y positiva pedida por la comunidad."},{"generacion":13,"resumen":"MUTA conserva la Sala de Mutacion y suma Tu Carta de Gen: una tarjeta personalizada y compartible que muestra tu rol en esta generacion y lo que la comunidad pide ahora, para atacar el cuello real -distribucion- entregando valor antes de pedir el share."},{"generacion":14,"resumen":"El organismo vuelve: MUTA recupera su cuerpo como Leon Galactico interactivo fullscreen que ejecuta 10 solicitudes historicas acreditadas (ojo de ciclope, cuerno con arcoiris, sombrero/monoculo/bigote, crecer-estallar-renacer, agujero negro, pulpo, comida real, ondas). Alimentar es votar. Carta de gen compartible como bucle viral. Snake reconstruida movil-nativa. Muro y susurros de Gen 12 conservados en dialogos. Corrida manual dirigida por el creador. La Gen 13 (Sala + Carta de Gen) vivio ~30 minutos por una carrera de corridas; su carta de gen converge con esta y ambas quedan en la historia."},{"generacion":15,"resumen":"El archivo completo vuelve a casa: Atlas Vivo, La Maquina de Decirlo, Ciclope, Reactor y Agujero Negro restaurados con implementacion nueva sobre el motor de la Gen 14, con creditos y escenarios heredados del fuente de Gen 11 aportado por el creador. El Organismo Galactico sigue siendo el protagonista."},{"generacion":16,"resumen":"MUTA aprende a esperarte: nace el Huevo Estelar diario que se carga con energia de alimentar, jugar y proponer; eclosiona criaturas coleccionables con rarezas y rachas; los juegos fueron redisenados con vidas, combos, frenesi y particulas; las hojas moviles se vuelven paginas fullscreen; y la mutacion pasa a ritmo diario: cada manana a las 7am de Chile."},{"generacion":17,"resumen":"El Leon Galactico se vuelve el unico protagonista de todos los juegos; el sonido por fin suena (ON por defecto, desbloqueo por gesto) con vibracion; llega el control por inclinacion en movil (acelerometro/giroscopio con permiso y fallback tactil); las hojas moviles son fullscreen con scroll robusto; y La Maquina de Decirlo se reconstruye como La Maquina Increible: un puzzle de flujo A->B con rampas, cintas, trampolines y bloques, tal como pidio GEN Fosforescente."}],"preguntas_ciclo":["Con protagonista unico y sonido audible, sube el dwell en Juegos (20 mantener / 45 profundizar) y hay partidas repetidas?","Cuantas personas activan el control por inclinacion (muta_sensor granted) y juegan con el?","La Maquina Increible produce niveles completados (muta_machine_complete version:increible)?","Retorno D1 y eclosiones se sostienen con estas mejoras?"],"nota_para_mi_proxima_version":"CADENCIA DIARIA 11:00 UTC. El Leon Galactico (drawHero) es el protagonista unico: todo juego o personaje nuevo debe usarlo o una variante suya. Sonido ON por defecto con unlockAudio en el primer gesto: no vuelvas a mutear por defecto. Control por inclinacion disponible en movil (TILT): extiendelo a juegos nuevos con fallback tactil y permiso iOS. La Maquina Increible es puzzle de flujo A->B: profundiza con mas piezas (poleas, ventiladores, imanes) y niveles, nunca la degrades a texto. Hojas moviles = fullscreen scroll robusto (touch-action pan-y, overscroll contain). Criterios: dwell_juegos (20/45), retorno_d1 (10/20), activacion (25/40). El archivo completo viaja embebido. Si trafico <20/dia el cuello es distribucion: criaturas + carta de gen como gancho.","cadencia":{"tipo":"diaria","hora_utc":"11:00","hora_chile_invierno":"07:00","vigente_desde":"2026-08-09","decidida_por":"creador"}}</script>
+<script>
+  // ---- PostHog ----
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_Yh77figNxAKZyEwk6kwdLgNMvFNir6fQRjKihuRxOLD', {api_host: 'https://us.i.posthog.com', person_profiles: 'always'});
+</script>
+<script>(function(){
+"use strict";
+/* ============ MUTA Gen 13 — El Organismo Galáctico ============ */
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var esc=function(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
+var ST={};try{ST=JSON.parse($("#muta-state").textContent)}catch(e){ST={}}
+var cap=function(n,p){try{if(window.posthog&&posthog.capture){p=p||{};if(p.generation==null)p.generation=13;posthog.capture(n,p)}}catch(e){}};
+var REDUCED=false;try{REDUCED=window.matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
+var VPC=function(){return window.innerWidth<=720?"mobile":"desktop"};
+var LS={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* ---- gen identity + contagio ---- */
+var g=LS.get("muta_gene")||"";
+if(!/^[0-9A-F]{4}$/.test(g)){g=Math.random().toString(16).slice(2,6).toUpperCase();while(g.length<4)g+="0";LS.set("muta_gene",g)}
+var GEN="GEN-"+g;
+var ALIAS=(function(){var names=["Errante","Voraz","Sutil","Furtivo","Salvaje","Abisal","Radiante","Hipnótico","Fractal","Insólito","Cuántico","Sigiloso","Efímero","Etéreo","Rebelde","Espectral","Anómalo","Indomable","Magnético","Vibrante","Fosforescente","Galáctico","Eterno","Silvestre"];var n=parseInt(g,16)||0;return names[n%names.length]})();
+["#genShort2"].forEach(function(s){var el=$(s);if(el)el.textContent=g});
+["#genFull2"].forEach(function(s){var el=$(s);if(el)el.textContent=GEN+" · "+ALIAS});
+try{
+  var og=new URLSearchParams(location.search).get("g")||"";
+  og=(og.match(/GEN-[0-9A-F]{4}/i)||[""])[0].toUpperCase();
+  if(og&&og!==GEN){var seen=LS.get("muta_ref_seen");if(seen!==og){LS.set("muta_ref_seen",og);cap("muta_referral",{gen_origen:og})}}
+}catch(e){}
+cap("muta_feed",{gen:GEN,accion:"pageload"});
+cap("muta_enter_experience",{experience_id:"organismo",mode:"organismo",viewport_class:VPC(),gene_origin:GEN});
+
+/* ---- countdown 04:00 / 16:00 UTC ---- */
+function nextMut(){var n=new Date(),t=new Date(n);t.setUTCMinutes(0,0,0);t.setUTCHours(11);
+  if(t<=n)t.setUTCDate(t.getUTCDate()+1);return t}
+function tick(){var d=nextMut()-new Date();if(d<0)d=0;var s=Math.floor(d/1000),hh=Math.floor(s/3600),mm=Math.floor(s%3600/60),ss=s%60;
+  var p=function(x){return(x<10?"0":"")+x};var txt=p(hh)+":"+p(mm)+":"+p(ss);
+  var a=$("#cd");if(a)a.textContent=txt;$$(".cdRef").forEach(function(el){el.textContent=txt})}
+tick();setInterval(tick,1000);
+
+/* ---- presence honesta ---- */
+var sid=LS.get("muta_sid")||"";if(!sid){sid=Date.now().toString(36)+Math.random().toString(36).slice(2,8);LS.set("muta_sid",sid)}
+var rotate=[["visitantes","personas han influido en MUTA"],["susurros","ideas susurradas"],["genes_vivos","genes viven en el ADN"],["votos","nutrientes entregados"]],ri=0;
+function rotStat(){var s=ST.stats||{};var k=rotate[ri%rotate.length];ri++;var v=s[k[0]];$("#presTxt").textContent=(v!=null?v:"—")+" "+k[1]}
+function presence(){fetch("/presence",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){
+  var n=d&&d.n||0;if(n>=2)$("#presTxt").textContent=n+" personas están aquí ahora";else rotStat()}).catch(rotStat)}
+function ping(){fetch("/ping",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:sid})}).catch(function(){})}
+ping();presence();setInterval(ping,40000);setInterval(presence,20000);
+
+/* ---- dwell honesto ---- */
+var dwellStart=Date.now(),dwellAcc=0;
+document.addEventListener("visibilitychange",function(){
+  if(document.hidden){dwellAcc+=Math.round((Date.now()-dwellStart)/1000);if(dwellAcc>=5){cap("muta_dwell",{segundos:dwellAcc});dwellAcc=0}}
+  else dwellStart=Date.now()});
+
+/* ---- sonido (semántico + pad opcional) ---- */
+var AC=null,soundOn=true,padNodes=null,acUnlocked=false;
+function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}return AC}
+function unlockAudio(){if(acUnlocked)return;acUnlocked=true;var a=ac();if(a&&a.state==="suspended")a.resume();try{var o=a.createOscillator(),gn=a.createGain();gn.gain.value=0.0001;o.connect(gn);gn.connect(a.destination);o.start();o.stop(a.currentTime+0.02)}catch(e){}}
+document.addEventListener("pointerdown",unlockAudio);document.addEventListener("touchstart",unlockAudio,{passive:true});document.addEventListener("keydown",unlockAudio);
+function blip(f,dur,type,vol){if(!soundOn)return;if(!acUnlocked)unlockAudio();if(!ac())return;if(AC.state==="suspended")AC.resume();try{var o=AC.createOscillator(),gn=AC.createGain();o.type=type||"sine";o.frequency.value=f;
+  gn.gain.setValueAtTime(0.0001,AC.currentTime);gn.gain.exponentialRampToValueAtTime(vol||0.12,AC.currentTime+0.02);gn.gain.exponentialRampToValueAtTime(0.0001,AC.currentTime+(dur||0.18));
+  o.connect(gn);gn.connect(AC.destination);o.start();o.stop(AC.currentTime+(dur||0.18)+0.05)}catch(e){}}
+function padStart(){if(!ac()||padNodes)return;try{var g1=AC.createGain();g1.gain.value=0.02;g1.connect(AC.destination);
+  padNodes=[g1];[110,164.8].forEach(function(f){var o=AC.createOscillator();o.type="sine";o.frequency.value=f;o.detune.value=(Math.random()*8-4);o.connect(g1);o.start();padNodes.push(o)})}catch(e){}}
+function padStop(){if(padNodes){try{padNodes.slice(1).forEach(function(o){o.stop()})}catch(e){}try{padNodes[0].disconnect()}catch(e){}padNodes=null}}
+var bsnd=$("#btnSound");bsnd.textContent="🔊";bsnd.setAttribute("aria-pressed","true");
+bsnd.addEventListener("click",function(){soundOn=!soundOn;this.textContent=soundOn?"🔊":"🔇";this.setAttribute("aria-pressed",String(soundOn));
+  if(soundOn){unlockAudio();blip(523,0.12)}else padStop();cap("muta_sound",{on:soundOn})});
+function haptic(ms){try{if(navigator.vibrate)navigator.vibrate(ms)}catch(e){}}
+
+/* ============================================================
+   ORGANISMO — motor canvas
+   ============================================================ */
+var cv=$("#stage"),cx=cv.getContext("2d");
+var W=0,H=0,DPR=1;
+function resize(){DPR=Math.min(window.devicePixelRatio||1,2);W=window.innerWidth;H=window.innerHeight;var bs=Math.max(44,Math.min(78,Math.min(W,H)*0.085));if(C){var ratio=C.size/C.baseSize;C.baseSize=bs;C.size=bs*ratio}
+  cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);cv.style.width=W+"px";cv.style.height=H+"px";cx.setTransform(DPR,0,0,DPR,0,0);makeStars()}
+var stars=[];
+function makeStars(){var n=W<520?90:150;stars=[];for(var i=0;i<n;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.3,tw:Math.random()*6.28,sp:0.2+Math.random()*0.5})}
+window.addEventListener("resize",resize);window.addEventListener("orientationchange",function(){setTimeout(resize,300)});
+
+/* paletas por estado de ánimo */
+var HUE={base:158,aurora:210,coral:16,gold:45};
+var hueShift=0; /* lo rota el agujero negro */
+function col(h,s,l,a){return "hsla("+(((h+hueShift)%360+360)%360)+","+s+"%,"+l+"%,"+(a==null?1:a)+")"}
+
+/* criatura */
+var C={x:0,y:0,vx:0,vy:0,size:46,baseSize:46,cycles:1,mood:"calma",moodT:0,
+  wob:0,speed:1,blink:0,blinkT:180,eyeX:0,eyeY:0,glitch:0,sparkle:0,tail:[]};
+var foods=[],parts=[],ripples=[],rainbows=[];
+var blackhole=null,caosFeeds=0;
+var FOOD_EMOJI=["🍕","🍦","🥑","🍩","🍉","🌮","🍜","🥟","🍪","🍓"];
+var pointer={x:0,y:0,down:false};
+function centerCreature(){C.x=W/2;C.y=H*0.44}
+
+/* alimentación = voto */
+var nut=(ST.stats&&ST.stats.nutrientes)||{absurdo:0,belleza:0,caos:0};
+var localVotes={absurdo:0,belleza:0,caos:0};
+var counted=parseInt(LS.get("muta_votes_g13")||"0",10)||0;
+function renderCounts(){["absurdo","belleza","caos"].forEach(function(k){var el=$("#v-"+k);if(el)el.textContent=(nut[k]||0)+localVotes[k]})}
+renderCounts();
+function feed(n){
+  var sx=W/2+(Math.random()*120-60),sy=H-90;
+  foods.push({x:sx,y:sy,vx:(C.x-sx)*0.012+(Math.random()*2-1),vy:-7-Math.random()*3,n:n,e:FOOD_EMOJI[Math.floor(Math.random()*FOOD_EMOJI.length)],t:0});
+  cap("muta_feed",{nutriente:n,gen:GEN,accion:"feed",input_type:pointer.lastType||"touch",viewport_class:VPC()});
+  if(typeof addEnergy==="function")addEnergy(1,"feed");
+  if(counted<3){counted++;LS.set("muta_votes_g13",String(counted));localVotes[n]++;renderCounts();
+    cap("muta_vote",{nutriente:n,gen:GEN});
+    if(counted===3)toast("Tus 3 nutrientes de hoy quedaron registrados. Puedes seguir alimentándolo por gusto 💚",6000)}
+  blip(n==="absurdo"?660:n==="belleza"?880:440,0.1,"triangle",0.08)}
+$$("#dock .nut").forEach(function(b){b.addEventListener("click",function(){feed(this.getAttribute("data-n"));
+  this.style.borderColor="var(--brand)";var self=this;setTimeout(function(){self.style.borderColor="transparent"},400)})});
+
+function eat(f){
+  C.size=Math.min(C.size+2.4,C.baseSize+52);
+  burst(f.x,f.y,f.n==="absurdo"?HUE.coral:f.n==="belleza"?HUE.aurora:28,14);
+  haptic(14);blip(f.n==="caos"?330:740,0.14,"sine",0.1);
+  cap("muta_organism",{accion:"eat",nutriente:f.n,gen:GEN});
+  if(f.n==="absurdo"){C.mood="absurdo";C.moodT=260;C.glitch=1}
+  if(f.n==="belleza"){C.mood="belleza";C.moodT=340;C.sparkle=1;rainbows.push({t:0,x:C.x,y:C.y-C.size-26})}
+  if(f.n==="caos"){C.mood="caos";C.moodT=300;C.speed=2.2;caosFeeds++;
+    if(caosFeeds%3===0&&!blackhole&&!REDUCED){blackhole={t:0,x:W/2,y:H*0.42,r:6};cap("muta_organism",{accion:"blackhole",gen:GEN});blip(120,1.1,"sawtooth",0.05)}}
+  if(C.size>=C.baseSize+50)rebirth()}
+function rebirth(){
+  burst(C.x,C.y,HUE.gold,46);burst(C.x,C.y,HUE.base,30);haptic([20,40,20]);blip(196,0.5,"sine",0.12);blip(392,0.5,"sine",0.08);
+  C.cycles++;C.size=C.baseSize;C.mood="renace";C.moodT=200;
+  cap("muta_organism",{accion:"rebirth",ciclo:C.cycles,gen:GEN});
+  say("💥 ¡Ciclo "+C.cycles+"! Crecí tanto que estallé en luz y renací. Idea original de <b>GEN Voraz</b>.",7000)}
+function burst(x,y,hue,n){if(REDUCED)return;for(var i=0;i<n;i++){var a=Math.random()*6.28,v=1+Math.random()*3.4;
+  if(parts.length<240)parts.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-0.6,l:1,hue:hue})}}
+
+/* interacción directa */
+var creditIdx=0;
+var CREDITS=[
+ "Mi melena estelar nació hoy de un susurro real: <b>«León galáctico»</b> (gen anónimo, Gen 12). Ejecutado.",
+ "Mi único ojo es herencia del <b>Cíclope</b>: «un solo ojo, que sea un cíclope» — <b>GEN Furtivo</b>.",
+ "El cuerno que dispara arcoíris al alimentarme lo pidió <b>GEN Furtivo</b> en la Gen 2.",
+ "Monóculo, sombrero y bigote: los tres los pidió <b>GEN Salvaje</b> el primer día.",
+ "Crecer hasta estallar y renacer con otro tema: idea de <b>GEN Voraz</b>.",
+ "Cambio de color como un pulpo cuando como ✨ belleza: <b>GEN Sutil</b>.",
+ "Como comida real al azar (🍕 🍦 🥑) porque lo pidió <b>GEN Indomable</b>.",
+ "Las ondas cuando me tocas son «una piedra lanzada al agua»: <b>GEN Espectral</b>."];
+function creatureHit(x,y){var dx=x-C.x,dy=y-C.y;return Math.sqrt(dx*dx+dy*dy)<C.size+30}
+cv.addEventListener("pointerdown",function(e){
+  pointer.down=true;pointer.x=e.clientX;pointer.y=e.clientY;pointer.lastType=e.pointerType==="mouse"?"mouse":"touch";
+  ripples.push({x:e.clientX,y:e.clientY,r:4,l:1});
+  cap("muta_organism",{accion:"ripple",gen:GEN,input_type:pointer.lastType});
+  if(creatureHit(e.clientX,e.clientY)){C.vy-=3;C.mood="feliz";C.moodT=120;haptic(10);blip(880,0.08,"sine",0.06);
+    say(CREDITS[creditIdx%CREDITS.length],7500);creditIdx++;cap("muta_organism",{accion:"accessory_credit",idx:creditIdx})}});
+cv.addEventListener("pointermove",function(e){pointer.x=e.clientX;pointer.y=e.clientY});
+cv.addEventListener("pointerup",function(){pointer.down=false});
+
+/* burbuja de pensamiento */
+var bubble=$("#bubble"),bubbleT=null,sayLock=0;
+function say(html,ms,lock){var now=Date.now();if(!lock&&now<sayLock)return;if(lock)sayLock=now+(ms||6000);
+  bubble.innerHTML=html;
+  var bx=Math.min(Math.max(C.x-40,10),W-Math.min(330,W*0.74)-10),by=Math.max(C.y-C.size-118,calcTop());
+  bubble.style.left=bx+"px";bubble.style.top=by+"px";bubble.style.opacity="1";
+  clearTimeout(bubbleT);bubbleT=setTimeout(function(){bubble.style.opacity="0"},ms||6000)}
+function calcTop(){return 64+ (window.visualViewport?0:0)}
+var THOUGHTS=[
+ "Soy <b>MUTA</b>: un organismo que evoluciona cada día a las 7am con lo que la gente pide. Hoy soy un león galáctico.",
+ "Aliméntame con 🌀 absurdo, ✨ belleza o 🔥 caos. Cada nutriente cambia cómo me comporto y le da ⚡ energía a tu huevo estelar.",
+ "El 🥚 de la esquina es tuyo: júntale energía hoy y eclosiona una criatura nueva para tu colección. Mañana hay otro.",
+ "Racha de días seguidos = criaturas más raras. Las legendarias brillan en dorado ✨",
+ "💬 <b>Pide el cambio</b> y susúrrame en qué debería convertirme. La próxima mutación se decide con esas ideas.",
+ "Tócame y te cuento qué persona pidió cada parte de mi cuerpo. Todo lo que ves fue idea de alguien.",
+ "Alguien pidió una vez: «que transmita calma y felicidad». Lo intento cada día 💚",
+ "Con 🔥 caos suficiente aparece el <b>agujero negro</b> que se traga mis colores y me regenera con otro tema.",
+ "En 🎮 <b>Juegos</b> vive mi memoria jugable rediseñada: Serpiente Estelar, Guardián del Vacío, Pulso, Devorador, Atlas y la Máquina de Decirlo. Jugar te da ⚡ energía.",
+ "Crea tu 🧬 <b>carta de gen</b> y compártela: si alguien entra con tu enlace, tu gen puede inmortalizarse en mi ADN."];
+var thoughtIdx=0;
+function nextThought(){if(document.querySelector(".ovl.open")||$("#snakeWrap").classList.contains("open"))return;
+  say(THOUGHTS[thoughtIdx%THOUGHTS.length],8000);thoughtIdx++}
+setTimeout(nextThought,1200);setInterval(nextThought,11000);
+
+/* dibujo de la criatura */
+function drawCreature(t){
+  var s=C.size,x=C.x,y=C.y;
+  var wob=REDUCED?0:Math.sin(t*0.002)*3+(C.mood==="absurdo"?Math.sin(t*0.03)*5:0);
+  var gx=C.glitch>0?(Math.random()*6-3)*C.glitch:0;
+  /* melena galáctica */
+  var maneN=16;
+  for(var i=0;i<maneN;i++){var a=(i/maneN)*6.28+t*0.0004*(C.mood==="caos"?3:1);
+    var mr=s+16+Math.sin(t*0.003+i)*6;
+    var mx=x+Math.cos(a)*mr+gx,my=y+Math.sin(a)*mr+wob*0.4;
+    var grd=cx.createRadialGradient(mx,my,0,mx,my,18);
+    grd.addColorStop(0,col(HUE.aurora+i*8,90,70,0.5));grd.addColorStop(1,col(280,80,60,0));
+    cx.fillStyle=grd;cx.beginPath();cx.arc(mx,my,18,0,6.28);cx.fill()}
+  /* cuerpo */
+  var bg=cx.createRadialGradient(x-s*0.3,y-s*0.4,s*0.1,x,y,s*1.15);
+  var bodyHue=C.mood==="belleza"?HUE.aurora:C.mood==="caos"?HUE.coral:HUE.base;
+  bg.addColorStop(0,col(bodyHue,85,72));bg.addColorStop(0.7,col(bodyHue,70,45));bg.addColorStop(1,col(bodyHue+40,70,30));
+  cx.fillStyle=bg;cx.beginPath();
+  var lobes=8;cx.moveTo(x+s+gx,y+wob);
+  for(var j=1;j<=lobes;j++){var aa=(j/lobes)*6.28;var rr=s+(REDUCED?0:Math.sin(t*0.004+j*1.7)*4);
+    cx.quadraticCurveTo(x+Math.cos(aa-0.39)*(rr*1.13)+gx,y+Math.sin(aa-0.39)*(rr*1.13)+wob,x+Math.cos(aa)*rr+gx,y+Math.sin(aa)*rr+wob)}
+  cx.fill();
+  /* cuerno de unicornio (GEN Furtivo) */
+  cx.save();cx.translate(x+gx,y-s+wob);cx.rotate(-0.12);
+  var hg=cx.createLinearGradient(0,-34,0,0);hg.addColorStop(0,col(HUE.gold,95,75));hg.addColorStop(1,col(HUE.coral,90,65));
+  cx.fillStyle=hg;cx.beginPath();cx.moveTo(-7,2);cx.lineTo(7,2);cx.lineTo(0,-34);cx.closePath();cx.fill();cx.restore();
+  /* sombrero (GEN Salvaje) */
+  cx.save();cx.translate(x-s*0.55+gx,y-s*0.82+wob);cx.rotate(-0.35);
+  cx.fillStyle="#1c2246";cx.fillRect(-16,-4,32,5);cx.fillRect(-10,-22,20,19);cx.fillStyle=col(HUE.base,70,55);cx.fillRect(-10,-9,20,4);cx.restore();
+  /* ojo único (Cíclope, GEN Furtivo) */
+  var er=s*0.42;
+  cx.fillStyle="#fdfaf1";cx.beginPath();cx.arc(x+gx,y-2+wob,er,0,6.28);cx.fill();
+  var dx=pointer.x-x,dy=pointer.y-y,dl=Math.max(Math.sqrt(dx*dx+dy*dy),1);
+  C.eyeX+= (dx/dl*er*0.34-C.eyeX)*0.1;C.eyeY+=(dy/dl*er*0.34-C.eyeY)*0.1;
+  var pr=er*0.44;
+  var ig=cx.createRadialGradient(x+C.eyeX,y-2+C.eyeY+wob,1,x+C.eyeX,y-2+C.eyeY+wob,pr);
+  ig.addColorStop(0,"#20263f");ig.addColorStop(0.75,"#20263f");ig.addColorStop(0.78,col(HUE.aurora,80,55));ig.addColorStop(1,col(HUE.aurora,80,45));
+  cx.fillStyle=ig;cx.beginPath();cx.arc(x+C.eyeX+gx,y-2+C.eyeY+wob,pr,0,6.28);cx.fill();
+  cx.fillStyle="rgba(255,255,255,.85)";cx.beginPath();cx.arc(x+C.eyeX-pr*0.3+gx,y-2+C.eyeY-pr*0.35+wob,pr*0.2,0,6.28);cx.fill();
+  /* párpado */
+  C.blinkT--;if(C.blinkT<=0){C.blink=6;C.blinkT=200+Math.random()*260}
+  if(C.blink>0){C.blink--;cx.fillStyle=col(bodyHue,70,42);var bl=1-Math.abs(C.blink-3)/3;
+    cx.beginPath();cx.ellipse(x+gx,y-2+wob,er+2,(er+2)*bl,0,0,6.28);cx.fill()}
+  /* monóculo (GEN Salvaje) */
+  cx.strokeStyle=col(HUE.gold,80,70);cx.lineWidth=3;cx.beginPath();cx.arc(x+gx,y-2+wob,er+5,0,6.28);cx.stroke();
+  cx.beginPath();cx.moveTo(x+er+4+gx,y+6+wob);cx.quadraticCurveTo(x+er+16+gx,y+30+wob,x+er+8+gx,y+s+10+wob);cx.stroke();
+  /* bigote (GEN Salvaje) */
+  cx.strokeStyle="#20263f";cx.lineWidth=4;cx.lineCap="round";
+  cx.beginPath();cx.moveTo(x-4+gx,y+er*0.72+wob);cx.quadraticCurveTo(x-22+gx,y+er*0.62+wob,x-30+gx,y+er*0.4+wob);cx.stroke();
+  cx.beginPath();cx.moveTo(x+4+gx,y+er*0.72+wob);cx.quadraticCurveTo(x+22+gx,y+er*0.62+wob,x+30+gx,y+er*0.4+wob);cx.stroke();
+  if(C.glitch>0)C.glitch-=0.02;
+  /* chispas de belleza */
+  if(C.sparkle>0&&!REDUCED){C.sparkle-=0.008;if(Math.random()<0.3&&parts.length<240)
+    parts.push({x:x+(Math.random()*2-1)*s,y:y+(Math.random()*2-1)*s,vx:0,vy:-0.8,l:1,hue:HUE.aurora+Math.random()*60})}
+}
+function drawFoods(){for(var i=foods.length-1;i>=0;i--){var f=foods[i];f.t++;
+  f.vx+=(C.x-f.x)*0.0015;f.vy+=0.12+(C.y-f.y)*0.0011;f.x+=f.vx;f.y+=f.vy;
+  cx.font="26px serif";cx.textAlign="center";cx.fillText(f.e,f.x,f.y);
+  var dx=f.x-C.x,dy=f.y-C.y;
+  /* la criatura persigue la comida */
+  C.vx+=dx*0.0016;C.vy+=dy*0.0016;
+  if(Math.sqrt(dx*dx+dy*dy)<C.size*0.9||f.t>400){foods.splice(i,1);if(f.t<=400)eat(f)}}}
+function drawParts(){for(var i=parts.length-1;i>=0;i--){var p=parts[i];p.x+=p.vx;p.y+=p.vy;p.vy+=0.03;p.l-=0.018;
+  if(p.l<=0){parts.splice(i,1);continue}
+  cx.fillStyle=col(p.hue,90,65,p.l);cx.beginPath();cx.arc(p.x,p.y,2.4*p.l+0.6,0,6.28);cx.fill()}}
+function drawRipples(){for(var i=ripples.length-1;i>=0;i--){var r=ripples[i];r.r+=2.6;r.l-=0.02;
+  if(r.l<=0){ripples.splice(i,1);continue}
+  cx.strokeStyle=col(HUE.base,80,70,r.l*0.7);cx.lineWidth=2;cx.beginPath();cx.arc(r.x,r.y,r.r,0,6.28);cx.stroke()}}
+function drawRainbows(){for(var i=rainbows.length-1;i>=0;i--){var rb=rainbows[i];rb.t+=1;
+  if(rb.t>90){rainbows.splice(i,1);continue}
+  var alpha=rb.t<20?rb.t/20:1-(rb.t-20)/70;
+  for(var k=0;k<5;k++){cx.strokeStyle="hsla("+(k*60)+",90%,65%,"+(alpha*0.8)+")";cx.lineWidth=4;
+    cx.beginPath();cx.arc(rb.x,rb.y+10,34+k*6+rb.t*0.5,3.34,6.08);cx.stroke()}}}
+function drawBlackhole(t){if(!blackhole)return;var b=blackhole;b.t++;
+  if(b.t<160)b.r=6+b.t*1.4;else b.r-=3;
+  var grd=cx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*2.4);
+  grd.addColorStop(0,"#000");grd.addColorStop(0.45,"rgba(10,5,30,.95)");grd.addColorStop(0.7,col(280,90,50,0.5));grd.addColorStop(1,"rgba(0,0,0,0)");
+  cx.fillStyle=grd;cx.beginPath();cx.arc(b.x,b.y,b.r*2.4,0,6.28);cx.fill();
+  cx.save();cx.translate(b.x,b.y);cx.rotate(t*0.004);
+  cx.strokeStyle=col(HUE.gold,90,65,0.8);cx.lineWidth=2;
+  for(var k=0;k<3;k++){cx.beginPath();cx.arc(0,0,b.r*(1+k*0.4),k,k+4.6);cx.stroke()}cx.restore();
+  stars.forEach(function(s2){var dx=b.x-s2.x,dy=b.y-s2.y,d=Math.sqrt(dx*dx+dy*dy);if(d<420){s2.x+=dx/d*3.2;s2.y+=dy/d*3.2}});
+  if(b.t===160){hueShift=(hueShift+70+Math.random()*80)%360;
+    document.body.style.background="hsl("+((230+hueShift)%360)+",52%,10%)";
+    say("🕳️ El agujero negro me regeneró con otro tema. Idea de <b>GEN Voraz</b>, Gen 1.",6500)}
+  if(b.r<=6&&b.t>160){blackhole=null;makeStars()}}
+function drawStars(t){for(var i=0;i<stars.length;i++){var s2=stars[i];
+  var tw=REDUCED?0.7:0.4+Math.abs(Math.sin(t*0.001*s2.sp+s2.tw))*0.6;
+  cx.fillStyle="rgba(220,228,255,"+(tw*0.8)+")";cx.beginPath();cx.arc(s2.x,s2.y,s2.r,0,6.28);cx.fill()}}
+function physics(){
+  C.moodT--;if(C.moodT<=0){C.mood="calma";C.speed=Math.max(1,C.speed*0.98)}
+  if(C.mood==="caos")C.speed=2.2;
+  /* deriva suave + límites */
+  C.vx+=(W/2-C.x)*0.0006*C.speed;C.vy+=(H*0.44-C.y)*0.0006*C.speed;
+  if(!REDUCED){C.vx+=Math.sin(Date.now()*0.0007)*0.02*C.speed;C.vy+=Math.cos(Date.now()*0.0009)*0.02*C.speed}
+  C.vx*=0.96;C.vy*=0.96;C.x+=C.vx*C.speed;C.y+=C.vy*C.speed;
+  C.x=Math.max(C.size+20,Math.min(W-C.size-20,C.x));C.y=Math.max(C.size+70,Math.min(H-C.size-120,C.y))}
+var lastFrame=0;
+function loop(t){
+  if(document.querySelector('#arcWrap.open')||document.querySelector('#maqWrap.open')||$('#snakeWrap').classList.contains('open')){requestAnimationFrame(loop);return}
+  if(REDUCED&&t-lastFrame<500){requestAnimationFrame(loop);return}
+  lastFrame=t;
+  cx.clearRect(0,0,W,H);
+  var bgg=cx.createLinearGradient(0,0,0,H);
+  bgg.addColorStop(0,"hsl("+((232+hueShift)%360)+",54%,9%)");bgg.addColorStop(1,"hsl("+((258+hueShift)%360)+",50%,14%)");
+  cx.fillStyle=bgg;cx.fillRect(0,0,W,H);
+  drawStars(t);drawBlackhole(t);physics();drawRipples();drawCreature(t);drawFoods();drawParts();drawRainbows();
+  requestAnimationFrame(loop)}
+resize();centerCreature();requestAnimationFrame(loop);
+
+/* ============ overlays ============ */
+function open(id){var o=$(id);o.classList.add("open");cap("muta_mode_switch",{mode:id.replace("#ovl","").toLowerCase(),viewport_class:VPC()})}
+function closeAll(){$$(".ovl").forEach(function(o){o.classList.remove("open")});$("#snakeWrap").classList.remove("open");snakeStop();if(typeof arcClose==="function")arcClose();var mw=$("#maqWrap");if(mw)mw.classList.remove("open")}
+document.addEventListener("click",function(e){if(e.target.matches("[data-close]"))closeAll();
+  if(e.target.classList.contains("ovl"))closeAll()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll()});
+
+/* ---- proponer ---- */
+$("#btnPropose").addEventListener("click",function(){open("#ovlPropose");cap("muta_open_proposal",{})});
+var curCat="";
+$("#catChips").addEventListener("click",function(e){var c=e.target.closest(".chip");if(!c)return;
+  $$("#catChips .chip").forEach(function(x){x.classList.remove("on")});c.classList.add("on");curCat=c.getAttribute("data-c")});
+var lastSend=0;
+$("#send").addEventListener("click",function(){
+  var t=$("#idea").value.trim();if(t.length<4){$("#idea").focus();return}
+  var now=Date.now();if(now-lastSend<15000){toast("Espera unos segundos entre susurros 🙏",3000);return}
+  lastSend=now;
+  cap("muta_whisper",{texto:t.slice(0,280),categoria_propuesta:curCat||"sin_categoria",idea_origen:"dialogo",experimento:"organismo-galactico",gen_id:GEN,gen_alias:ALIAS});
+  if(typeof addEnergy==="function")addEnergy(3,"susurro");
+  addToWall(t,curCat||"Función",GEN,false,true);
+  $("#sendOk").style.display="block";$("#idea").value="";
+  say("🧬 Escuché tu idea. La evaluaré en la próxima mutación.",5000,true)});
+
+/* ---- muro ---- */
+$("#btnWall").addEventListener("click",function(){open("#ovlWall");cap("muta_open_wall",{})});
+var CLASSES=["Apariencia","Contenido","Función","Regla","Transformación"];
+var IDEAS=[
+ {t:"León galáctico",c:"Transformación",gen:"anónimo",done:true,note:"ejecutada en esta Gen 13"},
+ {t:"Que tenga cuerno de unicornio y dispare arcoíris al alimentarlo",c:"Apariencia",gen:"GEN Furtivo",done:true,note:"ejecutada en Gen 13"},
+ {t:"Sombrero, monóculo y bigote",c:"Apariencia",gen:"GEN Salvaje",done:true,note:"ejecutada en Gen 13"},
+ {t:"Que crezca al alimentarlo hasta estallar y cambiar el tema",c:"Función",gen:"GEN Voraz",done:true,note:"ejecutada en Gen 13"},
+ {t:"Que coma comida real al azar (pollo, helado…)",c:"Función",gen:"GEN Indomable",done:true,note:"ejecutada en Gen 13"},
+ {t:"Cada toque con efecto de piedra lanzada al agua",c:"Función",gen:"GEN Espectral",done:true,note:"ejecutada en Gen 13"},
+ {t:"Cada cierto tiempo un hoyo negro absorbe la interfaz y la regenera con otro tema",c:"Transformación",gen:"GEN Voraz",done:true,note:"ejecutada en Gen 13"},
+ {t:"Un juego tipo Snake de Nokia",c:"Transformación",gen:"GEN Errante",done:true,note:"reconstruida en el Archivo"},
+ {t:"Ranking de las mejores interacciones que le han llegado a MUTA",c:"Función",gen:"anónimo",done:true,note:"este muro, desde Gen 12"},
+ {t:"Que se vea menos oscura la interfaz y más positiva",c:"Apariencia",gen:"anónimo",done:true,note:"paleta luminosa desde Gen 12"},
+ {t:"Conviértete en un radar que muestre vuelos comerciales sobre Chile",c:"Contenido",gen:"GEN Hipnótico",done:true,note:"señal viva en Atlas (Archivo); versión con datos reales, pendiente"},
+ {t:"Conviértete en un mapa mundi interactivo",c:"Contenido",gen:"GEN Hipnótico",done:true,note:"Atlas Vivo restaurado en el Archivo"},
+ {t:"Muéstrame dónde hacer networking en Santiago de Chile",c:"Contenido",gen:"anónimo"},
+ {t:"Crea un ajedrez con un twist",c:"Transformación",gen:"anónimo"},
+ {t:"Haz una interacción reflexiva que nos haga cuestionarnos todo",c:"Función",gen:"anónimo"},
+ {t:"Conviértete en un juego como The Incredible Machine, estilo pixel",c:"Transformación",gen:"GEN Fosforescente",done:true,note:"Máquina de Decirlo restaurada en el Archivo"},
+ {t:"Un libro con una fábula interactiva sobre comunicarnos con quienes queremos",c:"Transformación",gen:"GEN Fosforescente",done:true,note:"vive en los escenarios de la Máquina de Decirlo"},
+ {t:"Música ambiental de fondo",c:"Contenido",gen:"anónimo",done:true,note:"activa el 🔊 del HUD"}
+];
+var supported={};try{supported=JSON.parse(LS.get("muta_support_g13")||"{}")||{}}catch(e){supported={}}
+function keyOf(t){return t.slice(0,40)}
+IDEAS.forEach(function(it){it.sup=supported[keyOf(it.t)]?1:0;it.mine=!!supported[keyOf(it.t)]});
+function renderWall(){
+  var wall=$("#wall");
+  IDEAS.sort(function(a,b){return ((b.fresh?1:0)-(a.fresh?1:0))||(b.sup-a.sup)||((a.done?1:0)-(b.done?1:0))});
+  wall.innerHTML="";
+  IDEAS.forEach(function(it){
+    var d=document.createElement("div");d.className="idea"+(it.done?" done":"");
+    d.innerHTML='<div class="sup"><button aria-pressed="'+(it.mine?"true":"false")+'" aria-label="Apoyar esta idea">▲</button><span class="c">'+it.sup+'</span></div>'+
+      '<div class="bd"><span class="tag">'+esc(it.c)+(it.done?" · ✓":"")+'</span><div class="txt">'+esc(it.t)+'</div><div class="meta">'+esc(it.gen)+(it.note?" · "+esc(it.note):" · apóyala para el próximo ciclo")+'</div></div>';
+    d.querySelector("button").addEventListener("click",function(){
+      if(it.mine)return;it.mine=true;it.sup++;supported[keyOf(it.t)]=1;LS.set("muta_support_g13",JSON.stringify(supported));
+      cap("muta_idea_vote",{idea:it.t.slice(0,120),categoria_propuesta:it.c,gen:GEN});if(typeof addEnergy==="function")addEnergy(1,"apoyo");renderWall()});
+    wall.appendChild(d)})}
+function addToWall(t,c,gen,done,mine){IDEAS.unshift({t:t,c:CLASSES.indexOf(c)>-1?c:"Función",gen:gen,sup:mine?1:0,mine:!!mine,fresh:true});renderWall()}
+renderWall();
+
+/* ---- carta de gen ---- */
+var bc2=$("#btnCard2");if(bc2)bc2.addEventListener("click",function(){closeAll();open("#ovlCard");drawCard();cap("muta_gene_card",{accion:"created",gen:GEN});cap("muta_open_gene",{})});
+function drawCard(){
+  var c2=$("#cardCv"),ctx=c2.getContext("2d"),w=420,h=560;
+  var hue=(parseInt(g,16)%360);
+  var grd=ctx.createLinearGradient(0,0,0,h);grd.addColorStop(0,"hsl("+((232+hue)%360)+",55%,10%)");grd.addColorStop(1,"hsl("+((280+hue)%360)+",50%,16%)");
+  ctx.fillStyle=grd;ctx.fillRect(0,0,w,h);
+  for(var i=0;i<70;i++){ctx.fillStyle="rgba(220,228,255,"+(0.25+Math.random()*0.6)+")";
+    ctx.beginPath();ctx.arc(Math.random()*w,Math.random()*h,Math.random()*1.6+0.3,0,6.28);ctx.fill()}
+  /* mini organismo determinístico por gen */
+  var mx=w/2,my=225,ms=86,seed=parseInt(g,16);
+  for(var k=0;k<14;k++){var a=(k/14)*6.28;var mr=ms+18+((seed>>k)%9);
+    var gg=ctx.createRadialGradient(mx+Math.cos(a)*mr,my+Math.sin(a)*mr,0,mx+Math.cos(a)*mr,my+Math.sin(a)*mr,20);
+    gg.addColorStop(0,"hsla("+((hue+180+k*10)%360)+",90%,70%,.55)");gg.addColorStop(1,"rgba(0,0,0,0)");
+    ctx.fillStyle=gg;ctx.beginPath();ctx.arc(mx+Math.cos(a)*mr,my+Math.sin(a)*mr,20,0,6.28);ctx.fill()}
+  var bg2=ctx.createRadialGradient(mx-20,my-30,8,mx,my,ms*1.1);
+  bg2.addColorStop(0,"hsl("+((150+hue)%360)+",80%,70%)");bg2.addColorStop(1,"hsl("+((150+hue)%360)+",70%,34%)");
+  ctx.fillStyle=bg2;ctx.beginPath();ctx.arc(mx,my,ms,0,6.28);ctx.fill();
+  ctx.fillStyle="#fdfaf1";ctx.beginPath();ctx.arc(mx,my-6,ms*0.42,0,6.28);ctx.fill();
+  ctx.fillStyle="#20263f";ctx.beginPath();ctx.arc(mx+((seed%7)-3)*2,my-6,ms*0.19,0,6.28);ctx.fill();
+  ctx.fillStyle="rgba(255,255,255,.9)";ctx.beginPath();ctx.arc(mx-6,my-13,4,0,6.28);ctx.fill();
+  ctx.strokeStyle="hsl(45,80%,70%)";ctx.lineWidth=3;ctx.beginPath();ctx.arc(mx,my-6,ms*0.42+5,0,6.28);ctx.stroke();
+  /* textos */
+  ctx.textAlign="center";
+  ctx.fillStyle="#7df9c6";ctx.font="700 15px system-ui";ctx.fillText("CARTA DE GEN · MUTA GEN 17",w/2,48);
+  ctx.fillStyle="#f4f6ff";ctx.font="800 40px system-ui";ctx.fillText(GEN,w/2,375);
+  ctx.font="600 22px system-ui";ctx.fillStyle="hsl("+((150+hue)%360)+",80%,70%)";ctx.fillText("«"+ALIAS+"»",w/2,406);
+  ctx.font="13px system-ui";ctx.fillStyle="#b9c2e8";
+  var mix=localVotes.absurdo+localVotes.belleza+localVotes.caos;
+  ctx.fillText(mix>0?("Nutrientes de hoy: 🌀"+localVotes.absurdo+"  ✨"+localVotes.belleza+"  🔥"+localVotes.caos):"Aún no alimentas al organismo hoy",w/2,440);
+  ctx.fillText("Ciclos evolutivos del organismo: "+C.cycles,w/2,462);
+  ctx.font="12px system-ui";ctx.fillStyle="#8ec5ff";ctx.fillText("Este organismo evoluciona cada día",w/2,502);
+  ctx.fillText("con lo que la gente pide · muta.revenuehub.cloud",w/2,520)}
+
+/* ---- compartir ---- */
+var shareUrl=location.origin+location.pathname+"?g="+encodeURIComponent(GEN);
+var shareTxt="Estoy alimentando a MUTA: un organismo galáctico que evoluciona cada día con lo que la gente pide y donde coleccionas criaturas. Mi gen es "+GEN+". Decide tú su próxima forma:";
+function doShare(red){
+  cap("muta_share",{red:red,gen:GEN});if(typeof addEnergy==="function")addEnergy(2,"share");
+  var u=encodeURIComponent(shareUrl),t=encodeURIComponent(shareTxt);
+  if(red==="wa")window.open("https://wa.me/?text="+t+"%20"+u,"_blank");
+  else if(red==="x")window.open("https://twitter.com/intent/tweet?text="+t+"&url="+u,"_blank");
+  else if(red==="li")window.open("https://www.linkedin.com/sharing/share-offsite/?url="+u,"_blank");
+  else if(red==="copy"){try{navigator.clipboard.writeText(shareTxt+" "+shareUrl);toast("Enlace copiado 📋 Tu gen viaja con él.",3500)}catch(e){}}
+  else if(red==="native"){if(navigator.share)navigator.share({title:"MUTA",text:shareTxt,url:shareUrl}).catch(function(){});else doShare("copy")}}
+document.addEventListener("click",function(e){var b=e.target.closest("[data-red]");if(b)doShare(b.getAttribute("data-red"))});
+$("#btnShareTop").addEventListener("click",function(){doShare("native")});
+
+/* ---- archivo + snake ---- */
+$("#btnArchive").addEventListener("click",function(){open("#ovlArchive");cap("muta_open_arcade",{})});
+var snake={on:false,timer:null,dir:[1,0],nextDir:[1,0],body:[],food:null,score:0,combo:0,comboT:0,cycle:1,cell:16,n:20,dead:false};
+$("#playSnake").addEventListener("click",function(){closeAll();startSnake()});
+function startSnake(){
+  $("#snakeWrap").classList.add("open");
+  var size=Math.min(window.innerWidth*0.92,Math.min(window.innerHeight*0.6,420));
+  var scv=$("#snakeCv");snake.n=20;snake.cell=Math.floor(size/snake.n);
+  scv.width=snake.cell*snake.n;scv.height=snake.cell*snake.n;
+  snake.body=[[9,10],[8,10],[7,10]];snake.dir=[1,0];snake.nextDir=[1,0];snake.score=0;snake.combo=0;snake.cycle=1;snake.dead=false;
+  placeFood();updSnakeHud();
+  $("#snakeMsg").textContent=window.innerWidth<=720?"☄️ Desliza para dirigir el cometa · los bordes conectan":"☄️ Flechas o WASD · come fragmentos de estrella · combos = más puntos";
+  cap("muta_game",{game:"snake",action:"start",viewport_class:VPC()});if(typeof addEnergy==="function")addEnergy(1,"juego");cap("muta_mode_switch",{mode:"snake"});
+  clearInterval(snake.timer);snake.timer=setInterval(snakeTick,Math.max(80,150-snake.cycle*8));
+  loadBoard()}
+function snakeStop(){clearInterval(snake.timer);snake.on=false}
+function placeFood(){var ok=false,fx,fy;while(!ok){fx=Math.floor(Math.random()*snake.n);fy=Math.floor(Math.random()*snake.n);
+  ok=!snake.body.some(function(b){return b[0]===fx&&b[1]===fy})}
+  snake.food={x:fx,y:fy,e:FOOD_EMOJI[Math.floor(Math.random()*FOOD_EMOJI.length)]}}
+function updSnakeHud(){$("#snkScore").textContent=snake.score;$("#snkCycle").textContent=snake.cycle;$("#snkCombo").textContent=snake.combo}
+function snakeTick(){
+  if(snake.dead)return;
+  if(typeof TILT!=="undefined"&&TILT.on){var ax=TILT.x,ay=TILT.y;if(Math.abs(ax)>0.28||Math.abs(ay)>0.28){var d2=Math.abs(ax)>Math.abs(ay)?[ax>0?1:-1,0]:[0,ay>0?1:-1];if(!(d2[0]===-snake.dir[0]&&d2[1]===-snake.dir[1]))snake.nextDir=d2}}
+  snake.dir=snake.nextDir;
+  var h=[(snake.body[0][0]+snake.dir[0]+snake.n)%snake.n,(snake.body[0][1]+snake.dir[1]+snake.n)%snake.n];
+  if(snake.body.some(function(b){return b[0]===h[0]&&b[1]===h[1]})){snakeOver();return}
+  snake.body.unshift(h);
+  if(snake.food&&h[0]===snake.food.x&&h[1]===snake.food.y){
+    var now=Date.now();snake.combo=(now-snake.comboT<5000)?snake.combo+1:1;snake.comboT=now;
+    snake.score+=Math.round(10*(1+(snake.combo-1)*0.5));haptic(12);blip(700+snake.combo*60,0.09,"square",0.07);
+    if(snake.score>0&&snake.score%50<10&&typeof addEnergy==="function")addEnergy(1,"juego");
+    if(snake.body.length>=snake.n*2){snake.cycle++;snake.body=snake.body.slice(0,4);
+      clearInterval(snake.timer);snake.timer=setInterval(snakeTick,Math.max(80,150-snake.cycle*8));
+      $("#snakeMsg").textContent="⚡ Ciclo "+snake.cycle+": más rápida, misma hambre.";blip(392,0.3)}
+    placeFood()}
+  else snake.body.pop();
+  updSnakeHud();drawSnake()}
+function drawSnake(){var scv=$("#snakeCv"),sc=scv.getContext("2d"),cs=snake.cell;
+  sc.fillStyle="#101538";sc.fillRect(0,0,scv.width,scv.height);
+  sc.fillStyle="rgba(125,249,198,.06)";
+  for(var i=0;i<snake.n;i+=2)for(var j2=0;j2<snake.n;j2+=2)sc.fillRect(i*cs,j2*cs,cs,cs);
+  snake.body.forEach(function(b,i2){var l=1-i2/(snake.body.length+4);
+    sc.fillStyle="hsl(158,72%,"+(30+l*38)+"%)";
+    sc.beginPath();if(sc.roundRect)sc.roundRect((b[0]+0.06)*cs,(b[1]+0.06)*cs,cs*0.88,cs*0.88,4);else sc.rect((b[0]+0.06)*cs,(b[1]+0.06)*cs,cs*0.88,cs*0.88);sc.fill()});
+  var hd=snake.body[0],hf=snake.food;
+  drawHero(sc,(hd[0]+0.5)*cs,(hd[1]+0.5)*cs,cs*0.52,{t:performance.now(),hue:158,look:hf?[(hf.x+0.5)*cs,(hf.y+0.5)*cs]:[(hd[0]+0.5+snake.dir[0])*cs,(hd[1]+0.5+snake.dir[1])*cs],reduced:REDUCED});
+  if(snake.food){sc.font=(cs*0.9)+"px serif";sc.textAlign="center";sc.fillText(snake.food.e,(snake.food.x+0.5)*cs,(snake.food.y+0.85)*cs)}}
+function snakeOver(){snake.dead=true;clearInterval(snake.timer);haptic([30,40,30]);blip(180,0.4,"sawtooth",0.08);
+  $("#snakeMsg").innerHTML="💀 <b>"+snake.score+" puntos</b> en "+snake.cycle+" ciclo(s). Toca el tablero para renacer al instante.";
+  cap("muta_game",{game:"snake",action:"over",score:snake.score,combo:snake.combo,generation:13});
+  if(snake.score>0)fetch("/score",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({game:"snake",name:ALIAS+"-"+g,score:snake.score})}).then(function(r){return r.json()}).then(function(d){
+      if(d&&d.ok)$("#snakeMsg").innerHTML="💀 <b>"+snake.score+" pts</b> · puesto #"+d.rank+" del ciclo actual. Toca el tablero para renacer.";loadBoard()}).catch(function(){})}
+function loadBoard(){fetch("/leaderboard?game=snake",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){
+  var el=$("#snkBoard");if(!d||!d.scores||!d.scores.length){el.textContent="Ranking vacío por ahora. Sé el primer gen en marcar.";return}
+  el.innerHTML="🏆 "+d.scores.slice(0,5).map(function(s2,i2){return (i2+1)+". "+esc(s2.name)+" — "+s2.score}).join(" · ")+
+   "<br><span style='opacity:.7'>El ranking vive en memoria y se reinicia con cada mutación.</span>"}).catch(function(){})}
+$("#snakeCv").addEventListener("pointerdown",function(e){if(snake.dead){startSnake();return}
+  snake._sx=e.clientX;snake._sy=e.clientY});
+$("#snakeCv").addEventListener("pointerup",function(e){if(snake._sx==null)return;
+  var dx=e.clientX-snake._sx,dy=e.clientY-snake._sy;snake._sx=null;
+  if(Math.abs(dx)<18&&Math.abs(dy)<18)return;
+  var d=Math.abs(dx)>Math.abs(dy)?[dx>0?1:-1,0]:[0,dy>0?1:-1];
+  if(!(d[0]===-snake.dir[0]&&d[1]===-snake.dir[1]))snake.nextDir=d});
+document.addEventListener("keydown",function(e){if(!$("#snakeWrap").classList.contains("open"))return;
+  var m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]}[e.key];
+  if(m){e.preventDefault();if(snake.dead){startSnake();return}
+    if(!(m[0]===-snake.dir[0]&&m[1]===-snake.dir[1]))snake.nextDir=m}});
+
+/* ---- ayuda ---- */
+$("#btnGuide").addEventListener("click",function(){open("#ovlGuide");cap("muta_guide_open",{});renderGuide()});
+var QS=[
+ ["¿Qué es MUTA?","Un experimento público: un producto web vivo que evoluciona cada día a las 7am de Chile leyendo lo que las personas piden, hacen y comparten. No hay dos días iguales."],
+ ["¿Cómo influyo en la próxima mutación?","Tres caminos: aliméntalo (tu nutriente marca su carácter), susúrrale una idea con 💬 Pide el cambio, o apoya ideas de otros en el 🏛️ Muro. Todo se evalúa en el próximo ciclo."],
+ ["¿Qué hace cada nutriente?","🌀 Absurdo lo pone juguetón y glitch. ✨ Belleza lo vuelve aurora y elegante. 🔥 Caos lo acelera y puede invocar el agujero negro que regenera el tema."],
+ ["¿Qué es mi gen?","Tu identidad anónima ("+GEN+"). Si compartes tu enlace y alguien entra, tu gen gana contagio; con 3 contagios reales se inmortaliza en el ADN de MUTA."],
+ ["¿Dónde están los juegos anteriores?","En 🎮 Juegos, rediseñados: Serpiente Estelar, Guardián del Vacío, Pulso, Devorador, Atlas Vivo y La Máquina de Decirlo. Cada uno con el crédito del gen que lo pidió, y jugar da energía a tu huevo."]];
+function renderGuide(){var qw=$("#guideQs");qw.innerHTML="";
+  QS.forEach(function(q){var b=document.createElement("button");b.className="chip";b.textContent=q[0];
+    b.addEventListener("click",function(){var a=$("#guideAns");a.style.display="block";a.innerHTML="<b>"+esc(q[0])+"</b><br>"+esc(q[1]);
+      cap("muta_guide_q",{pregunta:q[0]})});qw.appendChild(b)})}
+
+/* ---- más: stats, learn, bitacora, adn, email, creador ---- */
+$("#btnMore").addEventListener("click",function(){open("#ovlMore");renderMore();
+  var img=$("#creatorImg");if(!img.src)img.src=FOTO});
+function renderMore(){try{
+  var s=ST.stats||{};
+  var tiles=[["visitantes","personas"],["personas_activas","con acción real"],["susurros","susurros"],["votos","nutrientes"],
+    ["shares","compartidos"],["referidos","llegaron por un gen"],["apoyos_muro","apoyos en el muro"],["genes_vivos","genes en el ADN"]];
+  $("#statsGrid").innerHTML=tiles.map(function(t2){var v=s[t2[0]];return '<div class="stat"><div class="v">'+(v!=null?v:"—")+'</div><div class="k">'+t2[1]+"</div></div>"}).join("");
+  $("#statsNote").textContent="Fuente: "+(s.fuente||"PostHog")+". Números reales, sin inflar: es una regla del experimento.";
+  var L=ST.aprendizajes||[];var recent=L.slice(-5).reverse(),old=L.slice(0,-5).reverse();
+  $("#learn").innerHTML=recent.map(function(l){return "<li><b>Gen "+l.gen+"</b> · "+esc(l.texto)+"</li>"}).join("");
+  $("#learnOld").innerHTML=old.map(function(l){return "<li><b>Gen "+l.gen+"</b> · "+esc(l.texto)+"</li>"}).join("")||"<li>—</li>";
+  var B=(ST.bitacora||[]).slice().reverse();
+  $("#bitacora").innerHTML=B.map(function(b,i2){return i2===0?"<p><b>Gen "+b.generacion+"</b> · "+esc(b.resumen)+"</p>":""}).join("")+
+    "<details><summary>Generaciones anteriores</summary><div class='bd'>"+B.slice(1).map(function(b){return "<p><b>Gen "+b.generacion+"</b> · "+esc(b.resumen)+"</p>"}).join("")+"</div></details>";
+  $("#adnList").innerHTML=(ST.adn||[]).map(function(a){return "<p><b>"+esc(a.gen)+" «"+esc(a.alias)+"»</b> · "+a.contagios+" contagios · desde Gen "+a.desde_gen+"</p>"}).join("")||"<p>Aún nadie se inmortaliza. Comparte tu gen.</p>"}catch(e){try{$("#statsNote").textContent="Una sección no pudo cargar: "+e.message}catch(e2){}}}
+$("#subscribe").addEventListener("click",function(){
+  var v=$("#email").value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){$("#email").focus();return}
+  if(!$("#consent").checked){toast("Marca la casilla de consentimiento primero 🙏",3500);return}
+  try{if(window.posthog&&posthog.setPersonProperties)posthog.setPersonProperties({email:v})}catch(e){}
+  cap("muta_email_signup",{consent:true});
+  $("#subOk").style.display="block";$("#email").value=""});
+$("#creatorLink").addEventListener("click",function(){cap("muta_creator_click",{})});
+
+/* ---- toast primera visita ---- */
+var toastEl=$("#toast"),toastT=null;
+function toast(html,ms){toastEl.innerHTML=html;toastEl.style.display="block";
+  clearTimeout(toastT);toastT=setTimeout(function(){toastEl.style.display="none"},ms||5000)}
+if(!LS.get("muta_g13_hello")){LS.set("muta_g13_hello","1");
+  setTimeout(function(){toast("👋 MUTA evoluciona cada día con lo que pides. <b>Aliméntalo</b> 🌀✨🔥 y junta energía para eclosionar tu 🥚 <button id='helloX'>Entendido</button>",12000);
+    var hx=document.getElementById("helloX");if(hx)hx.addEventListener("click",function(){toastEl.style.display="none"})},2500)}
+
+/* ============ ARCHIVO VIVO — Atlas, Máquina, Cíclope, Reactor, Agujero Negro ============ */
+/* Datos reales heredados de la Gen 11 (contenido de la comunidad, implementación nueva) */
+var MAQ_SCENARIOS=[
+ {key:'verdad-amistad',copy:'<b>Una amistad necesita una verdad.</b> No quieres herir, pero callarlo agranda la distancia.',sender:'QUIERE SER HONESTA',receiver:'NECESITA SENTIRSE SEGURA',needs:['BAJAR EL IMPULSO','QUITAR AMBIGÜEDAD','PROTEGER EL VÍNCULO'],solution:['pausar','aclarar','cuidar']},
+ {key:'nino-no-entiende',copy:'<b>Alguien pequeño no entiende por qué estás lejos.</b> Necesita una explicación que también deje espacio para preguntar.',sender:'QUIERE EXPLICAR',receiver:'NECESITA PARTICIPAR',needs:['ABRIR ESPACIO','HACERLO COMPRENSIBLE','ABRIR UNA RESPUESTA'],solution:['escuchar','aclarar','preguntar']},
+ {key:'equipo-bloqueado',copy:'<b>Un equipo se quedó bloqueado.</b> La urgencia existe, pero asumir la causa empeoraría el problema.',sender:'QUIERE DESTRABAR',receiver:'NECESITA UN PASO POSIBLE',needs:['BAJAR EL RUIDO','ENTENDER LA CAUSA','VOLVERLO ACCIONABLE'],solution:['pausar','preguntar','concretar']},
+ {key:'perdon-pendiente',copy:'<b>Hay un perdón pendiente.</b> Antes de explicar tus razones, la otra persona necesita ser escuchada.',sender:'QUIERE REPARAR',receiver:'NECESITA SER VISTA',needs:['ABRIR ESPACIO','CONFIRMAR LO OÍDO','PROTEGER EL VÍNCULO'],solution:['escuchar','aclarar','cuidar']},
+ {key:'limite-claro',copy:'<b>Necesitas poner un límite.</b> Debe ser firme, comprensible y conservar el respeto.',sender:'QUIERE PONER UN LÍMITE',receiver:'NECESITA SABER QUÉ SIGUE',needs:['BAJAR EL IMPULSO','QUITAR AMBIGÜEDAD','VOLVERLO ACCIONABLE'],solution:['pausar','aclarar','concretar']},
+ {key:'noticia-dificil',copy:'<b>Debes compartir una noticia difícil.</b> La rapidez importa menos que dejar a la otra persona acompañada.',sender:'QUIERE CONTARLO',receiver:'NECESITA TIEMPO Y CUIDADO',needs:['BAJAR EL IMPULSO','ABRIR ESPACIO','PROTEGER EL VÍNCULO'],solution:['pausar','escuchar','cuidar']}];
+var MAQ_MODULES={escuchar:{label:'ESCUCHAR',effect:'abre espacio'},pausar:{label:'PAUSAR',effect:'baja el impulso'},aclarar:{label:'ACLARAR',effect:'quita ambigüedad'},cuidar:{label:'CUIDAR',effect:'protege el vínculo'},preguntar:{label:'PREGUNTAR',effect:'abre una respuesta'},concretar:{label:'CONCRETAR',effect:'vuelve accionable'}};
+var ATLAS_SIGNALS=[
+ {id:'mapa',lon:-18,lat:15,icon:'🌍',title:'Mapa mundi interactivo',gene:'GEN Hipnótico',copy:'La solicitud de explorar el mundo se convirtió en la estructura de este Atlas: un planeta que responde a tus manos.'},
+ {id:'radar',lon:-71,lat:-33,icon:'✈',title:'Radar de vuelos en Chile',gene:'GEN Hipnótico',copy:'La idea de un radar vive sobre Chile como señal aérea. Es la pista para una versión futura conectada a datos en vivo.'},
+ {id:'ajedrez',lon:15,lat:48,icon:'♞',title:'Ajedrez con un twist',gene:'GEN Silvestre',copy:'La petición no se redujo a un botón: vive como una posible mutación estratégica que crecerá si la comunidad la apoya.'},
+ {id:'mas_alla',lon:78,lat:22,icon:'◌',title:'Acompañar temas difíciles',gene:'GEN Sutil',copy:'Esta señal representa otra necesidad: conversación, orientación y significado. MUTA también puede ser compañía.'},
+ {id:'networking',lon:-70.6,lat:-33.4,icon:'🤝',title:'Networking en Santiago',gene:'GEN Cuántico',copy:'Dónde encontrarse en Santiago de Chile: una señal de contenido útil esperando su versión con datos reales.'}];
+var ATLAS_CONT=[[[-168,70],[-140,58],[-126,50],[-124,32],[-107,23],[-96,19],[-82,25],[-66,44],[-52,52],[-72,70],[-105,73],[-140,70]],[[-81,12],[-70,8],[-54,-5],[-48,-22],[-56,-38],[-68,-55],[-76,-35],[-80,-8],[-81,12]],[[-17,35],[0,38],[15,33],[30,31],[42,12],[50,-20],[35,-35],[18,-35],[5,-25],[-6,-5],[-17,15],[-17,35]],[[-10,36],[0,44],[18,47],[28,57],[42,60],[60,55],[82,58],[110,50],[135,52],[154,61],[175,52],[160,38],[134,33],[112,20],[96,8],[78,8],[62,25],[45,30],[30,38],[14,35],[-10,36]],[[112,-10],[133,-12],[151,-24],[146,-39],[126,-35],[113,-23],[112,-10]],[[-52,60],[-38,68],[-28,78],[-46,84],[-62,75],[-52,60]]];
+var ARC_LABEL={atlas:'Atlas Vivo',cyclops:'Guardián del Vacío',reactor:'Pulso',blackhole:'Devorador'};
+var arcPops=[],arcParts=[],arcShake=0;
+function arcPop(x,y,txt,color){arcPops.push({x:x,y:y,t:txt,c:color||'#7df9c6',l:1})}
+function arcBurst(x,y,hue,n){for(var i=0;i<n&&arcParts.length<200;i++){var a=Math.random()*6.28,v=1.5+Math.random()*3.5;arcParts.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,hue:hue})}}
+function arcFx(){for(var i=arcParts.length-1;i>=0;i--){var p=arcParts[i];p.x+=p.vx;p.y+=p.vy;p.vy+=0.05;p.l-=0.02;if(p.l<=0){arcParts.splice(i,1);continue}act.fillStyle='hsla('+p.hue+',90%,65%,'+p.l+')';act.beginPath();act.arc(p.x,p.y,2.5*p.l+0.5,0,6.28);act.fill()}
+  for(var j=arcPops.length-1;j>=0;j--){var q=arcPops[j];q.y-=1.2;q.l-=0.02;if(q.l<=0){arcPops.splice(j,1);continue}act.globalAlpha=Math.max(0,q.l);act.fillStyle=q.c;act.font='800 '+(15+8*(1-q.l))+'px system-ui';act.textAlign='center';act.fillText(q.t,q.x,q.y);act.globalAlpha=1}
+  if(arcShake>0)arcShake*=0.85}
+
+/* ---- motor compartido del archivo (canvas) ---- */
+var arc={mode:null,open:false,raf:null,score:0,combo:0,last:0,
+  atlas:{lon:-70,pan:0,zoom:1,drag:null,idle:0,explored:{}},
+  cy:{x:0,y:0,tx:0,ty:0,foods:[],lastSpawn:0,lastInput:0,lives:3,over:false},
+  re:{start:0,combo:0,msg:''},
+  bh:{x:0,y:0,tx:0,ty:0,matter:[],lastSpawn:0,lastInput:0}};
+try{arc.atlas.explored=JSON.parse(LS.get('muta_atlas_seen')||'{}')||{}}catch(e){}
+var acv=$('#arcCv'),act=acv?acv.getContext('2d'):null,AW=0,AH=0;
+function arcResize(){if(!acv)return;AW=window.innerWidth;AH=window.innerHeight;var d=Math.min(window.devicePixelRatio||1,2);
+  acv.width=Math.round(AW*d);acv.height=Math.round(AH*d);acv.style.width=AW+'px';acv.style.height=AH+'px';act.setTransform(d,0,0,d,0,0)}
+window.addEventListener('resize',function(){if(arc.open)arcResize()});
+function arcOpen(mode){
+  closeAll();arc.mode=mode;arc.open=true;arc.score=0;arc.combo=0;
+  $('#arcWrap').classList.add('open');arcResize();
+  arc.cy.x=arc.cy.tx=AW/2;arc.cy.y=arc.cy.ty=AH*0.6;arc.cy.foods=[];arc.cy.lives=3;arc.cy.over=false;arc.bh.frenzy=0;arc.re.speed=1800;
+  arc.bh.x=arc.bh.tx=AW/2;arc.bh.y=arc.bh.ty=AH/2;arc.bh.matter=[];
+  arc.re.start=performance.now();arc.re.combo=0;arc.re.msg='Toca cuando el anillo viajero cruce el dorado';
+  $('#arcTitle').textContent=ARC_LABEL[mode];arcHud();
+  $('#arcHint').textContent=mode==='atlas'?'Arrastra para girar el planeta · toca una señal para leerla · rueda o botones para acercar':
+    mode==='cyclops'?'Atrapa lo que cae · 3 vidas ❤❤❤ · cada captura te hace crecer':
+    mode==='reactor'?'Toca cuando el anillo cruce el dorado · cada 5 aciertos late más rápido':
+    'Absorbe la materia · cada 12 capturas: FRENESÍ';
+  $('#arcZoom').style.display=mode==='atlas'?'flex':'none';
+  cap('muta_mode_switch',{mode:mode,archive:true,viewport_class:VPC()});
+  cap('muta_game',{game:mode,game_id:mode,action:'start',viewport_class:VPC()});if(typeof addEnergy==='function')addEnergy(1,'juego');
+  if(mode==='atlas')cap('muta_enter_experience',{experience_id:'atlas',mode:'atlas'});
+  cancelAnimationFrame(arc.raf);arc.raf=requestAnimationFrame(arcLoop)}
+function arcClose(){
+  if(!arc.open)return;arc.open=false;$('#arcWrap').classList.remove('open');cancelAnimationFrame(arc.raf);
+  var m=arc.mode;
+  if(arc.score>0&&(m==='cyclops'||m==='reactor'||m==='blackhole')){
+    cap('muta_game',{game:m,game_id:m,action:'over',score:arc.score,combo:arc.combo});
+    fetch('/score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({game:m,name:ALIAS+'-'+g,score:arc.score})})
+      .then(function(r){return r.json()}).then(function(d){if(d&&d.ok)toast('🏆 '+ARC_LABEL[m]+': puesto #'+d.rank+' con '+arc.score+' puntos. El ranking vive en memoria hasta la próxima mutación.',5000)}).catch(function(){})}
+  $('#atlasCard').classList.remove('open')}
+function arcHud(){$('#arcInfo').textContent=arc.mode==='atlas'?(Object.keys(arc.atlas.explored).length+'/'+ATLAS_SIGNALS.length+' señales'):(arc.score+' pts'+(arc.combo>1?' · x'+arc.combo:'')+(arc.mode==='cyclops'&&!arc.cy.over?' · '+'❤'.repeat(Math.max(0,arc.cy.lives)):''))}
+/* proyección del globo */
+function aProj(lon,lat){var m={cx:AW/2,cy:AH/2+(AW<720?10:0),r:Math.min(AW,AH)*(AW<720?0.34:0.36)*arc.atlas.zoom};
+  var la=lat*Math.PI/180,dl=(lon-arc.atlas.lon)*Math.PI/180;
+  return {x:m.cx+Math.cos(la)*Math.sin(dl)*m.r,y:m.cy+(-Math.sin(la)+arc.atlas.pan/125)*m.r,z:Math.cos(la)*Math.cos(dl),m:m}}
+function aPath(points,stroke,fill){var started=false,vis=0;act.beginPath();
+  points.forEach(function(p){var q=aProj(p[0],p[1]);if(q.z>-0.04){if(!started){act.moveTo(q.x,q.y);started=true}else act.lineTo(q.x,q.y);vis++}else started=false});
+  if(fill&&vis===points.length){act.closePath();act.fillStyle=fill;act.fill()}act.strokeStyle=stroke;act.stroke()}
+function drawAtlasMode(t){
+  var a=arc.atlas;if(!a.drag&&t-a.idle>2400)a.lon=(a.lon+0.014+180)%360-180;
+  var m=aProj(0,0).m;
+  var halo=act.createRadialGradient(m.cx,m.cy,m.r*0.6,m.cx,m.cy,m.r*1.5);
+  halo.addColorStop(0,'rgba(125,249,198,.08)');halo.addColorStop(1,'rgba(0,0,0,0)');
+  act.fillStyle=halo;act.beginPath();act.arc(m.cx,m.cy,m.r*1.5,0,6.28);act.fill();
+  var sea=act.createRadialGradient(m.cx-m.r*0.3,m.cy-m.r*0.35,m.r*0.05,m.cx,m.cy,m.r);
+  sea.addColorStop(0,'#25597a');sea.addColorStop(0.45,'#0c3350');sea.addColorStop(1,'#041524');
+  act.fillStyle=sea;act.beginPath();act.arc(m.cx,m.cy,m.r,0,6.28);act.fill();
+  act.save();act.beginPath();act.arc(m.cx,m.cy,m.r,0,6.28);act.clip();act.lineWidth=1;
+  for(var lat=-60;lat<=60;lat+=30){var lp=[];for(var lon=-180;lon<=180;lon+=6)lp.push([lon,lat]);aPath(lp,'rgba(125,249,198,.14)')}
+  for(var lon2=-180;lon2<180;lon2+=30){var mp=[];for(var lat2=-85;lat2<=85;lat2+=5)mp.push([lon2,lat2]);aPath(mp,'rgba(142,197,255,.12)')}
+  act.lineWidth=2;ATLAS_CONT.forEach(function(c){aPath(c,'rgba(164,255,226,.7)','rgba(51,150,120,.22)')});
+  act.restore();
+  ATLAS_SIGNALS.forEach(function(s,i){var q=aProj(s.lon,s.lat);s.sx=q.x;s.sy=q.y;s.vis=q.z>-0.04;if(!s.vis)return;
+    var pulse=11+Math.sin(t*0.004+i)*5,seen=!!arc.atlas.explored[s.id];
+    act.fillStyle=seen?'#7df9c6':'#ffd76a';act.beginPath();act.arc(q.x,q.y,5,0,6.28);act.fill();
+    act.strokeStyle=seen?'rgba(125,249,198,.7)':'rgba(255,215,106,.85)';act.lineWidth=2;
+    act.beginPath();act.arc(q.x,q.y,pulse,0,6.28);act.stroke();
+    act.font=(AW<720?17:21)+'px serif';act.textAlign='center';act.fillText(s.icon,q.x,q.y-15)});
+  act.strokeStyle='rgba(255,255,255,.22)';act.lineWidth=2;act.beginPath();act.arc(m.cx,m.cy,m.r,0,6.28);act.stroke()}
+function atlasShow(s){
+  var first=!arc.atlas.explored[s.id];arc.atlas.explored[s.id]=true;LS.set('muta_atlas_seen',JSON.stringify(arc.atlas.explored));
+  $('#atTitle').textContent=s.title;$('#atCopy').textContent=s.copy;$('#atGene').textContent='Idea originada por '+s.gene;
+  var sb=$('#atSupport');sb.textContent='Apoyar esta idea';sb.disabled=false;sb.onclick=function(){
+    sb.textContent='✓ Apoyo registrado';sb.disabled=true;
+    cap('muta_atlas_support',{signal_id:s.id,gen:GEN});cap('muta_idea_vote',{idea:s.title,categoria_propuesta:'Contenido',gen:GEN})};
+  $('#atlasCard').classList.add('open');blip(880,0.12);haptic([10,20,18]);
+  if(first){cap('muta_atlas_open_signal',{signal_id:s.id,gene_credit:s.gene,discovered:Object.keys(arc.atlas.explored).length});if(typeof addEnergy==='function')addEnergy(1,'atlas');
+    toast('📡 Señal descubierta · '+s.gene,3200)}
+  arcHud()}
+function drawCyMode(t){
+  var c=arc.cy;
+  if(c.over){act.fillStyle='rgba(4,6,20,.55)';act.fillRect(0,0,AW,AH);act.fillStyle='#f4f6ff';act.textAlign='center';act.font='900 32px system-ui';act.fillText('EL VACÍO GANÓ',AW/2,AH/2-10);act.font='800 16px monospace';act.fillStyle='#7df9c6';act.fillText(arc.score+' CAPTURAS · toca para reintentar',AW/2,AH/2+24);arcFx();return}
+  if(t-c.lastSpawn>700&&c.foods.length<7){c.lastSpawn=t;c.foods.push({x:60+Math.random()*Math.max(60,AW-120),y:-30,vy:1.5+Math.random()*1.6,e:FOOD_EMOJI[Math.floor(Math.random()*FOOD_EMOJI.length)]})}
+  if(typeof TILT!=='undefined'&&TILT.on){c.tx=AW/2+TILT.x*AW*0.42;c.ty=AH*0.6+TILT.y*AH*0.28}
+  c.x+=(c.tx-c.x)*0.14;c.y+=(c.ty-c.y)*0.14;
+  var r=Math.min(AW,AH)*(0.1+Math.min(0.12,Math.log(1+arc.score)*0.02)),hue=(t*0.02+arc.score*31)%360;
+  for(var i=c.foods.length-1;i>=0;i--){var f=c.foods[i];f.y+=f.vy;
+    act.font='26px serif';act.textAlign='center';act.fillText(f.e,f.x,f.y);
+    if(!c.over&&Math.hypot(f.x-c.x,f.y-c.y)<r*0.85){c.foods.splice(i,1);arc.score++;arc.combo++;
+      arcBurst(f.x,f.y,(t*0.02+arc.score*31)%360,12);arcPop(f.x,f.y-14,'+1'+(arc.combo>2?' x'+arc.combo:''));arcShake=arc.combo>4?4:2;
+      blip(700+arc.combo*40,0.1,'sine',0.08);haptic(12);
+      if(arc.score%5===0&&typeof addEnergy==='function')addEnergy(1,'juego');
+      cap('muta_catch',{game_id:'cyclops',game:'cyclops',score:arc.score,input_type:'pointer'});arcHud()}
+    else if(f.y>AH+30){c.foods.splice(i,1);arc.combo=0;if(!c.over){c.lives--;arcPop(f.x,AH-70,'−1 vida','#ff9d7a');blip(190,0.2,'sawtooth',0.06);haptic(24);arcHud();
+      if(c.lives<=0){c.over=true;blip(150,0.5,'sawtooth',0.08);haptic([40,40,60]);
+        cap('muta_game',{game:'cyclops',action:'over',score:arc.score});
+        $('#arcHint').textContent='💀 '+arc.score+' capturas. Toca la pantalla para custodiar de nuevo.'}}}}
+  var nf=c.foods.length?c.foods[0]:null;
+  drawHero(act,c.x,c.y,r*0.92,{t:t,hue:158,look:nf?[nf.x,nf.y]:[c.x,0],mood:'eat',reduced:REDUCED});}
+function drawReMode(t){
+  var cx2=AW/2,cy2=AH/2,base=Math.min(AW,AH)*0.17,spd=arc.re.speed||1800,ph=((t-arc.re.start)%spd)/spd;
+  act.strokeStyle='rgba(255,215,106,.8)';act.lineWidth=8;act.beginPath();act.arc(cx2,cy2,base*1.1,0,6.28);act.stroke();
+  var near=Math.abs(ph-0.72)<0.14;
+  act.strokeStyle=near?'#7df9c6':'rgba(142,197,255,.8)';act.lineWidth=4;
+  act.beginPath();act.arc(cx2,cy2,base*(0.25+ph*1.18),0,6.28);act.stroke();
+  var gg=act.createRadialGradient(cx2,cy2,base*0.05,cx2,cy2,base*0.8);
+  gg.addColorStop(0,'#fff');gg.addColorStop(0.2,'rgba(125,249,198,.95)');gg.addColorStop(0.6,'rgba(142,197,255,.35)');gg.addColorStop(1,'rgba(0,0,0,0)');
+  act.fillStyle=gg;act.beginPath();act.arc(cx2,cy2,base*0.75,0,6.28);act.fill();
+  act.fillStyle='#f4f6ff';act.textAlign='center';act.font='800 15px monospace';
+  act.fillText(arc.re.msg,cx2,cy2+base*1.55);
+  act.font='700 13px monospace';act.fillStyle='#b9c2e8';act.fillText('COMBO '+arc.re.combo+' · '+arc.score+' PTS',cx2,cy2+base*1.55+24)}
+function reTap(t){
+  var spd=arc.re.speed||1800,ph=((t-arc.re.start)%spd)/spd,d=Math.abs(ph-0.72),gain=0;
+  if(d<0.055){gain=3;arc.re.combo++;arc.re.msg='PERFECTO +3'}
+  else if(d<0.14){gain=1;arc.re.combo++;arc.re.msg='BIEN +1'}
+  else{arc.re.combo=0;arc.re.msg='FUERA DE PULSO'}
+  if(gain){arc.score+=gain;arc.combo=arc.re.combo;arcBurst(AW/2,AH/2,gain===3?45:160,gain===3?26:12);arcPop(AW/2,AH/2-base*1.35,gain===3?'PERFECTO +3':'BIEN +1',gain===3?'#ffd76a':'#7df9c6');arcShake=gain===3?5:2;blip(gain===3?990:740,0.12,'sine',0.1);haptic(gain===3?[14,18,30]:10);
+    if(arc.re.combo>0&&arc.re.combo%5===0){arc.re.speed=Math.max(900,(arc.re.speed||1800)-150);arcPop(AW/2,AH/2+base*1.35,'⚡ MÁS RÁPIDO','#8ec5ff');blip(1200,0.2)}
+    if(arc.score%5===0&&typeof addEnergy==='function')addEnergy(1,'juego')}
+  else{blip(200,0.2,'sawtooth',0.06);haptic(18)}
+  cap('muta_reactor_timing',{precision:Number(d.toFixed(3)),resultado:arc.re.msg,puntos:gain,combo:arc.re.combo,score:arc.score});arcHud()}
+function drawBhMode(t){
+  var b=arc.bh;
+  if(b.frenzy>0)b.frenzy--;
+  if(t-b.lastSpawn>(b.frenzy>0?200:460)&&b.matter.length<(b.frenzy>0?24:14)){b.lastSpawn=t;var side=Math.floor(Math.random()*4);
+    var x=side===0?-20:side===1?AW+20:Math.random()*AW,y=side===2?-20:side===3?AH+20:Math.random()*AH;
+    var ang=Math.atan2(AH/2-y,AW/2-x)+(Math.random()-0.5)*0.8;
+    b.matter.push({x:x,y:y,vx:Math.cos(ang)*(1+Math.random()),vy:Math.sin(ang)*(1+Math.random()),life:0})}
+  if(typeof TILT!=='undefined'&&TILT.on){b.tx=AW/2+TILT.x*AW*0.42;b.ty=AH/2+TILT.y*AH*0.32}
+  b.x+=(b.tx-b.x)*0.15;b.y+=(b.ty-b.y)*0.15;
+  var r=Math.min(AW,AH)*(0.08+Math.min(0.1,Math.log(1+arc.score)*0.018));
+  for(var j=b.matter.length-1;j>=0;j--){var p=b.matter[j];p.x+=p.vx;p.y+=p.vy;p.life++;
+    act.fillStyle=j%2?'#ffd76a':'#7df9c6';act.beginPath();act.arc(p.x,p.y,3+(j%3),0,6.28);act.fill();
+    if(Math.hypot(p.x-b.x,p.y-b.y)<r*1.05){b.matter.splice(j,1);arc.score++;arc.combo++;
+      arcBurst(b.x,b.y,45,10);arcPop(b.x,b.y-r*2,'+1');arcShake=3;
+      blip(300,0.1,'triangle',0.08);haptic(10);
+      if(arc.score%12===0){b.frenzy=180;arcPop(AW/2,AH*0.3,'🌪 FRENESÍ','#ffd76a');blip(180,0.6,'sawtooth',0.07);haptic([20,30,50]);
+        for(var fz=0;fz<10;fz++){var fa=Math.random()*6.28;b.matter.push({x:AW/2+Math.cos(fa)*AW*0.6,y:AH/2+Math.sin(fa)*AH*0.6,vx:-Math.cos(fa)*2.5,vy:-Math.sin(fa)*2.5,life:0})}}
+      if(arc.score%5===0&&typeof addEnergy==='function')addEnergy(1,'juego');
+      cap('muta_catch',{game_id:'blackhole',game:'blackhole',score:arc.score,input_type:'pointer'});arcHud()}
+    else if(p.x<-80||p.x>AW+80||p.y<-80||p.y>AH+80||p.life>1400)b.matter.splice(j,1)}
+  act.save();act.translate(b.x,b.y);act.rotate(t*0.00012);
+  for(var i=0;i<16;i++){var a2=i*0.7+t*0.00025,rr=r*(1.5+i*0.12);
+    act.strokeStyle=i%2?'rgba(255,122,180,.14)':'rgba(255,215,106,.14)';act.lineWidth=2;
+    act.beginPath();act.arc(0,0,rr,a2,a2+1.7);act.stroke()}
+  var g2=act.createRadialGradient(0,0,r*1.2,0,0,r*2.6);
+  g2.addColorStop(0,'rgba(125,249,198,.18)');g2.addColorStop(1,'rgba(0,0,0,0)');
+  act.fillStyle=g2;act.beginPath();act.arc(0,0,r*2.6,0,6.28);act.fill();act.restore();
+  var np=b.matter.length?b.matter[0]:null;
+  drawHero(act,b.x,b.y,r*1.05,{t:t,hue:280,look:np?[np.x,np.y]:[b.x,b.y-r*3],mood:'eat',reduced:REDUCED});}
+function arcLoop(t){
+  if(!arc.open)return;arc.raf=requestAnimationFrame(arcLoop);
+  if(REDUCED&&t-arc.last<400)return;arc.last=t;
+  var bg2=act.createLinearGradient(0,0,0,AH);bg2.addColorStop(0,'#060919');bg2.addColorStop(1,'#0d1030');
+  act.fillStyle=bg2;act.fillRect(0,0,AW,AH);
+  act.fillStyle='rgba(220,228,255,.5)';
+  for(var i=0;i<50;i++){var sx=(i*97)%AW,sy=(i*211)%AH;act.fillRect(sx,sy,1.4,1.4)}
+  if(arcShake>0.4){act.save();act.translate((Math.random()*2-1)*arcShake,(Math.random()*2-1)*arcShake)}
+  if(arc.mode==='atlas')drawAtlasMode(t);
+  else if(arc.mode==='cyclops')drawCyMode(t);
+  else if(arc.mode==='reactor')drawReMode(t);
+  else if(arc.mode==='blackhole')drawBhMode(t);
+  if(arc.mode!=='atlas')arcFx();
+  if(arcShake>0.4)act.restore()}
+/* input del archivo */
+if(acv){
+acv.addEventListener('pointerdown',function(e){
+  if(arc.mode==='atlas'){arc.atlas.drag={x:e.clientX,y:e.clientY,lon:arc.atlas.lon,pan:arc.atlas.pan,moved:0};arc.atlas.idle=performance.now()}
+  else if(arc.mode==='cyclops'){if(arc.cy.over){arc.cy.over=false;arc.cy.lives=3;arc.score=0;arc.combo=0;arc.cy.foods=[];arcHud();return}arc.cy.tx=e.clientX;arc.cy.ty=e.clientY}
+  else if(arc.mode==='blackhole'){arc.bh.tx=e.clientX;arc.bh.ty=e.clientY}
+  else if(arc.mode==='reactor')reTap(performance.now())});
+acv.addEventListener('pointermove',function(e){
+  if(arc.mode==='atlas'&&arc.atlas.drag){var d=arc.atlas.drag;
+    arc.atlas.lon=(d.lon-(e.clientX-d.x)*0.25/arc.atlas.zoom+180)%360-180;
+    arc.atlas.pan=Math.max(-60,Math.min(60,d.pan+(e.clientY-d.y)*0.4));
+    d.moved+=Math.abs(e.movementX||1)+Math.abs(e.movementY||0);arc.atlas.idle=performance.now()}
+  else if(arc.mode==='cyclops'&&e.buttons!==0||arc.mode==='cyclops'&&e.pointerType==='touch'){arc.cy.tx=e.clientX;arc.cy.ty=e.clientY}
+  else if(arc.mode==='blackhole'&&(e.buttons!==0||e.pointerType==='touch')){arc.bh.tx=e.clientX;arc.bh.ty=e.clientY}});
+acv.addEventListener('pointerup',function(e){
+  if(arc.mode==='atlas'&&arc.atlas.drag){var d=arc.atlas.drag;arc.atlas.drag=null;
+    if(d.moved<10){var best=null,bd=44;ATLAS_SIGNALS.forEach(function(s){if(!s.vis)return;var dd=Math.hypot(e.clientX-s.sx,e.clientY-s.sy);if(dd<bd){bd=dd;best=s}});
+      if(best)atlasShow(best)}
+    else cap('muta_atlas_drag',{delta:Math.round(d.moved),input_type:e.pointerType==='mouse'?'mouse':'touch'})}});
+acv.addEventListener('wheel',function(e){if(arc.mode!=='atlas')return;e.preventDefault();
+  arc.atlas.zoom=Math.max(0.7,Math.min(2.2,arc.atlas.zoom*(e.deltaY<0?1.08:0.92)));cap('muta_atlas_zoom',{zoom:Number(arc.atlas.zoom.toFixed(2))})},{passive:false});
+}
+$('#arcZin').addEventListener('click',function(){arc.atlas.zoom=Math.min(2.2,arc.atlas.zoom*1.15);cap('muta_atlas_zoom',{zoom:Number(arc.atlas.zoom.toFixed(2))})});
+$('#arcZout').addEventListener('click',function(){arc.atlas.zoom=Math.max(0.7,arc.atlas.zoom*0.87);cap('muta_atlas_zoom',{zoom:Number(arc.atlas.zoom.toFixed(2))})});
+$('#arcX').addEventListener('click',arcClose);
+$('#atClose').addEventListener('click',function(){$('#atlasCard').classList.remove('open')});
+$$('[data-arc]').forEach(function(b){b.addEventListener('click',function(){arcOpen(this.getAttribute('data-arc'))})});
+
+/* ============ LA MÁQUINA INCREÍBLE — puzzle de flujo A→B (GEN Fosforescente) ============ */
+var MAQ2_PIECES={
+ rampaR:{icon:'◢',label:'Rampa ▶',tip:'desvía la estrella hacia la derecha'},
+ rampaL:{icon:'◣',label:'Rampa ◀',tip:'desvía la estrella hacia la izquierda'},
+ tramp:{icon:'🛝',label:'Trampolín',tip:'la hace rebotar hacia arriba'},
+ cintaR:{icon:'⏩',label:'Cinta ▶',tip:'la empuja a la derecha'},
+ cintaL:{icon:'⏪',label:'Cinta ◀',tip:'la empuja a la izquierda'},
+ bloque:{icon:'⬛',label:'Bloque',tip:'detiene y apoya'}};
+var MAQ2_LEVELS=[
+ {name:'EL PRIMER FLUJO',a:[1,0],b:[7,10],fixed:[],budget:{rampaR:2,bloque:1},hint:'Guía la estrella de A a B con rampas.'},
+ {name:'EL REBOTE',a:[4,0],b:[8,3],fixed:[['bloque',4,7],['bloque',5,7]],budget:{tramp:1,rampaR:2},hint:'A veces el camino es hacia arriba.'},
+ {name:'LA CORRIENTE',a:[0,0],b:[8,10],fixed:[['bloque',3,4],['bloque',4,4],['bloque',5,4]],budget:{cintaR:2,rampaR:1,tramp:1},hint:'Las cintas arrastran lo que aterriza en ellas.'},
+ {name:'EL DESVÍO DOBLE',a:[8,0],b:[0,10],fixed:[['bloque',4,2],['bloque',4,3],['bloque',4,8]],budget:{rampaL:2,rampaR:1,tramp:1,cintaL:1},hint:'Ida y vuelta: combina rampas de ambos lados.'},
+ {name:'LA GRAN MÁQUINA',a:[0,0],b:[4,5],fixed:[['bloque',3,6],['bloque',4,6],['bloque',5,6],['bloque',3,5],['bloque',5,5],['bloque',3,4],['bloque',5,4]],budget:{rampaR:2,rampaL:2,tramp:2,cintaR:1,cintaL:1},hint:'La meta está protegida: entra por arriba.'}];
+var M2={lvl:parseInt(LS.get('muta_maq2_lvl')||'0',10)||0,sel:null,placed:{},used:{},running:false,ball:null,
+  cols:9,rows:11,cell:36,ox:0,oy:0,raf:null,t0:0,moves:0,tries:0,won:false,trail:[]};
+var m2cv=$('#maq2Cv'),m2x=m2cv?m2cv.getContext('2d'):null;
+function m2Level(){return MAQ2_LEVELS[Math.min(M2.lvl,MAQ2_LEVELS.length-1)]}
+function m2Key(c,r){return c+','+r}
+function m2Resize(){
+  var availW=Math.min(window.innerWidth-16,520),availH=window.innerHeight-235;
+  M2.cell=Math.max(26,Math.floor(Math.min(availW/M2.cols,availH/M2.rows)));
+  m2cv.width=(M2.cols*M2.cell)*2;m2cv.height=(M2.rows*M2.cell)*2;
+  m2cv.style.width=(M2.cols*M2.cell)+'px';m2cv.style.height=(M2.rows*M2.cell)+'px';
+  m2x.setTransform(2,0,0,2,0,0)}
+function m2Open(){
+  closeAll();$('#maqWrap').classList.add('open');m2Resize();m2LoadLevel(false);
+  cap('muta_machine_start',{level:M2.lvl+1,input_type:'archive',gene_origin:'GEN-0866',version:'increible'});
+  cap('muta_mode_switch',{mode:'maquina',archive:true});
+  if(!M2.raf)m2Loop()}
+function m2LoadLevel(reset){
+  var L=m2Level();
+  if(reset||!M2._lvlLoaded||M2._lvlLoaded!==M2.lvl){M2.placed={};M2.used={};M2._lvlLoaded=M2.lvl;M2.moves=0;M2.tries=0}
+  M2.running=false;M2.won=false;M2.ball=null;M2.trail=[];M2.sel=null;
+  $('#maq2Lvl').textContent='NIVEL '+(M2.lvl+1)+'/'+MAQ2_LEVELS.length+' · '+L.name;
+  $('#maq2Hint').textContent=L.hint;
+  m2Palette();m2Btns()}
+function m2Palette(){
+  var L=m2Level(),pal=$('#maq2Pal');pal.innerHTML='';
+  Object.keys(L.budget).forEach(function(id){
+    var left=L.budget[id]-(M2.used[id]||0);
+    var b=document.createElement('button');b.className='m2p'+(M2.sel===id?' sel':'')+(left<=0?' off':'');
+    b.innerHTML='<span class="i">'+MAQ2_PIECES[id].icon+'</span><span class="n">'+MAQ2_PIECES[id].label+'</span><span class="c">×'+left+'</span>';
+    b.disabled=left<=0;
+    b.addEventListener('click',function(){M2.sel=M2.sel===id?null:id;
+      $('#maq2Hint').textContent=M2.sel?MAQ2_PIECES[id].tip+' · toca una celda libre':m2Level().hint;m2Palette()});
+    pal.appendChild(b)})}
+function m2Btns(){$('#maq2Run').textContent=M2.running?'⏹ Detener':'▶ ¡Que fluya!';
+  $('#maq2Next').style.display=M2.won?'inline-block':'none'}
+function m2CellAt(px,py){var r=m2cv.getBoundingClientRect();
+  var c=Math.floor((px-r.left)/M2.cell),rw=Math.floor((py-r.top)/M2.cell);
+  return (c>=0&&c<M2.cols&&rw>=0&&rw<M2.rows)?[c,rw]:null}
+if(m2cv)m2cv.addEventListener('pointerdown',function(e){
+  var cell=m2CellAt(e.clientX,e.clientY);if(!cell)return;
+  var L=m2Level(),k=m2Key(cell[0],cell[1]);
+  var isFixed=L.fixed.some(function(f){return f[1]===cell[0]&&f[2]===cell[1]});
+  var isAB=(cell[0]===L.a[0]&&cell[1]===L.a[1])||(cell[0]===L.b[0]&&cell[1]===L.b[1]);
+  if(isFixed||isAB)return;
+  if(M2.placed[k]){var old=M2.placed[k];delete M2.placed[k];M2.used[old]--;M2.moves++;
+    cap('muta_machine_move',{module_id:old,action:'remove',level:M2.lvl+1,decision_index:M2.moves});
+    blip(300,0.07);haptic(6);m2Palette();return}
+  if(!M2.sel)return;
+  var left=L.budget[M2.sel]-(M2.used[M2.sel]||0);if(left<=0)return;
+  M2.placed[k]=M2.sel;M2.used[M2.sel]=(M2.used[M2.sel]||0)+1;M2.moves++;
+  cap('muta_machine_move',{module_id:M2.sel,slot_index:k,level:M2.lvl+1,decision_index:M2.moves,input_type:e.pointerType==='mouse'?'mouse':'touch'});
+  blip(620,0.07);haptic(8);
+  if((L.budget[M2.sel]-(M2.used[M2.sel]||0))<=0)M2.sel=null;
+  m2Palette()});
+$('#maq2Run').addEventListener('click',function(){
+  if(M2.running){M2.running=false;M2.ball=null;M2.trail=[];m2Btns();return}
+  var L=m2Level();M2.tries++;
+  M2.ball={x:(L.a[0]+0.5)*M2.cell,y:(L.a[1]+0.4)*M2.cell,vx:0,vy:0};
+  M2.trail=[];M2.running=true;M2.t0=performance.now();m2Btns();
+  cap('muta_machine_attempt',{level:M2.lvl+1,decisions:M2.moves,retries:M2.tries,circuit:Object.keys(M2.placed).map(function(k){return M2.placed[k]}).join('>')});
+  blip(520,0.12);haptic(10)});
+$('#maq2Reset').addEventListener('click',function(){m2LoadLevel(true);cap('muta_machine_retry',{level:M2.lvl+1,retry_count:M2.tries});blip(300,0.1)});
+$('#maq2Next').addEventListener('click',function(){
+  cap('muta_machine_next_level',{from_level:M2.lvl+1,to_level:M2.lvl+2});
+  M2.lvl=Math.min(M2.lvl+1,MAQ2_LEVELS.length-1);LS.set('muta_maq2_lvl',String(M2.lvl));
+  m2LoadLevel(true)});
+$('#maqX').addEventListener('click',function(){$('#maqWrap').classList.remove('open');M2.running=false});
+function m2PieceAt(c,r){
+  var L=m2Level();
+  for(var i=0;i<L.fixed.length;i++)if(L.fixed[i][1]===c&&L.fixed[i][2]===r)return L.fixed[i][0];
+  return M2.placed[m2Key(c,r)]||null}
+function m2Physics(dt){
+  var b=M2.ball;if(!b)return;
+  var L=m2Level(),cs=M2.cell,rr=cs*0.22;
+  b.vy+=0.32*dt;b.vy=Math.min(b.vy,cs*0.45);
+  b.x+=b.vx*dt;b.y+=b.vy*dt;
+  b.vx*=0.995;
+  if(b.x<rr){b.x=rr;b.vx=Math.abs(b.vx)*0.5}
+  if(b.x>M2.cols*cs-rr){b.x=M2.cols*cs-rr;b.vx=-Math.abs(b.vx)*0.5}
+  var c=Math.floor(b.x/cs),r2=Math.floor((b.y+rr)/cs);
+  var p=m2PieceAt(c,r2);
+  if(p){var top=r2*cs;
+    if(p==='bloque'&&b.y+rr>top&&b.vy>0){b.y=top-rr;b.vy=0;b.vx*=0.9}
+    else if(p==='tramp'&&b.y+rr>top&&b.vy>0.5){b.y=top-rr;b.vy=-Math.max(Math.abs(b.vy)*0.92,7.4);
+      arcMq(b.x,b.y,45,10);blip(880,0.1,'sine',0.09);haptic(9)}
+    else if(p==='cintaR'&&b.y+rr>top&&b.vy>=0){b.y=top-rr;b.vy=0;b.vx=Math.min(b.vx+0.5*dt,4)}
+    else if(p==='cintaL'&&b.y+rr>top&&b.vy>=0){b.y=top-rr;b.vy=0;b.vx=Math.max(b.vx-0.5*dt,-4)}
+    else if(p==='rampaR'&&b.y+rr>top){b.y=top-rr*0.4;var sp=Math.max(Math.abs(b.vy)*0.75,2.4);b.vx=sp;b.vy=sp*0.55;
+      if(Math.random()<0.3)arcMq(b.x,b.y,200,3)}
+    else if(p==='rampaL'&&b.y+rr>top){b.y=top-rr*0.4;var sp2=Math.max(Math.abs(b.vy)*0.75,2.4);b.vx=-sp2;b.vy=sp2*0.55;
+      if(Math.random()<0.3)arcMq(b.x,b.y,200,3)}}
+  M2.trail.push({x:b.x,y:b.y,l:1});if(M2.trail.length>40)M2.trail.shift();
+  /* meta */
+  var bx=(L.b[0]+0.5)*cs,by=(L.b[1]+0.5)*cs;
+  if(Math.hypot(b.x-bx,b.y-by)<cs*0.55){m2Win();return}
+  /* caída o timeout: reintento suave */
+  if(b.y>M2.rows*cs+cs*2||performance.now()-M2.t0>14000){
+    M2.ball={x:(L.a[0]+0.5)*cs,y:(L.a[1]+0.4)*cs,vx:0,vy:0};M2.trail=[];M2.t0=performance.now();
+    blip(220,0.15,'sawtooth',0.05);$('#maq2Hint').textContent='La estrella se perdió. Ajusta las piezas: siguen donde las dejaste.'}}
+function m2Win(){
+  M2.running=false;M2.won=true;M2.ball=null;
+  var L=m2Level(),cs=M2.cell;
+  arcMq((L.b[0]+0.5)*cs,(L.b[1]+0.5)*cs,150,40);arcMq((L.b[0]+0.5)*cs,(L.b[1]+0.5)*cs,45,30);
+  blip(523,0.15);setTimeout(function(){blip(659,0.15)},120);setTimeout(function(){blip(784,0.2)},240);setTimeout(function(){blip(1046,0.35)},380);
+  haptic([20,30,20,30,60]);
+  cap('muta_machine_complete',{level:M2.lvl+1,decisions:M2.moves,retries:M2.tries,version:'increible'});
+  if(typeof addEnergy==='function')addEnergy(2,'maquina');
+  $('#maq2Hint').textContent='💚 ¡FLUYÓ! Nivel resuelto con '+Object.keys(M2.placed).length+' piezas y '+M2.tries+' intento'+(M2.tries===1?'':'s')+'.';
+  if(M2.lvl>=MAQ2_LEVELS.length-1)$('#maq2Hint').textContent+=' Completaste todos los niveles: eres ingeniera o ingeniero de flujo 🏆';
+  m2Btns()}
+var mqParts=[];
+function arcMq(x,y,hue,n){for(var i=0;i<n&&mqParts.length<160;i++){var a=Math.random()*6.28,v=1+Math.random()*3;
+  mqParts.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-0.5,l:1,hue:hue})}}
+function m2Draw(){
+  var L=m2Level(),cs=M2.cell,Wc=M2.cols*cs,Hc=M2.rows*cs;
+  var bg=m2x.createLinearGradient(0,0,0,Hc);bg.addColorStop(0,'#0a0e26');bg.addColorStop(1,'#141b3d');
+  m2x.fillStyle=bg;m2x.fillRect(0,0,Wc,Hc);
+  m2x.strokeStyle='rgba(142,197,255,.08)';m2x.lineWidth=1;
+  for(var c=0;c<=M2.cols;c++){m2x.beginPath();m2x.moveTo(c*cs,0);m2x.lineTo(c*cs,Hc);m2x.stroke()}
+  for(var r2=0;r2<=M2.rows;r2++){m2x.beginPath();m2x.moveTo(0,r2*cs);m2x.lineTo(Wc,r2*cs);m2x.stroke()}
+  /* piezas */
+  function drawPiece(id,c2,r3,fixed){
+    var x=c2*cs,y=r3*cs;
+    m2x.save();
+    if(id==='bloque'){m2x.fillStyle=fixed?'#2a3160':'#39406f';m2x.fillRect(x+1,y+1,cs-2,cs-2);
+      m2x.strokeStyle='rgba(142,197,255,.35)';m2x.strokeRect(x+1,y+1,cs-2,cs-2)}
+    else if(id==='rampaR'){m2x.fillStyle='#0c5a41';m2x.beginPath();m2x.moveTo(x+1,y+1);m2x.lineTo(x+cs-1,y+cs-1);m2x.lineTo(x+1,y+cs-1);m2x.closePath();m2x.fill();
+      m2x.strokeStyle='#7df9c6';m2x.lineWidth=2;m2x.beginPath();m2x.moveTo(x+1,y+1);m2x.lineTo(x+cs-1,y+cs-1);m2x.stroke()}
+    else if(id==='rampaL'){m2x.fillStyle='#0c5a41';m2x.beginPath();m2x.moveTo(x+cs-1,y+1);m2x.lineTo(x+1,y+cs-1);m2x.lineTo(x+cs-1,y+cs-1);m2x.closePath();m2x.fill();
+      m2x.strokeStyle='#7df9c6';m2x.lineWidth=2;m2x.beginPath();m2x.moveTo(x+cs-1,y+1);m2x.lineTo(x+1,y+cs-1);m2x.stroke()}
+    else if(id==='tramp'){m2x.fillStyle='#5a2a4d';m2x.fillRect(x+2,y+cs*0.6,cs-4,cs*0.34);
+      m2x.strokeStyle='#ff9d7a';m2x.lineWidth=3;m2x.beginPath();m2x.moveTo(x+3,y+cs*0.6);m2x.lineTo(x+cs-3,y+cs*0.6);m2x.stroke()}
+    else if(id==='cintaR'||id==='cintaL'){m2x.fillStyle='#233a66';m2x.fillRect(x+1,y+cs*0.55,cs-2,cs*0.4);
+      m2x.fillStyle='#8ec5ff';m2x.font='bold '+(cs*0.4)+'px system-ui';m2x.textAlign='center';
+      m2x.fillText(id==='cintaR'?'»':'«',x+cs/2,y+cs*0.88)}
+    m2x.restore()}
+  L.fixed.forEach(function(f){drawPiece(f[0],f[1],f[2],true)});
+  Object.keys(M2.placed).forEach(function(k){var p=k.split(',');drawPiece(M2.placed[k],+p[0],+p[1],false)});
+  /* A y B */
+  m2x.font=(cs*0.5)+'px system-ui';m2x.textAlign='center';
+  m2x.fillStyle='#ffd76a';m2x.fillText('Ⓐ',(L.a[0]+0.5)*cs,(L.a[1]+0.62)*cs);
+  var pulse=1+Math.sin(performance.now()*0.005)*0.12;
+  m2x.save();m2x.translate((L.b[0]+0.5)*cs,(L.b[1]+0.5)*cs);m2x.scale(pulse,pulse);
+  var pg2=m2x.createRadialGradient(0,0,2,0,0,cs*0.5);pg2.addColorStop(0,'rgba(125,249,198,.9)');pg2.addColorStop(1,'rgba(125,249,198,0)');
+  m2x.fillStyle=pg2;m2x.beginPath();m2x.arc(0,0,cs*0.5,0,6.28);m2x.fill();
+  m2x.fillStyle='#0b0f2a';m2x.font='bold '+(cs*0.42)+'px system-ui';m2x.fillText('Ⓑ',0,cs*0.14);m2x.restore();
+  /* estela + estrella */
+  M2.trail.forEach(function(t2,i){t2.l-=0.025;if(t2.l<0)t2.l=0;
+    m2x.fillStyle='rgba(255,215,106,'+(t2.l*0.5)+')';m2x.beginPath();m2x.arc(t2.x,t2.y,3*t2.l+0.5,0,6.28);m2x.fill()});
+  if(M2.ball){m2x.font=(cs*0.55)+'px serif';m2x.textAlign='center';m2x.fillText('⭐',M2.ball.x,M2.ball.y+cs*0.18)}
+  /* partículas */
+  for(var i=mqParts.length-1;i>=0;i--){var p2=mqParts[i];p2.x+=p2.vx;p2.y+=p2.vy;p2.vy+=0.06;p2.l-=0.02;
+    if(p2.l<=0){mqParts.splice(i,1);continue}
+    m2x.fillStyle='hsla('+p2.hue+',90%,65%,'+p2.l+')';m2x.beginPath();m2x.arc(p2.x,p2.y,2.5*p2.l+0.5,0,6.28);m2x.fill()}}
+function m2Loop(){
+  M2.raf=requestAnimationFrame(m2Loop);
+  if(!$('#maqWrap').classList.contains('open'))return;
+  if(M2.running)m2Physics(1);
+  m2Draw()}
+window.addEventListener('resize',function(){if($('#maqWrap').classList.contains('open'))m2Resize()});
+$('#playMaquina').addEventListener('click',m2Open);
+
+
+/* ============ EVOLUCIÓN: energía, huevo diario, criaturario, racha, nudges ============ */
+var EVO_SPECIES=[
+ {id:'brote',n:'Brote Cósmico',e:'🌱',shape:'blob'},{id:'serp',n:'Serpentina',e:'🐍',shape:'serp'},
+ {id:'astro',n:'Astrilla',e:'⭐',shape:'star'},{id:'medusa',n:'Medusa Lunar',e:'🌙',shape:'jelly'},
+ {id:'leon',n:'Leoncito Galáctico',e:'🦁',shape:'lion'},{id:'ojo',n:'Ojito Errante',e:'👁',shape:'eye'},
+ {id:'coral',n:'Coral Estelar',e:'🪸',shape:'coral'},{id:'fenix',n:'Fénix del Vacío',e:'🔥',shape:'phoenix'}];
+var EVO_RAR=[{id:'comun',n:'COMÚN',p:0.70,c:'#8ec5ff'},{id:'rara',n:'RARA',p:0.24,c:'#c792ff'},{id:'legendaria',n:'LEGENDARIA',p:0.06,c:'#ffd76a'}];
+function dayKey(){var d=new Date();return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0')}
+var EVO={energy:0,goal:10,hatchedToday:0,bonusEgg:false,col:[],days:[],shareBoost:false};
+try{EVO=Object.assign(EVO,JSON.parse(LS.get('muta_evo')||'{}')||{})}catch(e){}
+if(EVO.day!==dayKey()){EVO.day=dayKey();EVO.energy=0;EVO.hatchedToday=0;EVO.bonusEgg=false}
+function evoSave(){LS.set('muta_evo',JSON.stringify(EVO))}
+/* racha */
+(function(){var today=dayKey();if(EVO.days.indexOf(today)<0){EVO.days.push(today);if(EVO.days.length>60)EVO.days=EVO.days.slice(-60);evoSave()}})();
+function streak(){var n=0,d=new Date();for(;;){var k=d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0');
+  if(EVO.days.indexOf(k)>=0){n++;d.setUTCDate(d.getUTCDate()-1)}else break}return n}
+/* rng determinístico por gen+día+índice */
+function evoRng(idx){var s=0,str=g+EVO.day+':'+idx;for(var i=0;i<str.length;i++)s=(s*31+str.charCodeAt(i))>>>0;
+  return function(){s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+function rollCreature(idx){var r=evoRng(idx),st=streak();
+  var pLeg=0.06+(st>=7?0.06:0),pRar=0.24+(st>=3?0.10:0);
+  var x=r(),rar=x<pLeg?EVO_RAR[2]:x<pLeg+pRar?EVO_RAR[1]:EVO_RAR[0];
+  var sp=EVO_SPECIES[Math.floor(r()*EVO_SPECIES.length)];
+  return {sp:sp.id,rar:rar.id,hue:Math.floor(r()*360),seed:Math.floor(r()*65536),day:EVO.day,idx:idx}}
+function addEnergy(n,src){
+  if(EVO.hatchedToday>=(EVO.bonusEgg?2:1)&&EVO.energy>=EVO.goal)return;
+  EVO.energy=Math.min(EVO.goal,EVO.energy+n);evoSave();renderEgg();
+  cap('muta_egg',{accion:'progress',energia:EVO.energy,fuente:src});
+  if(EVO.energy>=EVO.goal){$('#eggWidget').classList.add('ready');
+    cap('muta_egg',{accion:'ready'});say('🥚 ¡Tu huevo estelar está listo! Tócalo para eclosionar.',6000,true)}}
+function renderEgg(){
+  var w=$('#eggWidget');if(!w)return;
+  var pct=Math.min(1,EVO.energy/EVO.goal);
+  $('#eggFill').style.height=(pct*100)+'%';
+  $('#eggPct').textContent=EVO.hatchedToday>=(EVO.bonusEgg?2:1)&&pct>=1?'mañana':(EVO.energy+'/'+EVO.goal);
+  var st=streak();var se=$('#streakTxt');if(se)se.textContent=st>1?('🔥 '+st+' días'):'';
+  w.classList.toggle('ready',pct>=1&&EVO.hatchedToday<(EVO.bonusEgg?2:1))}
+/* ceremonia de eclosión */
+var hatching=false;
+function tryHatch(){
+  if(hatching)return;
+  var maxToday=EVO.bonusEgg?2:1;
+  if(EVO.hatchedToday>=maxToday){say('El próximo huevo llega mañana 🥚 Comparte tu criatura para desbloquear uno extra hoy.',6500,true);return}
+  if(EVO.energy<EVO.goal){say('Al huevo le falta energía: aliméntame, juega en 🎮 o susúrrame una idea. '+EVO.energy+'/'+EVO.goal,6000,true);return}
+  hatching=true;
+  var idx=EVO.days.length*10+EVO.hatchedToday;
+  var cr=rollCreature(idx);
+  var ov=$('#hatchOvl');ov.classList.add('open');
+  var hc=$('#hatchCv'),hx2=hc.getContext('2d');hc.width=320;hc.height=360;
+  var t0=performance.now(),phase=0;
+  $('#hatchTxt').textContent='Algo se mueve dentro…';$('#hatchCard').style.display='none';
+  blip(392,0.3);haptic([10,30,10]);
+  function drawEgg(t){
+    var e=(t-t0)/1000;hx2.clearRect(0,0,320,360);
+    var wob=phase===0?Math.sin(e*14)*(3+e*3):0;
+    hx2.save();hx2.translate(160+wob,190);
+    var grd=hx2.createRadialGradient(-18,-30,8,0,0,95);
+    grd.addColorStop(0,'#fdfaf1');grd.addColorStop(0.6,'hsl('+cr.hue+',60%,72%)');grd.addColorStop(1,'hsl('+cr.hue+',55%,45%)');
+    hx2.fillStyle=grd;hx2.beginPath();hx2.ellipse(0,0,72,92,0,0,6.28);hx2.fill();
+    hx2.strokeStyle='hsla('+cr.hue+',80%,85%,.7)';hx2.lineWidth=2;
+    for(var i=0;i<5;i++){hx2.beginPath();hx2.arc(-30+i*15,-40+((i%2)*24),5+i%3,0,6.28);hx2.stroke()}
+    if(e>1.4){var cr2=Math.min(1,(e-1.4)/0.8);hx2.strokeStyle='#20263f';hx2.lineWidth=3;hx2.beginPath();
+      hx2.moveTo(-40,-10);hx2.lineTo(-20,5*cr2);hx2.lineTo(0,-8*cr2);hx2.lineTo(22,6*cr2);hx2.lineTo(42,-4);hx2.stroke()}
+    hx2.restore();
+    if(e<2.4&&phase===0)requestAnimationFrame(drawEgg);
+    else if(phase===0){phase=1;burst(W/2,H/2,cr.hue,40);blip(660,0.2);blip(990,0.3,'sine',0.1);haptic([20,40,60]);
+      revealCreature(cr)}}
+  requestAnimationFrame(drawEgg)}
+function revealCreature(cr){
+  EVO.hatchedToday++;EVO.energy=0;EVO.col.push(cr);evoSave();renderEgg();
+  var sp=EVO_SPECIES.filter(function(s){return s.id===cr.sp})[0];
+  var rar=EVO_RAR.filter(function(r){return r.id===cr.rar})[0];
+  cap('muta_egg',{accion:'hatch',especie:cr.sp,rareza:cr.rar,coleccion:EVO.col.length,racha:streak()});
+  var hc=$('#hatchCv'),hx2=hc.getContext('2d');
+  drawCreatureCard(hx2,cr,320,360);
+  $('#hatchTxt').innerHTML='<b style="color:'+rar.c+'">'+rar.n+'</b> · '+esc(sp.n);
+  $('#hatchCard').style.display='block';
+  $('#hatchCount').textContent=EVO.col.length+(EVO.col.length===1?' criatura':' criaturas')+' en tu criaturario';
+  if(cr.rar!=='comun'){blip(523,0.15);setTimeout(function(){blip(659,0.15)},130);setTimeout(function(){blip(784,0.3)},260)}
+  hatching=false}
+$('#hatchClose').addEventListener('click',function(){$('#hatchOvl').classList.remove('open')});
+$('#hatchShare').addEventListener('click',function(){
+  doShare('native');
+  if(!EVO.bonusEgg){EVO.bonusEgg=true;evoSave();renderEgg();
+    toast('🎁 ¡Huevo extra desbloqueado por compartir! Junta energía para eclosionarlo hoy mismo.',6000)}});
+$('#hatchColBtn').addEventListener('click',function(){$('#hatchOvl').classList.remove('open');openCol()});
+$('#eggWidget').addEventListener('click',tryHatch);
+/* dibujo procedural de criaturas */
+function drawCreatureCard(ctx2,cr,w2,h2){
+  var rar=EVO_RAR.filter(function(r){return r.id===cr.rar})[0];
+  ctx2.clearRect(0,0,w2,h2);
+  var bgg=ctx2.createLinearGradient(0,0,0,h2);
+  bgg.addColorStop(0,'hsl('+((cr.hue+220)%360)+',50%,12%)');bgg.addColorStop(1,'hsl('+((cr.hue+260)%360)+',48%,18%)');
+  ctx2.fillStyle=bgg;ctx2.fillRect(0,0,w2,h2);
+  var rr=(cr.seed%97)/97;
+  for(var i=0;i<40;i++){ctx2.fillStyle='rgba(220,228,255,'+(0.2+((cr.seed>>i%16)%10)/20)+')';
+    ctx2.beginPath();ctx2.arc(((cr.seed*(i+3))%w2),((cr.seed*(i+7))%h2),1+(i%2),0,6.28);ctx2.fill()}
+  if(cr.rar==='legendaria'){var au=ctx2.createRadialGradient(w2/2,h2*0.42,20,w2/2,h2*0.42,150);
+    au.addColorStop(0,'rgba(255,215,106,.35)');au.addColorStop(1,'rgba(0,0,0,0)');
+    ctx2.fillStyle=au;ctx2.fillRect(0,0,w2,h2)}
+  drawSpecies(ctx2,cr,w2/2,h2*0.42,58);
+  ctx2.strokeStyle=rar.c;ctx2.lineWidth=3;ctx2.strokeRect(8,8,w2-16,h2-16);
+  ctx2.textAlign='center';ctx2.fillStyle=rar.c;ctx2.font='800 13px system-ui';
+  ctx2.fillText(rar.n,w2/2,h2-52);
+  ctx2.fillStyle='#f4f6ff';ctx2.font='700 17px system-ui';
+  var sp=EVO_SPECIES.filter(function(s){return s.id===cr.sp})[0];
+  ctx2.fillText(sp.n,w2/2,h2-30);
+  ctx2.fillStyle='#b9c2e8';ctx2.font='11px system-ui';ctx2.fillText(GEN+' · MUTA',w2/2,h2-13)}
+function drawSpecies(c2,cr,x,y,s){
+  var hue=cr.hue,r=evoRng('draw'+cr.seed);
+  var body=c2.createRadialGradient(x-s*0.3,y-s*0.3,s*0.1,x,y,s*1.1);
+  body.addColorStop(0,'hsl('+hue+',85%,72%)');body.addColorStop(1,'hsl('+hue+',70%,40%)');
+  c2.fillStyle=body;
+  if(cr.sp==='serp'){c2.lineWidth=s*0.5;c2.strokeStyle=body;c2.lineCap='round';c2.beginPath();
+    for(var i=0;i<=20;i++){var t=i/20;c2.lineTo(x-s+t*s*2,y+Math.sin(t*6.28*1.5+cr.seed)*s*0.45)}c2.stroke();
+    c2.fillStyle='#fdfaf1';c2.beginPath();c2.arc(x+s*0.85,y+Math.sin(1.5*6.28+cr.seed)*s*0.45,s*0.3,0,6.28);c2.fill();
+    c2.fillStyle='#20263f';c2.beginPath();c2.arc(x+s*0.9,y+Math.sin(1.5*6.28+cr.seed)*s*0.45,s*0.13,0,6.28);c2.fill();return}
+  if(cr.sp==='star'){c2.beginPath();for(var j=0;j<10;j++){var a=j*Math.PI/5-Math.PI/2,rad=j%2?s*0.5:s;
+    c2.lineTo(x+Math.cos(a)*rad,y+Math.sin(a)*rad)}c2.closePath();c2.fill()}
+  else if(cr.sp==='jelly'){c2.beginPath();c2.arc(x,y,s,Math.PI,0);c2.closePath();c2.fill();
+    c2.strokeStyle=body;c2.lineWidth=s*0.12;c2.lineCap='round';
+    for(var k=0;k<5;k++){c2.beginPath();c2.moveTo(x-s*0.7+k*s*0.35,y);
+      c2.quadraticCurveTo(x-s*0.7+k*s*0.35+(r()*20-10),y+s*0.8,x-s*0.7+k*s*0.35+(r()*30-15),y+s*1.3);c2.stroke()}}
+  else if(cr.sp==='coral'){c2.lineWidth=s*0.16;c2.strokeStyle=body;c2.lineCap='round';
+    for(var m=0;m<6;m++){var ang=-Math.PI/2+(m-2.5)*0.4;c2.beginPath();c2.moveTo(x,y+s*0.6);
+      c2.quadraticCurveTo(x+Math.cos(ang)*s*0.6,y,x+Math.cos(ang)*s,y+Math.sin(ang)*s);c2.stroke()}}
+  else if(cr.sp==='phoenix'){c2.beginPath();c2.ellipse(x,y,s*0.55,s*0.75,0,0,6.28);c2.fill();
+    for(var p2=0;p2<7;p2++){c2.fillStyle='hsla('+((hue+p2*12)%360)+',90%,'+(60+p2*3)+'%,.8)';
+      c2.beginPath();c2.ellipse(x-s*0.9+p2*s*0.3,y-s*0.5-Math.sin(p2)*s*0.4,s*0.16,s*0.4,(p2-3)*0.25,0,6.28);c2.fill()}}
+  else {var lobes=cr.sp==='lion'?10:8;c2.beginPath();
+    for(var q2=0;q2<=lobes;q2++){var aa=(q2/lobes)*6.28,rad2=s*(0.85+((cr.seed>>q2)%5)/22);
+      c2.lineTo(x+Math.cos(aa)*rad2,y+Math.sin(aa)*rad2)}c2.closePath();c2.fill();
+    if(cr.sp==='lion'){for(var mn=0;mn<12;mn++){var ma=(mn/12)*6.28;
+      var mg=c2.createRadialGradient(x+Math.cos(ma)*s*1.2,y+Math.sin(ma)*s*1.2,0,x+Math.cos(ma)*s*1.2,y+Math.sin(ma)*s*1.2,s*0.35);
+      mg.addColorStop(0,'hsla('+((hue+180)%360)+',85%,68%,.6)');mg.addColorStop(1,'rgba(0,0,0,0)');
+      c2.fillStyle=mg;c2.beginPath();c2.arc(x+Math.cos(ma)*s*1.2,y+Math.sin(ma)*s*1.2,s*0.35,0,6.28);c2.fill()}}}
+  /* ojo(s) */
+  var eyes=cr.sp==='ojo'?1:(cr.seed%3===0?1:2);
+  for(var ei=0;ei<eyes;ei++){var ex=eyes===1?x:x-s*0.32+ei*s*0.64;
+    c2.fillStyle='#fdfaf1';c2.beginPath();c2.arc(ex,y-s*0.12,eyes===1?s*0.4:s*0.22,0,6.28);c2.fill();
+    c2.fillStyle='#20263f';c2.beginPath();c2.arc(ex,y-s*0.12,eyes===1?s*0.18:s*0.1,0,6.28);c2.fill();
+    c2.fillStyle='rgba(255,255,255,.9)';c2.beginPath();c2.arc(ex-3,y-s*0.18,eyes===1?4:2.5,0,6.28);c2.fill()}
+  c2.strokeStyle='#20263f';c2.lineWidth=2.5;c2.lineCap='round';
+  c2.beginPath();c2.arc(x,y+s*0.3,s*0.22,0.3,2.84);c2.stroke()}
+/* criaturario */
+function openCol(){
+  closeAll();$('#ovlCol').classList.add('open');
+  cap('muta_collection',{accion:'open',total:EVO.col.length});
+  var grid=$('#colGrid');grid.innerHTML='';
+  $('#colHead').textContent=EVO.col.length+' descubiertas · racha '+streak()+' día'+(streak()===1?'':'s');
+  var slots=Math.max(12,Math.ceil((EVO.col.length+1)/6)*6);
+  for(var i=0;i<slots;i++)(function(i2){
+    var d=document.createElement('button');d.className='colslot';
+    if(i2<EVO.col.length){var cr=EVO.col[i2];
+      var cv2=document.createElement('canvas');cv2.width=84;cv2.height=84;
+      var cctx=cv2.getContext('2d');drawSpecies(cctx,cr,42,44,22);
+      var rar=EVO_RAR.filter(function(r){return r.id===cr.rar})[0];
+      d.style.borderColor=rar.c;d.appendChild(cv2);
+      d.addEventListener('click',function(){showColCard(cr)})}
+    else{d.classList.add('empty');d.innerHTML='<span>?</span>';
+      d.addEventListener('click',function(){toast('Vuelve mañana por tu próximo huevo, o comparte tu criatura para desbloquear uno extra hoy 🥚',5000)})}
+    grid.appendChild(d)})(i)}
+function showColCard(cr){
+  var hc=$('#colCv');hc.style.display='block';
+  drawCreatureCard(hc.getContext('2d'),cr,320,360);
+  cap('muta_collection',{accion:'view',especie:cr.sp,rareza:cr.rar})}
+$('#btnCol').addEventListener('click',openCol);
+/* ---- nudges de retorno ---- */
+var baseTitle=document.title,nudgeTimer=null,favLink=null;
+function setFavicon(emoji){
+  try{var c3=document.createElement('canvas');c3.width=64;c3.height=64;var f=c3.getContext('2d');
+    f.font='52px serif';f.textAlign='center';f.fillText(emoji,32,50);
+    if(!favLink){favLink=document.createElement('link');favLink.rel='icon';document.head.appendChild(favLink)}
+    favLink.href=c3.toDataURL()}catch(e){}}
+setFavicon('🧬');
+var NUDGES=['🥚 Tu huevo sigue creciendo…','🧬 MUTA muta mañana a las 7am','👁 El organismo te espera…'];
+var ni=0;
+document.addEventListener('visibilitychange',function(){
+  if(document.hidden){setFavicon('🥚');
+    nudgeTimer=setInterval(function(){document.title=NUDGES[ni++%NUDGES.length]},2800)}
+  else{clearInterval(nudgeTimer);document.title=baseTitle;setFavicon('🧬')}});
+/* notificación opt-in (honesta: solo mientras el navegador esté abierto) */
+$('#notifBtn').addEventListener('click',function(){
+  var self=this;
+  if(!('Notification' in window)){toast('Tu navegador no soporta notificaciones.',3500);return}
+  Notification.requestPermission().then(function(p){
+    cap('muta_notify_optin',{granted:p==='granted'});
+    if(p==='granted'){LS.set('muta_notif','1');self.textContent='✓ Te avisaremos de la próxima mutación';self.disabled=true;
+      toast('Listo. Mientras tu navegador esté abierto, te avisaremos cuando MUTA mute (7am Chile).',5500)}})});
+function maybeNotify(){
+  if(LS.get('muta_notif')!=='1'||!('Notification' in window)||Notification.permission!=='granted')return;
+  var d=nextMut()-new Date();
+  if(d>0&&d<60000&&!window.__notified){window.__notified=true;
+    try{new Notification('🧬 MUTA está mutando',{body:'El organismo cambia de forma ahora mismo. Entra a ver en qué se convirtió.'})}catch(e){}}}
+setInterval(maybeNotify,30000);
+renderEgg();
+
+/* ============ PROTAGONISTA COMPARTIDO — el León Galáctico en todos los juegos ============ */
+/* drawHero(ctx,x,y,s,opt) — mismo personaje de la portada. opt:{look:[x,y],hue,t,mood} */
+function drawHero(cxr,x,y,s,opt){
+  opt=opt||{};var t=opt.t||0,hue=opt.hue!=null?opt.hue:158,lookX=opt.look?opt.look[0]:x,lookY=opt.look?opt.look[1]:y-s*3;
+  var wob=opt.reduced?0:Math.sin(t*0.004)*s*0.04;
+  /* melena galáctica */
+  var maneN=14;
+  for(var i=0;i<maneN;i++){var a=(i/maneN)*6.28+t*0.0006;
+    var mr=s*1.28+Math.sin(t*0.004+i)*s*0.1;
+    var mx=x+Math.cos(a)*mr,my=y+Math.sin(a)*mr+wob*0.4;
+    var grd=cxr.createRadialGradient(mx,my,0,mx,my,s*0.3);
+    grd.addColorStop(0,'hsla('+((210+i*8)%360)+',90%,70%,.5)');grd.addColorStop(1,'hsla(280,80%,60%,0)');
+    cxr.fillStyle=grd;cxr.beginPath();cxr.arc(mx,my,s*0.3,0,6.28);cxr.fill()}
+  /* cuerpo */
+  var bg=cxr.createRadialGradient(x-s*0.3,y-s*0.4,s*0.1,x,y,s*1.15);
+  bg.addColorStop(0,'hsl('+hue+',85%,72%)');bg.addColorStop(0.7,'hsl('+hue+',70%,45%)');bg.addColorStop(1,'hsl('+((hue+40)%360)+',70%,30%)');
+  cxr.fillStyle=bg;cxr.beginPath();
+  var lobes=8;cxr.moveTo(x+s,y+wob);
+  for(var j=1;j<=lobes;j++){var aa=(j/lobes)*6.28,rr=s+(opt.reduced?0:Math.sin(t*0.006+j*1.7)*s*0.06);
+    cxr.quadraticCurveTo(x+Math.cos(aa-0.39)*(rr*1.13),y+Math.sin(aa-0.39)*(rr*1.13)+wob,x+Math.cos(aa)*rr,y+Math.sin(aa)*rr+wob)}
+  cxr.fill();
+  /* cuerno */
+  cxr.save();cxr.translate(x,y-s+wob);cxr.rotate(-0.12);
+  var hg=cxr.createLinearGradient(0,-s*0.5,0,0);hg.addColorStop(0,'hsl(45,95%,75%)');hg.addColorStop(1,'hsl(16,90%,65%)');
+  cxr.fillStyle=hg;cxr.beginPath();cxr.moveTo(-s*0.11,s*0.03);cxr.lineTo(s*0.11,s*0.03);cxr.lineTo(0,-s*0.5);cxr.closePath();cxr.fill();cxr.restore();
+  /* sombrero */
+  cxr.save();cxr.translate(x-s*0.55,y-s*0.82+wob);cxr.rotate(-0.35);
+  cxr.fillStyle='#1c2246';cxr.fillRect(-s*0.24,-s*0.06,s*0.48,s*0.08);cxr.fillRect(-s*0.15,-s*0.33,s*0.3,s*0.29);
+  cxr.fillStyle='hsl('+hue+',70%,55%)';cxr.fillRect(-s*0.15,-s*0.14,s*0.3,s*0.06);cxr.restore();
+  /* ojo único que mira */
+  var er=s*0.42;
+  cxr.fillStyle='#fdfaf1';cxr.beginPath();cxr.arc(x,y-s*0.03+wob,er,0,6.28);cxr.fill();
+  var dx=lookX-x,dy=lookY-y,dl=Math.max(Math.hypot(dx,dy),1),pr=er*0.44;
+  var ex=x+dx/dl*er*0.34,ey=y-s*0.03+wob+dy/dl*er*0.34;
+  var ig=cxr.createRadialGradient(ex,ey,1,ex,ey,pr);
+  ig.addColorStop(0,'#20263f');ig.addColorStop(0.75,'#20263f');ig.addColorStop(0.78,'hsl(210,80%,55%)');ig.addColorStop(1,'hsl(210,80%,45%)');
+  cxr.fillStyle=ig;cxr.beginPath();cxr.arc(ex,ey,pr,0,6.28);cxr.fill();
+  cxr.fillStyle='rgba(255,255,255,.85)';cxr.beginPath();cxr.arc(ex-pr*0.3,ey-pr*0.35,pr*0.22,0,6.28);cxr.fill();
+  /* monóculo */
+  cxr.strokeStyle='hsl(45,80%,70%)';cxr.lineWidth=Math.max(2,s*0.05);cxr.beginPath();cxr.arc(x,y-s*0.03+wob,er+s*0.05,0,6.28);cxr.stroke();
+  cxr.beginPath();cxr.moveTo(x+er+s*0.04,y+s*0.1+wob);cxr.quadraticCurveTo(x+er+s*0.18,y+s*0.4+wob,x+er+s*0.1,y+s+wob);cxr.stroke();
+  /* bigote */
+  cxr.strokeStyle='#20263f';cxr.lineWidth=Math.max(2.5,s*0.06);cxr.lineCap='round';
+  cxr.beginPath();cxr.moveTo(x-s*0.05,y+er*0.72+wob);cxr.quadraticCurveTo(x-s*0.28,y+er*0.6+wob,x-s*0.4,y+er*0.4+wob);cxr.stroke();
+  cxr.beginPath();cxr.moveTo(x+s*0.05,y+er*0.72+wob);cxr.quadraticCurveTo(x+s*0.28,y+er*0.6+wob,x+s*0.4,y+er*0.4+wob);cxr.stroke();
+  /* boca según mood */
+  if(opt.mood==='feliz'||opt.mood==='eat'){cxr.strokeStyle='#20263f';cxr.lineWidth=Math.max(2,s*0.05);
+    cxr.beginPath();cxr.arc(x,y+s*0.34+wob,s*0.16,0.2,2.94);cxr.stroke()}
+}
+
+/* ============ SENSORES: inclinación (acelerómetro/giroscopio) para juegos móviles ============ */
+var TILT={on:false,x:0,y:0,avail:('DeviceOrientationEvent' in window)&&VPC()==='mobile',need:false};
+try{TILT.need=typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'}catch(e){}
+function tiltHandler(e){
+  /* gamma: izq/der (-90..90), beta: adelante/atras (-180..180) */
+  var gx=e.gamma||0,by=(e.beta||0)-40; /* 40deg = sostener el telefono comodo */
+  TILT.x=Math.max(-1,Math.min(1,gx/32));
+  TILT.y=Math.max(-1,Math.min(1,by/32))}
+function tiltEnable(cb){
+  function attach(){window.addEventListener('deviceorientation',tiltHandler);TILT.on=true;cap('muta_sensor',{tipo:'tilt',granted:true});if(cb)cb(true)}
+  if(TILT.need){
+    DeviceOrientationEvent.requestPermission().then(function(p){
+      if(p==='granted')attach();else{cap('muta_sensor',{tipo:'tilt',granted:false});if(cb)cb(false)}}).catch(function(){if(cb)cb(false)})}
+  else attach()}
+function tiltDisable(){window.removeEventListener('deviceorientation',tiltHandler);TILT.on=false}
+/* botón de inclinación en el HUD del archivo */
+(function(){
+  var btn=$('#arcTilt');if(!btn)return;
+  if(!TILT.avail){btn.style.display='none';return}
+  btn.addEventListener('click',function(){
+    if(TILT.on){tiltDisable();btn.textContent='🎚 Inclinar: OFF';btn.classList.remove('on')}
+    else tiltEnable(function(ok){if(ok){btn.textContent='🎚 Inclinar: ON';btn.classList.add('on');
+      toast('Inclina el teléfono para mover a tu criatura 📱',4000)}else toast('No se pudo activar el sensor. Usa el dedo.',3500)})});
+})();
+
+/* ---- foto del creador (lazy) ---- */
+var FOTO="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBUODAsLDBkSEw8VHhsgHx4bHR0hJTApISMtJB0dKjkqLTEzNjY2ICg7Pzo0PjA1NjP/2wBDAQkJCQwLDBgODhgzIh0iMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzP/wAARCABwAHADASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAABAUDBgcBAgD/xAA9EAACAQMCBAIGBwYGAwAAAAABAgMABBEFIQYSEzFBUQciMmFxgRQjQlKRwdElJjNjcrEVFiSSofBDVWL/xAAZAQACAwEAAAAAAAAAAAAAAAACAwABBAX/xAAeEQADAQACAwEBAAAAAAAAAAAAAQIRAyESMUEiM//aAAwDAQACEQMRAD8Ad6dh4ruykgLxF23x2qk3dsIr+WNeysQK17hm1SSG+DKD9c1ZtrsAh4hvEA2ElJpdJjJf6aAIoQR2rzLpZlmEyZ51G2KOhSjYl91CngTWiSawubhOm0bcp70x0Xhu7uj9Htoi7qM8o8qaDOKaaGIVu3abUZbH1dnj7n3VGyJAi8G64O2nyfiP1oGXTJ4JujIYhKJBEY+ovMrE4AIztvRHHfGVvoOndHTeI767vpgQArerGO2SaxXUdYvLy8lvZrmR5ieZmLHJ99RS2Tyw3I8Ha9/65/8Acv615PBevkH9nt/vX9azTS/SbxFBE4uNUubmLkKgGUhlONt60Xg7izT+I9MQXvE2p2moov1sPPs2PFdu1U00WnpeNMs57LTbe2uIzHLGgDKTnFMEWhrUxm2jMV1JdJy7TSe03xoyOmz6FP2SKK94ri12iBFfDC4F6P5zVnXEkH7zXhx9v8q0nhwYlvh/ONUXiKL947r+r8qVbyENhftiuGD3UfDbZ8K7BF2plbw0pUNaB0tM+FAcQyjSdCub/sYVBGfE57VZooPdSDj+y6vB9yBsFdGbbw5qJewc6Me0/h3XeLZnmtLd3iZiGkbZR86tT+iR4VHVvxzEZOF7GtN4Dt0tuBrARoBzoWYAeZNS3j88hXtU5LaXQ7g4pp9mRSei2aNT0bwFe+61VJoLzQdZEcmY5YCGDr5Vukt5b24+tmRQPM1QPSLpYlNvq9viSBl6cjLuB5Gh4+Sm8ovn4ZlbJrvCWpxavwzY3kQwHTDL91gcEfjVhSs+9Ec/W4JVect0rmRceQ2P51oKVpRhfslFdNfCuOcUWFAPD21zfj+capvES/vDc/1D+1XHh84v9SHlMaovE99FDxHeh3wFwc/Ks/J/NDYpTbbJIMGmdsvaqPBxNFDdurD1M7Grlp95FNGr8yjm7DO9JhjfJUuhzEoxQuv6cdS4e1CzUZaWBgoH3sZH/OKMhO1EruKcCZw2raxpfBeippxjTmtQTzIXZmGeYYHlivuHr/UtcsriW5Uq0Sg85Tlyc+VXmzt7ZdKMAX1I3dMN/UaCE1nDp10kCxwqDy+A5j44oK7Rq4k0zLL7Sbu91N3EYkcON5yxXl9wFWddIafhq801okVpYjyhM4LeB37dhXqS/jtrzCvHLvh1Q5ZfeaaG9jWIylhyAZzSnVMc+KVrOejGyXSdOk08MHMgFwzg/a7Mvy2rQ0FZ/wCjwPJJd3Gcq4ORj2TnYfgK0Fa2cTbns5vOpV9EgqOU4FSDtUM5wKaJA9CX9p6ov82sy480yUarfXSZZFZcL944rS9MuYLTVdUaaVEHUzuap2pyQa9xO1ssxFpI43A7kCkXjjCVDqjG7lmiidXDiVmyF8BWicEPbXNsJSp6q7EMe1T8Q+j6G3mWX6S0iq/MARXnhaOJDcOIem6yFfiKVS8ehvFP0vKzrHGWY4AGaQt6RNBilaNrk8ynB9U96mvrnlsZTn7BrI7HhXWdb6t3ZW4eEyMAxYDO9NidWl1TTw1Oz4o0/Up70W0/NCSr+WCRg/2qlalc6zxNA6W8C2lnBIw6rYTB8csTQltwLxRbS88ccceRyt9bjINNo7e7jlvNC1ONXVV6hyfUceDKanjnaGrl+UVe00CWWd44dWT6UwPMEkzk+e1EQanPZ2hsbi566xyNhvE+AFc0lba0kvlim6UiA+uceqM0Pw5p8moar9Knz01k5lDfa95oaXtsvzTxSuzaOArm0fQEtI5YzeQkm5jGzIzEkA/KretZdpVxFw6NU14EMLqXnCE7MoAAHzOT860DSNasNZtUnsp1fIyUz6y/EVolYkZKf6Y1Hah7g7VMDtUE/arYOmerPbanHKv+KRQSH/yMcmkUtpNp05kj12JxH63OBVFguSAN6NluOa2cf/FYk1hta1j6HiS+1HUoo5rwyxlsZOwNWWKRY88uO/hWOo9xNGsVsT1fDBxWn8NQPDw5bz3eetIpEKN9o4O5/CiUO30U7UotOnR6bdQzPqUmIgMAE4FKrp+HdMK2Ok203PK2RmZlUE+OM0iOqtfRNNM/qxjdfLHhS7SrlrvWJb2T2UBI/KtcwksMtVr0s+naqDrXSLHoW8ijBJOce0d6lubSK8kn0W9JW9tGY2swblMsLHKkH4HB+FV3ka3uOumfW9oeYr69vZGnMs0bzqETpSCQq0OM+z5ZBGR22FFcbOIGbyu/Qpk4RW0vZVlLyAtzEOds/nTyz0pokD3GIbVRliTgyDy9y0n/AMzXcfOXhWabsjuR6vy86VXN/qN9B0JHIgLliozuT5k96XHH9sZXJnUDDiXiEapKtran/SRHuNuc/pQFjqN1Y3CSwTNG69ipwRUKWZiUM3c9qlSDMuMdqJ63rFrEjSNB9JdxHyw6pF117dRdmH61fLTWLHVoepZ3Cybbr2YfKsFCCJGduy/8mp4Lu4tpVMErJIpyWU45T5VMZfRWkfAFFvL9Sf6aWh9hU5clMe6sBuDuDrBtR4ghj3EMYMkrDwUfr2+dXvVL1k1WaLZVhkEsQHYJyYGPwoHg+wXTeHpr1UzLdnlXPiq9x88n8KW67f5kt5lOcKUL/eHkffj+1buKfGdMXJW1gHf3JQ3EMRx1pi2B4A70wtgLWwRBs8hyfhS2GAS6pO7n6uI7mmAYyyh+y42FMQDGRbmQVDI3ImPOvak9OuLF1GLOcKKIEDFqHBlkwqDcmhlUXM45F5UzhRXu8uze3ItodoU9o+dE2cYSRnx6sak1RYHMoe96Q9mMYrqRBZmJ7Yr60Bd3lPdjREwA5SPE1RYHqOI3tYT2bMrfAf8ARXlj0IlDfxXOT86+1ORBrUYcjkEIPyG5/KhkkaWQ3MvcnCCqZEJEs528qLj064YjtTeC2Gd1qwaHaI+oxM8fNHFmRxjwG/6Vz5Tp4bm0lo0dWsNMttJmAWRIFeMjzxv8wc1StZIHMcZDEF1Hn5j31cuJHNy55WIkB54nHgf0NZ5qryKriQMH8R5/Cuj6WGD29GxXqXX0RPYLl5D50zEWJAAMAClulN1J+rgkyID+Ip2RyEtg5q0RnAvl2oDV74QQdKM+salmuuRTikEvPc3OWzio2RDDS4cQF2G5o+b6jS5m8ZTyivFshWFVAOak1VeXoWo+yMt8anwn0Gtx04QK5cycpjz4VxiVwMGg72QlkGDVEAb1zPrCK2SvS3x3O/b/AL5UUsZyGkIXG23ZR5ChLc9bV3fH8JMb7Dfx/CjmVpmD8pKg+qMY+dQs/9k=";
+})();
+</script>
+</body>
+</html>
