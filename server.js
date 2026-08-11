@@ -15,6 +15,28 @@ function activePresence(){const now=Date.now();for(const [id,time] of sessions)i
 function readBody(req,limit=1000){return new Promise((resolve,reject)=>{let body='';req.on('data',chunk=>{body+=chunk;if(body.length>limit){reject(new Error('too_large'));req.destroy()}});req.on('end',()=>resolve(body));req.on('error',reject)})}
 function cleanName(value){return String(value||'').normalize('NFKC').replace(/[^\p{L}\p{N} _.-]/gu,'').replace(/\s+/g,' ').trim().slice(0,16)}
 function board(game){if(!scores.has(game))scores.set(game,new Map());return scores.get(game)}
+/* Gen 19: cartelera cultural — titular en vivo de westthorn.cl (pedido por GEN Fractal).
+   Fetch server-side con cache 1h; si la fuente no responde, se informa sin inventar. */
+let cartCache={t:0,data:null};
+async function fetchCartelera(){
+  const ctrl=new AbortController();const to=setTimeout(()=>ctrl.abort(),6000);
+  try{
+    const r=await fetch('https://www.westthorn.cl/feed/',{signal:ctrl.signal,headers:{'User-Agent':'MUTA/19 (+https://muta.revenuehub.cloud)','Accept':'application/rss+xml, application/xml, text/xml'}});
+    clearTimeout(to);
+    if(!r.ok)throw new Error('status '+r.status);
+    const xml=(await r.text()).slice(0,300000);
+    const items=[];const re=/<item>[\s\S]*?<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>[\s\S]*?<link>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/link>[\s\S]*?<\/item>/g;
+    let m;
+    while((m=re.exec(xml))&&items.length<3){
+      const t=m[1].replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').replace(/&#8211;|&ndash;/g,'–').replace(/&#8217;|&rsquo;/g,'’').replace(/&#8220;|&ldquo;/g,'“').replace(/&#8221;|&rdquo;/g,'”').replace(/&quot;/g,'"').replace(/&#039;/g,"'").replace(/\s+/g,' ').trim().slice(0,140);
+      const l=String(m[2]||'').trim();
+      if(!/^https:\/\/(www\.)?westthorn\.cl\//.test(l))continue;
+      if(t)items.push({titular:t,link:l});
+    }
+    if(!items.length)throw new Error('sin items');
+    return {ok:true,fuente:'WestThorn · westthorn.cl',items,actualizado:new Date().toISOString()};
+  }catch(e){clearTimeout(to);return null}
+}
 function top(game){return Array.from(board(game).values()).sort((a,b)=>b.score-a.score||a.time-b.time).slice(0,10).map(x=>({name:x.name,score:x.score}))}
 function allowed(ip){const now=Date.now(),hits=(rate.get(ip)||[]).filter(t=>now-t<60000);if(hits.length>=8)return false;hits.push(now);rate.set(ip,hits);return true}
 function serveStatic(res,filePath){
@@ -36,7 +58,15 @@ const server=http.createServer(async(req,res)=>{
     try{const data=JSON.parse(await readBody(req,500)||'{}'),id=String(data.id||'').slice(0,64);if(id){if(activePresence()>=5000&&!sessions.has(id))return json(res,429,{ok:0});sessions.set(id,Date.now())}return json(res,200,{ok:1})}catch(e){return json(res,400,{ok:0})}
   }
   if(req.method==='GET'&&url.pathname==='/leaderboard'){
-    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:18,storage:'temporal-memory',game,scores:top(game)});
+    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:19,storage:'temporal-memory',game,scores:top(game)});
+  }
+  if(req.method==='GET'&&url.pathname==='/cartelera'){
+    const now=Date.now();
+    if(cartCache.data&&now-cartCache.t<3600000)return json(res,200,cartCache.data);
+    const fresh=await fetchCartelera();
+    if(fresh){cartCache={t:now,data:fresh};return json(res,200,fresh)}
+    if(cartCache.data)return json(res,200,cartCache.data);
+    return json(res,200,{ok:false,error:'sin_senal'});
   }
   if(req.method==='POST'&&url.pathname==='/score'){
     const ip=String(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').split(',')[0].trim();if(!allowed(ip))return json(res,429,{error:'Espera un momento antes de volver a guardar.'});
