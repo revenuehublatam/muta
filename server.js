@@ -37,6 +37,31 @@ async function fetchCartelera(){
     return {ok:true,fuente:'WestThorn · westthorn.cl',items,actualizado:new Date().toISOString()};
   }catch(e){clearTimeout(to);return null}
 }
+/* Gen 20: clima real de Santiago (pedido por GEN Radiante) — Open-Meteo, sin API key,
+   atribución CC BY 4.0. Fetch server-side con cache 1h; si falla, se informa sin inventar. */
+let climaCache={t:0,data:null};
+async function fetchClima(){
+  const ctrl=new AbortController();const to=setTimeout(()=>ctrl.abort(),6000);
+  try{
+    const u='https://api.open-meteo.com/v1/forecast?latitude=-33.4489&longitude=-70.6693&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&current=temperature_2m,weather_code,is_day&timezone=America%2FSantiago&forecast_days=8';
+    const r=await fetch(u,{signal:ctrl.signal,headers:{'User-Agent':'MUTA/20 (+https://muta.revenuehub.cloud)','Accept':'application/json'}});
+    clearTimeout(to);
+    if(!r.ok)throw new Error('status '+r.status);
+    const j=await r.json();
+    const d=j&&j.daily;if(!d||!Array.isArray(d.time)||!d.time.length)throw new Error('sin daily');
+    const dias=d.time.slice(0,8).map((fecha,i)=>({
+      fecha,
+      code:Number(d.weather_code&&d.weather_code[i]),
+      tmax:Math.round(Number(d.temperature_2m_max&&d.temperature_2m_max[i])),
+      tmin:Math.round(Number(d.temperature_2m_min&&d.temperature_2m_min[i])),
+      pp:Number(d.precipitation_probability_max&&d.precipitation_probability_max[i])
+    })).filter(x=>Number.isFinite(x.code)&&Number.isFinite(x.tmax)&&Number.isFinite(x.tmin));
+    if(!dias.length)throw new Error('dias vacios');
+    const cur=j.current||{};
+    return {ok:true,fuente:'Open-Meteo (open-meteo.com, CC BY 4.0)',actualizado:new Date().toISOString(),
+      current:{t:Math.round(Number(cur.temperature_2m)),code:Number(cur.weather_code),is_day:cur.is_day?1:0},dias};
+  }catch(e){clearTimeout(to);return null}
+}
 function top(game){return Array.from(board(game).values()).sort((a,b)=>b.score-a.score||a.time-b.time).slice(0,10).map(x=>({name:x.name,score:x.score}))}
 function allowed(ip){const now=Date.now(),hits=(rate.get(ip)||[]).filter(t=>now-t<60000);if(hits.length>=8)return false;hits.push(now);rate.set(ip,hits);return true}
 function serveStatic(res,filePath){
@@ -58,7 +83,7 @@ const server=http.createServer(async(req,res)=>{
     try{const data=JSON.parse(await readBody(req,500)||'{}'),id=String(data.id||'').slice(0,64);if(id){if(activePresence()>=5000&&!sessions.has(id))return json(res,429,{ok:0});sessions.set(id,Date.now())}return json(res,200,{ok:1})}catch(e){return json(res,400,{ok:0})}
   }
   if(req.method==='GET'&&url.pathname==='/leaderboard'){
-    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:19,storage:'temporal-memory',game,scores:top(game)});
+    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:20,storage:'temporal-memory',game,scores:top(game)});
   }
   if(req.method==='GET'&&url.pathname==='/cartelera'){
     const now=Date.now();
@@ -66,6 +91,14 @@ const server=http.createServer(async(req,res)=>{
     const fresh=await fetchCartelera();
     if(fresh){cartCache={t:now,data:fresh};return json(res,200,fresh)}
     if(cartCache.data)return json(res,200,cartCache.data);
+    return json(res,200,{ok:false,error:'sin_senal'});
+  }
+  if(req.method==='GET'&&url.pathname==='/clima'){
+    const now=Date.now();
+    if(climaCache.data&&now-climaCache.t<3600000)return json(res,200,climaCache.data);
+    const fresh=await fetchClima();
+    if(fresh){climaCache={t:now,data:fresh};return json(res,200,fresh)}
+    if(climaCache.data)return json(res,200,climaCache.data);
     return json(res,200,{ok:false,error:'sin_senal'});
   }
   if(req.method==='POST'&&url.pathname==='/score'){
@@ -89,3 +122,6 @@ const server=http.createServer(async(req,res)=>{
   return json(res,404,{error:'No encontrado'});
 });
 server.listen(Number(process.env.MUTA_PORT)||80,'0.0.0.0');
+/* Gen 20: warm-up de fuentes externas al arrancar (comet_error de Gen 19 fue un arranque frío) */
+setTimeout(async()=>{try{const c=await fetchCartelera();if(c)cartCache={t:Date.now(),data:c}}catch(e){}
+  try{const w=await fetchClima();if(w)climaCache={t:Date.now(),data:w}}catch(e){}},1500);

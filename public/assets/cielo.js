@@ -1,9 +1,13 @@
 /* ============================================================
-   MUTA Gen 19 — EL CIELO CULTURAL DE SANTIAGO (módulo lazy)
-   Nacido de GEN Fractal: «datos sobre arte y cultura en Santiago»
-   + «titular de westthorn.cl con link y fuegos artificiales al compartir».
-   Guía curada con lugares REALES (verificada 11-ago-2026) + titular
-   en vivo de WestThorn vía /cartelera (con estados de carga/error honestos).
+   MUTA Gen 20 — EL CIELO TOTAL DE SANTIAGO (módulo lazy)
+   Gen 19 (GEN Fractal): 12 panoramas culturales reales + cometa WestThorn.
+   Gen 20 profundiza con lo pedido en la ventana:
+   · GEN Radiante: «El clima en Santiago en los próximos 8 días» → /clima
+     (Open-Meteo, server-side, cache 1h, estados honestos) y el cielo se
+     tiñe según el clima REAL de ahora.
+   · GEN Silvestre: «un cielo con todos los puntos de escalada en Santiago»
+     → constelación LA CUMBRE: 4 montañas/escalada reales verificadas.
+   Guía curada con lugares REALES (verificada 12-ago-2026).
    ============================================================ */
 (function(){
 "use strict";
@@ -14,10 +18,11 @@ var esc=API.esc||function(t){return String(t==null?"":t).replace(/[&<>"']/g,func
 var blip=API.blip||function(){},haptic=API.haptic||function(){},addEnergy=API.addEnergy||function(){};
 var VPC=API.VPC||function(){return window.innerWidth<=720?"mobile":"desktop"};
 var GEN=API.GEN||"GEN-????",REDUCED=!!API.REDUCED;
-var ev=function(action,extra){var p={action:action,generation:19,experience_id:"cielo",viewport_class:VPC()};if(extra)for(var k in extra)p[k]=extra[k];cap("muta_constellation",p)};
+var ev=function(action,extra){var p={action:action,generation:20,experience_id:"cielo",viewport_class:VPC()};if(extra)for(var k in extra)p[k]=extra[k];cap("muta_constellation",p)};
+var evw=function(action,extra){var p={action:action,generation:20,experience_id:"cielo",viewport_class:VPC()};if(extra)for(var k in extra)p[k]=extra[k];cap("muta_weather",p)};
 
 /* ---------- datos curados (reales, con link oficial o de referencia) ---------- */
-var VERIFICADO="11-ago-2026";
+var VERIFICADO="12-ago-2026";
 var CONSTELACIONES=[
  {nombre:"EL MUSEO",hue:45,stars:[
   {id:"precolombino",fx:0.14,fy:0.22,nombre:"Museo Chileno de Arte Precolombino",tipo:"Museo · Santiago Centro",desc:"5.000 años de arte de América en pleno centro. Uno de los museos mejor curados de Chile.",link:"https://precolombino.cl"},
@@ -33,7 +38,12 @@ var CONSTELACIONES=[
   {id:"lastarria",fx:0.30,fy:0.55,nombre:"Barrio Lastarria",tipo:"Paseo cultural",desc:"Librerías, cine arte y terrazas a pasos del cerro Santa Lucía: el paseo cultural clásico de Santiago.",link:"https://es.wikipedia.org/wiki/Barrio_Lastarria"},
   {id:"italia",fx:0.48,fy:0.62,nombre:"Barrio Italia",tipo:"Diseño y galerías",desc:"Anticuarios, diseño y galerías entre Providencia y Ñuñoa: el barrio creativo para perderse una tarde.",link:"https://es.wikipedia.org/wiki/Barrio_Italia"},
   {id:"santalucia",fx:0.63,fy:0.54,nombre:"Cerro Santa Lucía",tipo:"Parque histórico",desc:"El jardín donde se fundó Santiago en 1541. Subida corta, vista total de la ciudad.",link:"https://es.wikipedia.org/wiki/Cerro_Santa_Luc%C3%ADa"},
-  {id:"mapocho",fx:0.80,fy:0.63,nombre:"Centro Cultural Estación Mapocho",tipo:"Centro cultural · Barrio Mapocho",desc:"La ex estación de trenes de 1912 convertida en un centro cultural monumental junto al río.",link:"https://www.estacionmapocho.cl"}]}
+  {id:"mapocho",fx:0.80,fy:0.63,nombre:"Centro Cultural Estación Mapocho",tipo:"Centro cultural · Barrio Mapocho",desc:"La ex estación de trenes de 1912 convertida en un centro cultural monumental junto al río.",link:"https://www.estacionmapocho.cl"}]},
+ {nombre:"LA CUMBRE",hue:205,gen:"GEN Silvestre",stars:[
+  {id:"manquehue",fx:0.16,fy:0.86,nombre:"Cerro Manquehue",tipo:"Trekking · Vitacura",desc:"La cumbre clásica de iniciación de Santiago (1.638 m): subida exigente y vista total de la cuenca. Ideal para empezar a escalar cerros.",link:"https://es.wikipedia.org/wiki/Cerro_Manquehue"},
+  {id:"provincia",fx:0.40,fy:0.79,nombre:"Cerro Provincia",tipo:"Trekking · Sierra de Ramón",desc:"Uno de los cerros más subidos de Chile (2.750 m): jornada completa por la Sierra de Ramón, el patio de entrenamiento de Santiago.",link:"https://es.wikipedia.org/wiki/Cerro_Provincia"},
+  {id:"maipo",fx:0.62,fy:0.88,nombre:"Cajón del Maipo",tipo:"Escalada y montaña · San José de Maipo",desc:"El territorio outdoor de Santiago: trekking, ríos y roca. Sus sectores como El Manzano son clásicos de la escalada deportiva chilena.",link:"https://es.wikipedia.org/wiki/Caj%C3%B3n_del_Maipo"},
+  {id:"plomo",fx:0.85,fy:0.78,nombre:"Cerro El Plomo",tipo:"Andinismo · 5.424 m",desc:"La cumbre nevada que ves desde toda la ciudad. Objetivo mayor del andinismo santiaguino, con historia inca en su cima.",link:"https://es.wikipedia.org/wiki/Cerro_El_Plomo"}]}
 ];
 
 /* ---------- DOM propio del módulo ---------- */
@@ -61,24 +71,34 @@ css.textContent=
 "#cieloCard a.go{background:#223060;border:1px solid #39406e;color:#dfe6ff}"+
 "#cieloCard button.shareStar{background:#ffd98a;border:none;color:#3a2a05}"+
 "#cieloCard button.cx{flex:0 0 auto;background:transparent;border:1px solid #39406e;color:#aab4dd;min-width:44px}"+
-"#cieloWt{display:none;position:absolute;z-index:3;left:12px;right:12px;top:auto;bottom:84px;pointer-events:none;text-align:center;font-size:11px;color:#9fb0e8}";
+"#cieloWt{display:none;position:absolute;z-index:3;left:12px;right:12px;top:auto;bottom:84px;pointer-events:none;text-align:center;font-size:11px;color:#9fb0e8}"+
+"#cieloClima{position:relative;z-index:3;display:flex;gap:6px;overflow-x:auto;padding:8px 12px 4px;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none}"+
+"#cieloClima::-webkit-scrollbar{display:none}"+
+"#cieloClima .wxc{flex:0 0 auto;min-width:58px;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:rgba(13,17,42,.82);border:1px solid #2c355f;border-radius:12px;padding:6px 8px;color:#dfe6ff;cursor:pointer;font-size:11px;line-height:1.25}"+
+"#cieloClima .wxc .we{font-size:16px}"+
+"#cieloClima .wxc .wt{color:#aab4dd;font-size:10px}"+
+"#cieloClima .wxc.hoy{border-color:#ffd98a}"+
+"#cieloClima .wxmsg{flex:0 0 auto;align-self:center;font-size:11px;color:#8b96c6;padding:6px 4px}";
 document.head.appendChild(css);
 
 var wrap=document.createElement("div");wrap.id="cieloWrap";
 wrap.setAttribute("role","dialog");wrap.setAttribute("aria-modal","true");wrap.setAttribute("aria-label","El Cielo Cultural de Santiago");
 wrap.innerHTML=
 '<canvas id="cieloCv" aria-label="Cielo con constelaciones culturales de Santiago. Toca una estrella para ver el panorama."></canvas>'+
-'<div id="cieloTop"><div><h2>🌌 El Cielo Cultural de Santiago</h2>'+
-'<div class="sub2">Cada estrella es un panorama real de arte y cultura. Tócala, conócelo y compártelo: los fuegos artificiales son de verdad (bueno, de canvas).</div></div>'+
+'<div id="cieloTop"><div><h2>🌌 El Cielo Total de Santiago</h2>'+
+'<div class="sub2">Cada estrella es un lugar real: cultura, barrios y ahora también montañas. Arriba, el clima real de los próximos 8 días. Toca cualquier cosa que brille.</div></div>'+
 '<button id="cieloX" aria-label="Cerrar el cielo">✕</button></div>'+
+'<div id="cieloClima" role="list" aria-label="Clima real de Santiago, próximos 8 días"><span class="wxmsg">🌡 midiendo el cielo real de Santiago…</span></div>'+
 '<div id="cieloCard"></div>'+
-'<div id="cieloFoot"><b>Nacida de GEN Fractal</b> · «datos sobre arte y cultura en Santiago» + «titular de westthorn.cl con fuegos artificiales al compartir». Guía curada con lugares reales, verificada '+VERIFICADO+' — horarios y entradas: revisa cada sitio oficial. Titular en vivo: WestThorn (westthorn.cl).</div>';
+'<div id="cieloFoot"><b>Nacido de genes reales</b> · cultura: GEN Fractal · clima 8 días: GEN Radiante · cumbres y escalada: GEN Silvestre. Guía curada con lugares reales, verificada '+VERIFICADO+' — horarios y accesos: revisa cada sitio oficial. Titular en vivo: WestThorn (westthorn.cl) · Clima: Open-Meteo.</div>';
 document.body.appendChild(wrap);
 
 var cv=wrap.querySelector("#cieloCv"),cx2=cv.getContext("2d");
 var card=wrap.querySelector("#cieloCard");
-var W=0,H=0,DPR=1,topPad=90,botPad=110;
+var climaEl=wrap.querySelector("#cieloClima");
+var W=0,H=0,DPR=1,topPad=150,botPad=110;
 function resize(){DPR=Math.min(window.devicePixelRatio||1,2);W=wrap.clientWidth||window.innerWidth;H=wrap.clientHeight||window.innerHeight;
+  try{var th=wrap.querySelector("#cieloTop").offsetHeight||70,ch=climaEl.offsetHeight||64;topPad=Math.max(120,th+ch+18)}catch(e){topPad=150}
   cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);cx2.setTransform(DPR,0,0,DPR,0,0);layout()}
 var bgStars=[],allStars=[],comet=null,cometState="loading",cometData=null,fw=[],t0=0,running=false,raf=null;
 function layout(){
@@ -89,9 +109,10 @@ function layout(){
   CONSTELACIONES.forEach(function(c,ci){
     c.stars.forEach(function(s,si){
       var fx=s.fx,fy=s.fy;
-      if(mob){ /* en móvil: 3 columnas verticales, una por constelación */
-        fx=0.18+ci*0.32+((si%2)*0.13-0.05);
-        fy=0.10+si*0.19+(ci%2)*0.04;
+      if(mob){ /* en móvil: cuadrícula 2×2, un bloque por constelación */
+        var colB=0.16+(ci%2)*0.46,rowB=(ci<2)?0.05:0.55;
+        fx=colB+(si%2)*0.24;
+        fy=rowB+Math.floor(si/2)*0.185+((si%2)*0.03);
       }
       allStars.push({c:c,s:s,x:fx*W,y:topPad+fy*(H-topPad-botPad),r:mob?15:13,ph:Math.random()*6.28});
     });
@@ -106,11 +127,81 @@ function loadCartelera(){
     }else{cometState="off";ev("comet_error")}
   }).catch(function(){cometState="off";ev("comet_error")});
 }
+/* ---------- clima real de Santiago (GEN Radiante: «el clima en los próximos 8 días») ---------- */
+var clima={state:"loading",data:null},wx={mode:"none",drops:[]};
+function wmo(code,isDay){
+  if(code===0)return isDay===0?{e:"🌙",t:"Despejado"}:{e:"☀️",t:"Despejado"};
+  if(code===1||code===2)return {e:"🌤",t:"Parcial"};
+  if(code===3)return {e:"☁️",t:"Nublado"};
+  if(code===45||code===48)return {e:"🌫",t:"Niebla"};
+  if(code>=51&&code<=57)return {e:"🌦",t:"Llovizna"};
+  if((code>=61&&code<=67)||(code>=80&&code<=82))return {e:"🌧",t:"Lluvia"};
+  if((code>=71&&code<=77)||code===85||code===86)return {e:"🌨",t:"Nieve"};
+  if(code>=95)return {e:"⛈",t:"Tormenta"};
+  return {e:"🌡",t:"Clima"};
+}
+var DIAS_ES=["dom","lun","mar","mié","jue","vie","sáb"];
+var DIAS_FULL=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+function applyClimaFx(){
+  wx.mode="none";wx.drops=[];
+  if(REDUCED||clima.state!=="ok"||!clima.data.current)return;
+  var c=clima.data.current.code;
+  if((c>=51&&c<=67)||(c>=80&&c<=82)||c>=95)wx.mode="rain";
+  else if((c>=71&&c<=77)||c===85||c===86)wx.mode="snow";
+  else if(c===3||c===45||c===48)wx.mode="dim";
+  else if(c===1||c===2)wx.mode="semi";
+  if(wx.mode==="rain"||wx.mode==="snow"){
+    var n=wx.mode==="rain"?70:45;
+    for(var i=0;i<n;i++)wx.drops.push({x:Math.random(),y:Math.random(),v:wx.mode==="rain"?(6+Math.random()*5):(0.7+Math.random()*0.9),ph:Math.random()*6.28});
+  }
+}
+function renderClima(){
+  if(clima.state==="loading"){climaEl.innerHTML='<span class="wxmsg">🌡 midiendo el cielo real de Santiago…</span>';return}
+  if(clima.state!=="ok"){climaEl.innerHTML='<span class="wxmsg">🌡 Sin señal del clima ahora (Open-Meteo). Las estrellas siguen brillando.</span>';return}
+  var d=clima.data,html="";
+  if(d.current&&isFinite(d.current.t)){var wc=wmo(d.current.code,d.current.is_day);
+    html+='<div class="wxc hoy" data-dia="ahora" role="listitem"><span class="we">'+wc.e+'</span><span><b>Ahora</b></span><span class="wt">'+esc(String(d.current.t))+'°C</span></div>'}
+  d.dias.forEach(function(day,i){
+    var w2=wmo(day.code,1),dt=new Date(day.fecha+"T12:00:00");
+    var lbl=i===0?"Hoy":DIAS_ES[dt.getDay()]+" "+dt.getDate();
+    html+='<div class="wxc" data-dia="'+i+'" role="listitem"><span class="we">'+w2.e+'</span><span>'+esc(lbl)+'</span><span class="wt">'+esc(String(day.tmax))+'° / '+esc(String(day.tmin))+'°</span></div>';
+  });
+  climaEl.innerHTML=html;
+  try{setTimeout(resize,60)}catch(e){}
+}
+function showDia(i){
+  var d=clima.data;if(!d)return;
+  var day=d.dias[i];if(!day)return;
+  var w2=wmo(day.code,1),dt=new Date(day.fecha+"T12:00:00");
+  evw("day",{dia:day.fecha,code:day.code});blip(587,0.1);haptic(10);
+  card.innerHTML='<div class="tipo">Clima real · Santiago de Chile</div>'+
+   '<h3>'+w2.e+' '+esc(DIAS_FULL[dt.getDay()])+' '+dt.getDate()+' — '+esc(w2.t)+'</h3>'+
+   '<p>Máxima '+esc(String(day.tmax))+'°C · mínima '+esc(String(day.tmin))+'°C'+(isFinite(day.pp)?' · probabilidad de lluvia '+esc(String(day.pp))+'%':'')+'.</p>'+
+   '<div class="gene">🌡 Dato real pedido por GEN Radiante · fuente: Open-Meteo · actualizado '+esc(String(d.actualizado||"").slice(0,16).replace("T"," "))+' UTC</div>'+
+   '<div class="row"><button class="cx" aria-label="Cerrar" style="flex:1">Cerrar</button></div>';
+  card.classList.add("open");
+  card.querySelector(".cx").addEventListener("click",closeCard);
+}
+climaEl.addEventListener("click",function(e){
+  var c=e.target.closest(".wxc");if(!c)return;
+  var v=c.getAttribute("data-dia");
+  if(v==="ahora"){showDia(0);return}
+  showDia(parseInt(v,10)||0);
+});
+function loadClima(){
+  clima.state="loading";renderClima();
+  fetch("/clima",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){
+    if(d&&d.ok&&d.dias&&d.dias.length){clima.data=d;clima.state="ok";renderClima();applyClimaFx()}
+    else{clima.state="off";renderClima();evw("error")}
+  }).catch(function(){clima.state="off";renderClima();evw("error")});
+}
 /* ---------- dibujo ---------- */
 function draw(ts){
   if(!t0)t0=ts;var t=(ts-t0)/1000;
   cx2.clearRect(0,0,W,H);
-  bgStars.forEach(function(b){var a=0.25+0.5*Math.abs(Math.sin(t*0.7+b.tw));cx2.fillStyle="rgba(214,224,255,"+a+")";cx2.beginPath();cx2.arc(b.x,b.y,b.r,0,6.28);cx2.fill()});
+  var starMul=wx.mode==="dim"?0.4:wx.mode==="semi"?0.7:(wx.mode==="rain"||wx.mode==="snow")?0.55:1;
+  bgStars.forEach(function(b){var a=(0.25+0.5*Math.abs(Math.sin(t*0.7+b.tw)))*starMul;cx2.fillStyle="rgba(214,224,255,"+a+")";cx2.beginPath();cx2.arc(b.x,b.y,b.r,0,6.28);cx2.fill()});
+  if(wx.mode==="dim"){cx2.fillStyle="rgba(120,130,165,.10)";cx2.fillRect(0,0,W,H)}
   /* líneas de constelación */
   CONSTELACIONES.forEach(function(c){
     var pts=allStars.filter(function(a){return a.c===c});
@@ -156,6 +247,13 @@ function draw(ts){
   for(var i=fw.length-1;i>=0;i--){var p=fw[i];p.x+=p.vx;p.y+=p.vy;p.vy+=0.045;p.l-=0.012;
     if(p.l<=0){fw.splice(i,1);continue}
     cx2.fillStyle="hsla("+p.hue+",95%,"+(55+p.l*30)+"%,"+p.l+")";cx2.beginPath();cx2.arc(p.x,p.y,2.2*p.l+0.4,0,6.28);cx2.fill()}
+  /* clima real: precipitación honesta según Open-Meteo (ahora mismo en Santiago) */
+  if(wx.mode==="rain"){cx2.strokeStyle="rgba(150,180,235,.5)";cx2.lineWidth=1.1;
+    wx.drops.forEach(function(dd){dd.y+=dd.v/H;if(dd.y>1){dd.y=-0.02;dd.x=Math.random()}
+      var dx3=dd.x*W,dy3=dd.y*H;cx2.beginPath();cx2.moveTo(dx3,dy3);cx2.lineTo(dx3-2.5,dy3+11);cx2.stroke()})}
+  else if(wx.mode==="snow"){cx2.fillStyle="rgba(235,242,255,.8)";
+    wx.drops.forEach(function(dd){dd.y+=dd.v/H;dd.ph+=0.02;if(dd.y>1){dd.y=-0.02;dd.x=Math.random()}
+      cx2.beginPath();cx2.arc(dd.x*W+Math.sin(dd.ph)*8,dd.y*H,1.7,0,6.28);cx2.fill()})}
   if(running)raf=requestAnimationFrame(draw);
 }
 function fireworks(n){
@@ -176,7 +274,7 @@ function showStar(a){
   openStar=a;ev("star",{star_id:a.s.id});blip(587,0.12);haptic(12);
   card.innerHTML='<div class="tipo">'+esc(a.s.tipo)+' · constelación '+esc(a.c.nombre)+'</div>'+
    '<h3>'+esc(a.s.nombre)+'</h3><p>'+esc(a.s.desc)+'</p>'+
-   '<div class="gene">⭐ Panorama real · guía curada por MUTA, verificada '+VERIFICADO+' · pedida por GEN Fractal</div>'+
+   '<div class="gene">⭐ Panorama real · guía curada por MUTA, verificada '+VERIFICADO+' · pedida por '+esc(a.c.gen||"GEN Fractal")+'</div>'+
    '<div class="row"><a class="go" href="'+esc(a.s.link)+'" target="_blank" rel="noopener">Ver sitio ↗</a>'+
    '<button class="shareStar">🎆 Compartir panorama</button>'+
    '<button class="cx" aria-label="Cerrar">✕</button></div>';
@@ -219,7 +317,7 @@ wrap.querySelector("#cieloX").addEventListener("click",function(){apiClose()});
 function apiOpen(){
   if(wrap.classList.contains("open"))return;
   wrap.classList.add("open");running=true;t0=0;
-  resize();loadCartelera();ev("open");
+  resize();loadCartelera();loadClima();ev("open");
   raf=requestAnimationFrame(draw);
 }
 function apiClose(){wrap.classList.remove("open");running=false;if(raf)cancelAnimationFrame(raf);closeCard()}
