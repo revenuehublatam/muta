@@ -62,6 +62,24 @@ async function fetchClima(){
       current:{t:Math.round(Number(cur.temperature_2m)),code:Number(cur.weather_code),is_day:cur.is_day?1:0},dias};
   }catch(e){clearTimeout(to);return null}
 }
+/* Gen 22: valor UF y dolar del dia (pedido por GEN Sutil) — mindicador.cl, sin API key.
+   Fetch server-side con cache 3h; si la fuente no responde, se informa sin inventar. */
+let ufCache={t:0,data:null};
+async function fetchUF(){
+  const ctrl=new AbortController();const to=setTimeout(()=>ctrl.abort(),6000);
+  try{
+    const r=await fetch('https://mindicador.cl/api',{signal:ctrl.signal,headers:{'User-Agent':'MUTA/22 (+https://muta.revenuehub.cloud)','Accept':'application/json'}});
+    clearTimeout(to);
+    if(!r.ok)throw new Error('status '+r.status);
+    const j=await r.json();
+    const uf=j&&j.uf,dolar=j&&j.dolar;
+    if(!uf||!Number.isFinite(Number(uf.valor)))throw new Error('sin uf');
+    const out={ok:true,fuente:'mindicador.cl (Banco Central de Chile)',actualizado:new Date().toISOString(),
+      uf:{valor:Number(uf.valor),fecha:String(uf.fecha||'').slice(0,10)}};
+    if(dolar&&Number.isFinite(Number(dolar.valor)))out.dolar={valor:Number(dolar.valor),fecha:String(dolar.fecha||'').slice(0,10)};
+    return out;
+  }catch(e){clearTimeout(to);return null}
+}
 function top(game){return Array.from(board(game).values()).sort((a,b)=>b.score-a.score||a.time-b.time).slice(0,10).map(x=>({name:x.name,score:x.score}))}
 function allowed(ip){const now=Date.now(),hits=(rate.get(ip)||[]).filter(t=>now-t<60000);if(hits.length>=8)return false;hits.push(now);rate.set(ip,hits);return true}
 function serveStatic(res,filePath){
@@ -83,7 +101,7 @@ const server=http.createServer(async(req,res)=>{
     try{const data=JSON.parse(await readBody(req,500)||'{}'),id=String(data.id||'').slice(0,64);if(id){if(activePresence()>=5000&&!sessions.has(id))return json(res,429,{ok:0});sessions.set(id,Date.now())}return json(res,200,{ok:1})}catch(e){return json(res,400,{ok:0})}
   }
   if(req.method==='GET'&&url.pathname==='/leaderboard'){
-    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:21,storage:'temporal-memory',game,scores:top(game)});
+    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:22,storage:'temporal-memory',game,scores:top(game)});
   }
   if(req.method==='GET'&&url.pathname==='/cartelera'){
     const now=Date.now();
@@ -99,6 +117,14 @@ const server=http.createServer(async(req,res)=>{
     const fresh=await fetchClima();
     if(fresh){climaCache={t:now,data:fresh};return json(res,200,fresh)}
     if(climaCache.data)return json(res,200,climaCache.data);
+    return json(res,200,{ok:false,error:'sin_senal'});
+  }
+  if(req.method==='GET'&&url.pathname==='/uf'){
+    const now=Date.now();
+    if(ufCache.data&&now-ufCache.t<10800000)return json(res,200,ufCache.data);
+    const fresh=await fetchUF();
+    if(fresh){ufCache={t:now,data:fresh};return json(res,200,fresh)}
+    if(ufCache.data)return json(res,200,ufCache.data);
     return json(res,200,{ok:false,error:'sin_senal'});
   }
   if(req.method==='POST'&&url.pathname==='/score'){
@@ -124,4 +150,5 @@ const server=http.createServer(async(req,res)=>{
 server.listen(Number(process.env.MUTA_PORT)||80,'0.0.0.0');
 /* Gen 20: warm-up de fuentes externas al arrancar (comet_error de Gen 19 fue un arranque frío) */
 setTimeout(async()=>{try{const c=await fetchCartelera();if(c)cartCache={t:Date.now(),data:c}}catch(e){}
-  try{const w=await fetchClima();if(w)climaCache={t:Date.now(),data:w}}catch(e){}},1500);
+  try{const w=await fetchClima();if(w)climaCache={t:Date.now(),data:w}}catch(e){}
+  try{const u=await fetchUF();if(u)ufCache={t:Date.now(),data:u}}catch(e){}},1500);
