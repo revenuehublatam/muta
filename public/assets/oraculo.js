@@ -1,9 +1,11 @@
-/* ============ EL ORÁCULO DEL LEÓN — Gen 22 ============
+/* ============ EL ORÁCULO DEL LEÓN — Gen 23: LA CARTA DEL ORÁCULO ============
    Nacido de GEN Fractal: «una bola de cristal que al tocarla entregue un mensaje
    positivo distinto para cada persona, una vez al día» + GEN Sutil: «deja el valor
-   de la UF diario de Chile». Honesto por diseño: el Oráculo no predice el futuro,
-   te presta un enfoque para hoy. El mensaje es determinista por gen + fecha + orbe.
-   Módulo con carga diferida. Sin secretos. */
+   de la UF diario de Chile». Gen 23 profundiza el rito (83% de revelación en su
+   primer día): tu mensaje ahora es una CARTA-IMAGEN compartible y descargable, y
+   consultar el Oráculo días seguidos construye una racha honesta con hitos de energía.
+   El Oráculo no predice el futuro: te presta un enfoque para hoy. Mensaje determinista
+   por gen + fecha + orbe. Módulo con carga diferida. Sin secretos. */
 (function(){
 "use strict";
 if(window.MUTA_ORACULO)return;
@@ -80,6 +82,20 @@ function LSset(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 function revealedToday(){var raw=LSget("muta_oraculo");if(!raw)return null;
   try{var o=JSON.parse(raw);if(o&&o.d===hoyKey()&&typeof o.orb==="number")return o}catch(e){}return null}
 
+/* ---- racha honesta (Gen 23): días consecutivos revelando; vive en este dispositivo ---- */
+function ayerKey(){var d=new Date();d.setDate(d.getDate()-1);var p=function(x){return (x<10?"0":"")+x};
+  return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())}
+function getStreak(){var st={last:"",n:0};try{st=JSON.parse(LSget("muta_orc_racha"))||st}catch(e){}
+  if(st.last!==hoyKey()&&st.last!==ayerKey())st.n=0;return st}
+function bumpStreak(){var st=getStreak();
+  if(st.last===hoyKey())return st.n;
+  st.n=(st.last===ayerKey())?(st.n||0)+1:1;st.last=hoyKey();
+  LSset("muta_orc_racha",JSON.stringify(st));
+  if(typeof API.addEnergy==="function"){if(st.n===3)API.addEnergy(3,"racha_oraculo");if(st.n===7)API.addEnergy(5,"racha_oraculo")}
+  return st.n}
+function streakLabel(){var st=getStreak();
+  return st.n>=2?"🔥 Racha: "+st.n+" días seguidos con el Oráculo":""}
+
 /* ---- UF real ---- */
 var ufData=null,ufTried=false;
 function fmtCLP(n){try{return "$"+Number(n).toLocaleString("es-CL",{minimumFractionDigits:2,maximumFractionDigits:2})}catch(e){return "$"+n}}
@@ -94,7 +110,7 @@ function renderUF(){
 }
 function loadUF(){
   fetch("/uf").then(function(r){return r.json()}).then(function(j){ufTried=true;ufData=j;renderUF();
-    cap("muta_oracle",{action:"uf",ok:!!(j&&j.ok),generation:22,viewport_class:VPC()});
+    cap("muta_oracle",{action:"uf",ok:!!(j&&j.ok),generation:23,viewport_class:VPC()});
   }).catch(function(){ufTried=true;ufData={ok:false};renderUF()});
 }
 
@@ -131,7 +147,17 @@ function build(){
   "#orcBtns button{border:none;border-radius:12px;padding:11px 16px;font-weight:700;cursor:pointer;font-size:14px}"+
   "#orcShare{background:linear-gradient(135deg,#7df9c6,#8ec5ff);color:#0b0f2a}"+
   "#orcAgain{background:rgba(255,255,255,.12);color:#fff}"+
-  "#orcCred{font-size:11.5px;color:#9aa3cf;max-width:520px;line-height:1.5}";
+  "#orcCred{font-size:11.5px;color:#9aa3cf;max-width:520px;line-height:1.5}"+
+  "#orcRacha{display:none;font-size:13px;font-weight:700;color:#ffd88a;margin-top:8px}"+
+  "#orcRacha.show{display:block}"+
+  "#orcCarta{display:none;margin-top:14px;border-top:1px solid rgba(255,255,255,.14);padding-top:14px}"+
+  "#orcCarta.show{display:block}"+
+  "#orcCartaImg{max-width:min(62vw,230px);border-radius:12px;border:1px solid rgba(141,110,255,.5);box-shadow:0 8px 30px rgba(0,0,0,.5)}"+
+  "#orcCartaBtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}"+
+  "#orcCartaBtns button{border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;font-size:13.5px}"+
+  "#orcCartaShare{background:linear-gradient(135deg,#ffd88a,#ff9a8a);color:#2a1608}"+
+  "#orcCartaDl{background:rgba(255,255,255,.14);color:#fff}"+
+  "#orcCartaNote{font-size:11.5px;color:#9aa3cf;margin-top:8px}";
   document.head.appendChild(css);
   ovl=document.createElement("div");ovl.id="orcOvl";ovl.setAttribute("role","dialog");ovl.setAttribute("aria-modal","true");ovl.setAttribute("aria-label","El Oráculo del León");
   ovl.innerHTML=
@@ -142,15 +168,20 @@ function build(){
      '<p id="orcSub"></p>'+
      '<div id="orcBall" aria-hidden="true"></div>'+
      '<div id="orcOrbs" role="group" aria-label="Elige un orbe"></div>'+
-     '<div id="orcCard"><p id="orcMsg"></p><div id="orcUf"></div><div id="orcMeta"></div>'+
-       '<div id="orcBtns"><button id="orcShare">📤 Compartir mi mensaje</button><button id="orcAgain">Volver al organismo</button></div>'+
+     '<div id="orcCard"><p id="orcMsg"></p><div id="orcRacha"></div><div id="orcUf"></div><div id="orcMeta"></div>'+
+       '<div id="orcBtns"><button id="orcShare">🖼 Mi carta de hoy</button><button id="orcAgain">Volver al organismo</button></div>'+
+       '<div id="orcCarta"><img id="orcCartaImg" alt="Tu carta del Oráculo de hoy"><div id="orcCartaBtns">'+
+         '<button id="orcCartaShare">📤 Compartir carta</button><button id="orcCartaDl">⬇️ Guardar imagen</button></div>'+
+         '<div id="orcCartaNote">Tu carta lleva tu mensaje, tu racha y la UF real. Compartirla da +2 de energía a tu huevo.</div></div>'+
      '</div>'+
      '<p id="orcCred">Nacido de <b>GEN Fractal</b> (la bola de cristal con un mensaje diario por persona) y <b>GEN Sutil</b> (la UF de cada día). El Oráculo no predice el futuro: te presta un enfoque para hoy. Mañana a las 07:00 hay mensaje nuevo.</p>'+
    '</div>';
   document.body.appendChild(ovl);
   document.getElementById("orcX").addEventListener("click",close);
   document.getElementById("orcAgain").addEventListener("click",close);
-  document.getElementById("orcShare").addEventListener("click",share);
+  document.getElementById("orcShare").addEventListener("click",makeCarta);
+  document.getElementById("orcCartaShare").addEventListener("click",shareCarta);
+  document.getElementById("orcCartaDl").addEventListener("click",downloadCarta);
   cvs=document.getElementById("orcCv");ctx=cvs.getContext("2d");
   window.addEventListener("resize",sizeCv);
 }
@@ -195,7 +226,7 @@ function showOrbs(){
   })(i);
 }
 function pick(orb){
-  cap("muta_oracle",{action:"pick",orb:orb,generation:22,gene_origin:GEN,viewport_class:VPC(),input_type:"touch"});
+  cap("muta_oracle",{action:"pick",orb:orb,generation:23,gene_origin:GEN,viewport_class:VPC(),input_type:"touch"});
   haptic(12);blip(392,0.2,"sine",0.09);
   var box=document.getElementById("orcOrbs");box.innerHTML="";
   document.getElementById("orcSub").textContent="El cristal gira…";
@@ -214,23 +245,116 @@ function reveal(orb,fresh){
   var card=document.getElementById("orcCard");card.classList.add("show");
   document.getElementById("orcMsg").textContent="«"+msg+"»";
   document.getElementById("orcMeta").innerHTML="Elegiste "+esc(ORB_TONO[orb])+" · mensaje del "+esc(hoyKey())+" para <b>"+esc(GEN)+"</b> · mañana hay uno nuevo";
+  var streakN=fresh?bumpStreak():getStreak().n;
+  var rl=streakLabel();var re=document.getElementById("orcRacha");
+  if(re){re.textContent=rl;re.classList.toggle("show",!!rl)}
   renderUF();if(!ufTried&&ufData===null)loadUF();
   if(fresh){
     burst(60);haptic([18,50,18]);blip(659,0.4,"sine",0.1);blip(880,0.5,"triangle",0.06);
-    cap("muta_oracle",{action:"reveal",orb:orb,generation:22,gene_origin:GEN,viewport_class:VPC()});
+    cap("muta_oracle",{action:"reveal",orb:orb,streak:streakN,generation:23,gene_origin:GEN,viewport_class:VPC()});
     if(typeof API.addEnergy==="function")API.addEnergy(2,"oraculo");
   }
 }
-function share(){
+
+/* ---- LA CARTA DEL ORÁCULO (Gen 23): tu mensaje como imagen compartible ---- */
+var cartaCanvas=null;
+function wrapText(c,text,x,y,maxW,lh){
+  var words=text.split(" "),line="",lines=[];
+  for(var i=0;i<words.length;i++){var t=line?line+" "+words[i]:words[i];
+    if(c.measureText(t).width>maxW&&line){lines.push(line);line=words[i]}else line=t}
+  if(line)lines.push(line);
+  for(var j=0;j<lines.length;j++)c.fillText(lines[j],x,y+j*lh);
+  return y+lines.length*lh;
+}
+function buildCarta(){
+  var st=revealedToday();if(!st)return null;
+  var msg=msgFor(st.orb);
+  var cw=1080,ch=1350;
+  var cv2=document.createElement("canvas");cv2.width=cw;cv2.height=ch;
+  var c=cv2.getContext("2d");
+  var g=c.createLinearGradient(0,0,0,ch);
+  g.addColorStop(0,"#1a1440");g.addColorStop(0.55,"#0d1130");g.addColorStop(1,"#070a1e");
+  c.fillStyle=g;c.fillRect(0,0,cw,ch);
+  for(var i=0;i<130;i++){c.globalAlpha=0.25+Math.random()*0.6;c.fillStyle="#dfe6ff";
+    c.beginPath();c.arc(Math.random()*cw,Math.random()*ch,Math.random()*2.4+0.6,0,6.28);c.fill()}
+  c.globalAlpha=1;
+  /* bola de cristal */
+  var bx=cw/2,by=330,br=150;
+  var rg=c.createRadialGradient(bx-br*0.35,by-br*0.4,br*0.1,bx,by,br);
+  rg.addColorStop(0,"rgba(255,255,255,.9)");rg.addColorStop(0.2,"rgba(180,160,255,.4)");
+  rg.addColorStop(0.6,"rgba(90,70,190,.55)");rg.addColorStop(1,"rgba(30,25,80,.95)");
+  c.fillStyle=rg;c.beginPath();c.arc(bx,by,br,0,6.28);c.fill();
+  c.strokeStyle="rgba(141,110,255,.8)";c.lineWidth=4;c.beginPath();c.arc(bx,by,br,0,6.28);c.stroke();
+  c.shadowColor="rgba(141,110,255,.8)";c.shadowBlur=60;c.beginPath();c.arc(bx,by,br,0,6.28);c.stroke();c.shadowBlur=0;
+  c.font="110px serif";c.textAlign="center";c.fillText(["🌙","⭐","🔥"][st.orb],bx,by+40);
+  /* textos */
+  c.fillStyle="#c9d0f2";c.font="700 34px system-ui,sans-serif";
+  c.fillText("🔮 EL ORÁCULO DEL LEÓN · MUTA",cw/2,92);
+  c.fillStyle="#9aa3cf";c.font="28px system-ui,sans-serif";
+  c.fillText("Mensaje del "+hoyKey()+" · "+ORB_TONO[st.orb].replace(/^[^ ]+ /,""),cw/2,136);
+  c.fillStyle="#f4f6ff";c.font="600 46px Georgia,serif";
+  var yEnd=wrapText(c,"«"+msg+"»",cw/2,565,880,62);
+  var y2=yEnd+30;
+  var rl=streakLabel();
+  if(rl){c.fillStyle="#ffd88a";c.font="700 34px system-ui,sans-serif";c.fillText(rl,cw/2,y2);y2+=56}
+  if(ufData&&ufData.ok&&ufData.uf){
+    c.fillStyle="#8ec5ff";c.font="700 34px system-ui,sans-serif";
+    var ufTxt="💠 UF hoy: "+fmtCLP(ufData.uf.valor)+(ufData.dolar?"  ·  💵 Dólar: "+fmtCLP(ufData.dolar.valor):"");
+    c.fillText(ufTxt,cw/2,y2);
+    c.fillStyle="#9aa3cf";c.font="24px system-ui,sans-serif";
+    c.fillText("Fuente: "+String(ufData.fuente||"mindicador.cl")+" · "+String(ufData.uf.fecha||hoyKey()),cw/2,y2+40);
+    y2+=96}
+  c.strokeStyle="rgba(255,255,255,.18)";c.lineWidth=2;
+  c.beginPath();c.moveTo(160,ch-190);c.lineTo(cw-160,ch-190);c.stroke();
+  c.fillStyle="#c9d0f2";c.font="700 30px system-ui,sans-serif";
+  c.fillText("Carta de "+GEN,cw/2,ch-152);
+  c.font="26px system-ui,sans-serif";c.fillStyle="#9aa3cf";
+  c.fillText("cada persona recibe un mensaje distinto cada día",cw/2,ch-112);
+  c.fillStyle="#7df9c6";c.font="700 34px system-ui,sans-serif";
+  c.fillText("muta.revenuehub.cloud",cw/2,ch-62);
+  return cv2;
+}
+function makeCarta(){
+  var st=revealedToday();
+  if(!st){document.getElementById("orcSub").textContent="Primero revela tu mensaje de hoy eligiendo un orbe.";return}
+  cartaCanvas=buildCarta();if(!cartaCanvas)return;
+  var img=document.getElementById("orcCartaImg");
+  img.src=cartaCanvas.toDataURL("image/png");
+  document.getElementById("orcCarta").classList.add("show");
+  haptic(12);blip(740,0.2,"triangle",0.08);burst(30);
+  cap("muta_oracle",{action:"card",orb:st.orb,streak:getStreak().n,generation:23,gene_origin:GEN,viewport_class:VPC()});
+}
+function cartaBlob(cb){if(!cartaCanvas)cartaCanvas=buildCarta();
+  if(!cartaCanvas){cb(null);return}
+  cartaCanvas.toBlob(function(b){cb(b)},"image/png")}
+function shareCarta(){
   var st=revealedToday();var msg=st?msgFor(st.orb):"";
   var url=location.origin+"/?g="+encodeURIComponent(GEN);
-  var txt="🔮 El Oráculo de MUTA me dejó este mensaje de hoy: «"+msg+"». Cada persona recibe uno distinto cada día, y de paso te muestra la UF real. Pide el tuyo:";
-  cap("muta_oracle",{action:"share",generation:22,gene_origin:GEN});
-  cap("muta_share",{red:"oraculo",gen:GEN});
+  var txt="🔮 Mi carta del Oráculo de MUTA de hoy: «"+msg+"». Cada persona recibe un mensaje distinto cada día, junto a la UF real de Chile. Pide el tuyo: "+url;
+  cap("muta_oracle",{action:"share_card",generation:23,gene_origin:GEN});
+  cap("muta_share",{red:"oraculo_carta",gen:GEN});
   if(typeof API.addEnergy==="function")API.addEnergy(2,"share");
-  if(navigator.share){navigator.share({title:"El Oráculo de MUTA",text:txt,url:url}).catch(function(){})}
-  else{try{navigator.clipboard.writeText(txt+" "+url);
-    var m=document.getElementById("orcMeta");if(m)m.innerHTML="📋 Mensaje copiado: pégalo donde quieras. Tu gen viaja con él."}catch(e){}}
+  cartaBlob(function(b){
+    if(b&&navigator.share&&navigator.canShare&&navigator.canShare({files:[new File([b],"x.png",{type:"image/png"})]})){
+      var f=new File([b],"oraculo-muta-"+hoyKey()+".png",{type:"image/png"});
+      navigator.share({title:"El Oráculo de MUTA",text:txt,files:[f]}).catch(function(){});
+    }else if(navigator.share){
+      navigator.share({title:"El Oráculo de MUTA",text:txt,url:url}).catch(function(){});
+      downloadCarta(true);
+    }else{
+      downloadCarta(true);
+      try{navigator.clipboard.writeText(txt);
+        var n=document.getElementById("orcCartaNote");
+        if(n)n.textContent="📋 Texto copiado y carta descargada: súbela donde quieras. Tu gen viaja con ella."}catch(e){}
+    }
+  });
+}
+function downloadCarta(silent){
+  cartaBlob(function(b){if(!b)return;
+    var a=document.createElement("a");a.href=URL.createObjectURL(b);
+    a.download="oraculo-muta-"+hoyKey()+".png";document.body.appendChild(a);a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},4000)});
+  if(silent!==true)cap("muta_oracle",{action:"card_download",generation:23,gene_origin:GEN});
 }
 function open(){
   build();sizeCv();STARS=stars();
@@ -238,7 +362,7 @@ function open(){
   if(anim)cancelAnimationFrame(anim);
   anim=requestAnimationFrame(loop);
   if(API.musicStart)API.musicStart("oraculo");
-  cap("muta_oracle",{action:"open",generation:22,gene_origin:GEN,viewport_class:VPC()});
+  cap("muta_oracle",{action:"open",generation:23,gene_origin:GEN,viewport_class:VPC()});
   cap("muta_enter_experience",{experience_id:"oraculo",mode:"oraculo",viewport_class:VPC(),gene_origin:GEN});
   var st=revealedToday();
   if(st){reveal(st.orb,false)}else{showOrbs()}
@@ -248,7 +372,7 @@ function close(){
   ovl.classList.remove("open");
   if(anim){cancelAnimationFrame(anim);anim=null}
   if(API.musicStop)API.musicStop();
-  cap("muta_oracle",{action:"close",generation:22});
+  cap("muta_oracle",{action:"close",generation:23});
 }
 window.MUTA_ORACULO={open:open};
 if(window.__oraculoAutoStart){window.__oraculoAutoStart=false;open()}
