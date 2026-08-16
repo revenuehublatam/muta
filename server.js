@@ -101,7 +101,7 @@ const server=http.createServer(async(req,res)=>{
     try{const data=JSON.parse(await readBody(req,500)||'{}'),id=String(data.id||'').slice(0,64);if(id){if(activePresence()>=5000&&!sessions.has(id))return json(res,429,{ok:0});sessions.set(id,Date.now())}return json(res,200,{ok:1})}catch(e){return json(res,400,{ok:0})}
   }
   if(req.method==='GET'&&url.pathname==='/leaderboard'){
-    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:23,storage:'temporal-memory',game,scores:top(game)});
+    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:24,storage:'temporal-memory',game,scores:top(game)});
   }
   if(req.method==='GET'&&url.pathname==='/cartelera'){
     const now=Date.now();
