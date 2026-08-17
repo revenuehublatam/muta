@@ -6,6 +6,7 @@
    cuentan un chiste distinto por época y por día. Cada época visitada deja una
    POSTAL coleccionable; cada día una época es LA ÉPOCA DORADA y su postal brilla.
    Todo determinista por gen + fecha: honesto, sin datos inventados.
+   Gen 25: cada época abre su cocina (🍲 La Cocina del Tiempo, módulo aparte).
    Módulo con carga diferida. Sin secretos. */
 (function(){
 "use strict";
@@ -163,7 +164,7 @@ wrap.innerHTML=
 '  <div id="twNav"><button id="twPrev" aria-label="Época anterior">‹</button>'+
 '  <button class="go" id="twGo">VIAJAR AQUÍ</button>'+
 '  <button id="twNext" aria-label="Época siguiente">›</button></div>'+
-'  <div id="twActions"><button id="twPostal">📮 Mi postal de esta época</button><button id="twShare">📤 Compartir</button></div>'+
+'  <div id="twActions"><button id="twReceta" style="border-color:#7df9c6;color:#b8ffe2">🍲 Receta de esta época</button><button id="twPostal">📮 Mi postal de esta época</button><button id="twShare">📤 Compartir</button></div>'+
 '  <div id="twHint">Desliza ‹ › para moverte por el tiempo · cada época visitada deja una postal · junta las 6</div>'+
 ' </div></div>';
 document.body.appendChild(wrap);
@@ -244,12 +245,12 @@ function viajar(){
   if(!yaHoy){LSs(dayKey,hoy);addEnergy(dor?2:1,"tiempo");
     toastTW(dor?"✨ POSTAL DORADA de "+E.ano+" conseguida · +2 ⚡":"📮 Postal de "+E.ano+" conseguida · +1 ⚡")}
   else toastTW("Ya tienes la postal de hoy de "+E.ano+". Mañana hay otra.");
-  cap("muta_tiempo",{action:"travel",era:E.id,dorada:dor,primera_vez:primera,generation:24,experience_id:"tiempo",viewport_class:VPC(),gene_origin:GEN});
+  cap("muta_tiempo",{action:"travel",era:E.id,dorada:dor,primera_vez:primera,experience_id:"tiempo",viewport_class:VPC(),gene_origin:GEN});
   var todas=ERAS.every(function(e){return P[e.id]});
   if(todas&&LSg("muta_tw_full_"+GEN)!=="1"){LSs("muta_tw_full_"+GEN,"1");
     addEnergy(5,"tiempo_full");haptic(30);blip(660,0.3,"triangle",0.12);
     toastTW("🏆 ¡ÁLBUM COMPLETO! Las 6 épocas son tuyas · +5 ⚡");
-    cap("muta_tiempo",{action:"collect_all",generation:24,gene_origin:GEN})}
+    cap("muta_tiempo",{action:"collect_all",gene_origin:GEN})}
   renderAlbum();renderEra(false);haptic(18)}
 
 /* ---- toast propio ---- */
@@ -290,7 +291,7 @@ function postalCanvas(cb){
   cb(cv)}
 function compartirPostal(){
   var E=ERAS[TW.idx];
-  cap("muta_tiempo",{action:"postal",era:E.id,generation:24,gene_origin:GEN,viewport_class:VPC()});
+  cap("muta_tiempo",{action:"postal",era:E.id,gene_origin:GEN,viewport_class:VPC()});
   postalCanvas(function(cv){
     cv.toBlob(function(blob){
       if(!blob)return;
@@ -299,28 +300,32 @@ function compartirPostal(){
       var texto="Viajé al año "+E.ano+" ("+E.nombre+") en la Máquina del Tiempo de MUTA, el sitio que muta cada día con lo que la gente pide. Mi postal viaja conmigo:";
       if(navigator.canShare&&navigator.canShare({files:[file]})){
         navigator.share({files:[file],title:"MUTA · Postal del Tiempo",text:texto+" "+url})
-          .then(function(){cap("muta_tiempo",{action:"share",era:E.id,red:"native",generation:24});cap("muta_share",{red:"tiempo_postal",gen:GEN});addEnergy(2,"share")})
+          .then(function(){cap("muta_tiempo",{action:"share",era:E.id,red:"native"});cap("muta_share",{red:"tiempo_postal",gen:GEN});addEnergy(2,"share")})
           .catch(function(){})}
       else{var a=document.createElement("a");a.href=URL.createObjectURL(blob);
         a.download="muta-postal-"+E.ano+".png";a.click();
         setTimeout(function(){URL.revokeObjectURL(a.href)},4000);
         try{navigator.clipboard.writeText(texto+" "+url)}catch(e){}
         toastTW("📥 Postal descargada y texto copiado. Compártela donde quieras.");
-        cap("muta_tiempo",{action:"share",era:E.id,red:"download",generation:24});cap("muta_share",{red:"tiempo_postal",gen:GEN});addEnergy(2,"share")}
+        cap("muta_tiempo",{action:"share",era:E.id,red:"download"});cap("muta_share",{red:"tiempo_postal",gen:GEN});addEnergy(2,"share")}
     },"image/png")})}
 
 /* ---- navegación ---- */
 function go(delta){TW.idx=(TW.idx+delta+ERAS.length)%ERAS.length;
-  cap("muta_tiempo",{action:"navigate",era:ERAS[TW.idx].id,generation:24,viewport_class:VPC()});
+  cap("muta_tiempo",{action:"navigate",era:ERAS[TW.idx].id,viewport_class:VPC()});
   renderEra(true)}
 $("#twPrev").addEventListener("click",function(){go(-1)});
 $("#twNext").addEventListener("click",function(){go(1)});
 $("#twGo").addEventListener("click",viajar);
 $("#twPostal").addEventListener("click",compartirPostal);
+$("#twReceta").addEventListener("click",function(){
+  var E=ERAS[TW.idx];
+  cap("muta_tiempo",{action:"receta",era:E.id,viewport_class:VPC()});
+  if(API.openCocina)API.openCocina(E.id)});
 $("#twShare").addEventListener("click",compartirPostal);
 $("#twMore").addEventListener("click",function(){TW.jokeN=(TW.jokeN||0)+1;renderChiste();
   blip(560,0.07,"sine",0.06);
-  cap("muta_tiempo",{action:"joke",era:ERAS[TW.idx].id,n:TW.jokeN,generation:24})});
+  cap("muta_tiempo",{action:"joke",era:ERAS[TW.idx].id,n:TW.jokeN})});
 $("#twX").addEventListener("click",cerrar);
 document.addEventListener("keydown",function(e){if(!TW.open)return;
   if(e.key==="Escape")cerrar();
@@ -339,12 +344,12 @@ function abrir(){
   var dId=eraDorada();TW.idx=Math.max(0,ERAS.findIndex(function(e){return e.id===dId}));
   resize();renderEra(false);TW.t=0;
   if(REDUCED)draw();else loop();
-  cap("muta_tiempo",{action:"open",era:ERAS[TW.idx].id,generation:24,experience_id:"tiempo",viewport_class:VPC(),gene_origin:GEN});
-  cap("muta_mode_switch",{mode:"tiempo",generation:24})}
+  cap("muta_tiempo",{action:"open",era:ERAS[TW.idx].id,experience_id:"tiempo",viewport_class:VPC(),gene_origin:GEN});
+  cap("muta_mode_switch",{mode:"tiempo"})}
 function cerrar(){TW.open=false;wrap.classList.remove("open");
   document.documentElement.style.overflow="";
   cancelAnimationFrame(TW.raf);
-  cap("muta_tiempo",{action:"close",generation:24})}
+  cap("muta_tiempo",{action:"close"})}
 
 window.MUTA_TIEMPO={open:abrir,close:cerrar};
 if(window.__tiempoAutoStart){window.__tiempoAutoStart=false;abrir()}
