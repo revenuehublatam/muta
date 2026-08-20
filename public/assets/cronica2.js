@@ -8,7 +8,12 @@
    → Primera persona por casillas, ciudad (Villa Gen) rodeada de bosque con
    monstruos, party de genes (reclutas del ADN inmortalizado + invitación real
    por enlace), música chiptune opcional y el Heraldo del Devorador como jefe.
-   Módulo lazy. Sin secretos. El Capítulo 3 se escribe con susurros. */
+   Gen 28 (decisión autónoma sobre datos de Gen 27: 33% inició, 0% completó,
+   el viajero abandonó a mitad del bosque): LA FOGATA DE LOS VIAJEROS — un
+   campamento real en el camino al Heraldo donde descansas (+PV), lees las
+   huellas que dejaron otros viajeros reales (endpoint /fogata, honesto sobre
+   su memoria temporal) y dejas la tuya con tu gen. Avanzar ▲ ahora se puede
+   mantener presionado. Módulo lazy. Sin secretos. El Cap. 3 se escribe con susurros. */
 (function(){
 "use strict";
 if(window.MUTA_C2)return;
@@ -29,7 +34,7 @@ function ev(action,extra){var p={action:action,experience_id:"rpg",chapter:2,vie
    T=árbol ~=agua #=muralla .=claro/sendero
    S=inicio (puerta de la ciudad) C=interior ciudad N=posada Q=plaza de genes
    e=Zorro de Ruido w=Seta Gritona a=Astilla del Devorador
-   P=poción R=reliquia B=claro del Heraldo */
+   P=poción R=reliquia B=claro del Heraldo F=Fogata de los Viajeros (Gen 28) */
 var MAPA=[
 "TTTTTTTTTTTTTTTTTTTTTTT",
 "T....T...T....T..P...TT",
@@ -47,7 +52,7 @@ var MAPA=[
 "T...T.......e...TT....T",
 "TT..e..TT....w...T..a.T",
 "T..T...T~~T....TT.TT..T",
-"T.TTT.e.T~~T.TT..e....T",
+"T.TTT.e.T~~T.TT..e.F..T",
 "T..R......T...T....TTTT",
 "TT...TT.a...e...TT....T",
 "T..w....TT...TT...e.B.T",
@@ -171,7 +176,7 @@ function buildWorld(){
       else row.push(c)}
     G.grid.push(row)}}
 function cell(x,y){if(x<0||y<0||x>=G.W||y>=G.Hh)return"T";return G.grid[y][x]}
-function walkable(c){return c==="."||c==="C"||c==="N"||c==="Q"||c==="G"}
+function walkable(c){return c==="."||c==="C"||c==="N"||c==="Q"||c==="G"||c==="F"}
 function foeAt(x,y){for(var i=0;i<G.foes.length;i++){var f=G.foes[i];if(!f.dead&&f.x===x&&f.y===y)return f}return null}
 function itemAt(x,y){for(var i=0;i<G.items.length;i++){var it=G.items[i];if(!it.used&&it.x===x&&it.y===y)return it}return null}
 
@@ -220,6 +225,7 @@ function render(){
         if(c==="G"){o.fillStyle=PAL.wall[3-z];o.fillRect(centerX-cw*0.66,baseY-ch*0.9,cw*0.18,ch*0.9);o.fillRect(centerX+cw*0.48,baseY-ch*0.9,cw*0.18,ch*0.9);o.fillStyle=shade(PAL.wall[3-z],0.8);o.fillRect(centerX-cw*0.66,baseY-ch*0.98,cw*1.32,ch*0.14)}
         if(c==="N"){emoji(o,"🏠",centerX,baseY-ch*0.4,Math.max(8,ch*0.55))}
         if(c==="Q"){emoji(o,"⛲",centerX,baseY-ch*0.4,Math.max(8,ch*0.55))}
+        if(c==="F"){emoji(o,"🔥",centerX,baseY-ch*0.38,Math.max(8,ch*0.5));if(!REDUCED&&(G.t>>3)%2===0)emoji(o,"💨",centerX+cw*0.1,baseY-ch*0.85,Math.max(6,ch*0.3))}
         var fz=foeAt(cx0,cy0);if(fz)emoji(o,FOES[fz.t].em,centerX,baseY-ch*0.34,Math.max(9,Math.min(ch*(fz.t==="B"?0.75:0.5),H*(fz.t==="B"?0.42:0.3))));
         var iz=itemAt(cx0,cy0);if(iz)emoji(o,iz.t==="P"?"🧪":"🪶",centerX,baseY-ch*0.28,Math.max(8,ch*0.38));
       }
@@ -236,9 +242,11 @@ function render(){
     o.fillStyle="rgba(2,10,6,.85)";o.fillRect(mx-2,my-2,mw+4,G.Hh*ms+4);
     for(var yy=0;yy<G.Hh;yy++)for(var xx=0;xx<G.W;xx++){
       if(!G.seen[xx+"_"+yy])continue;var cc=cell(xx,yy);
-      o.fillStyle=cc==="T"?"#153a22":cc==="#"?"#5e6575":cc==="~"?"#1f6a92":"#2b5a33";
+      o.fillStyle=cc==="T"?"#153a22":cc==="#"?"#5e6575":cc==="~"?"#1f6a92":cc==="F"?"#ffb46a":"#2b5a33";
       o.fillRect(mx+xx*ms,my+yy*ms,ms,ms);
       var ff=foeAt(xx,yy);if(ff){o.fillStyle=ff.t==="B"?"#ff5d7a":"#ffd98a";o.fillRect(mx+xx*ms,my+yy*ms,ms,ms)}}
+    /* Gen 28: el humo de la fogata se ve por sobre los árboles aunque no hayas pasado */
+    for(var fy=0;fy<G.Hh;fy++)for(var fx=0;fx<G.W;fx++)if(cell(fx,fy)==="F"){o.fillStyle="#ffb46a";o.fillRect(mx+fx*ms,my+fy*ms,ms,ms)}
     o.fillStyle="#fff";o.fillRect(mx+G.x*ms,my+G.y*ms,ms,ms);
   }
   ctx.imageSmoothingEnabled=false;
@@ -254,7 +262,7 @@ window.addEventListener("resize",function(){if(G.open)resize()});
 /* ---------- HUD ---------- */
 function hud(){
   var inCity=["C","N","Q"].indexOf(cell(G.x,G.y))>=0;
-  $("#c2Loc").textContent=inCity?"🏘 Villa Gen (a salvo)":cell(G.x,G.y)==="G"?"🚪 Puerta de Villa Gen":"🌲 Bosque de las Afueras";
+  $("#c2Loc").textContent=inCity?"🏘 Villa Gen (a salvo)":cell(G.x,G.y)==="G"?"🚪 Puerta de Villa Gen":cell(G.x,G.y)==="F"?"🔥 Fogata de los Viajeros":"🌲 Bosque de las Afueras";
   $("#c2HpT").textContent=G.hero.hp+"/"+G.hero.maxhp;
   $("#c2HpFill").style.width=Math.max(0,G.hero.hp/G.hero.maxhp*100)+"%";
   $("#c2Stats").textContent="⚔️"+G.hero.atk+" 🛡"+G.hero.def+" 🧪"+G.hero.pots+" · Nv "+G.hero.lvl+(G.hero.scar?" · 📖":"");
@@ -278,6 +286,7 @@ function tryMove(fwd){
   var here=cell(nx,ny);
   if(here==="N")posada();
   else if(here==="Q")plaza();
+  else if(here==="F")fogata();
   else if(here==="G"&&G.steps>1)log("🚪 La puerta de Villa Gen. Al norte: la plaza. Afuera: el bosque.");
   if(G.hero.hp<G.hero.maxhp&&["C","N","Q"].indexOf(here)>=0){} /* la posada cura, no el suelo */
   save();hud();render()}
@@ -293,6 +302,7 @@ function posada(){
   modal('<h3>🏠 Posada «El Susurro»</h3><div class="big">🛏️</div>'+
   '<p>'+(healed?"La posadera te sirve sopa de píxeles. <b>Vida restaurada.</b>":"Ya estás en plena forma. La posadera te cuenta un rumor:")+'</p>'+
   '<p style="color:#b6ff9e">«Dicen que el <b>Heraldo del Devorador</b> acampa en un claro al sureste. Nadie lo ha visto emerger ante un viajero solo… solo ante <b>expediciones</b>.»</p>'+
+  '<p style="color:#ffd98a">«Camino al claro hay una <b>fogata de viajeros 🔥</b>. Los que pasan dejan huellas escritas junto al fuego. Descansa ahí antes del final.»</p>'+
   '<button id="c2Ok1">Seguir</button>',function(){$("#c2Ok1").addEventListener("click",closeModal)})}
 function plaza(){
   ev("city_plaza");
@@ -335,6 +345,52 @@ function invitar(){
   var done=function(){G.invited=true;save();addEnergy(3,"c2-invitacion");log("💌 Invitación lista. Tu segundo lugar de party quedó abierto.");plaza()};
   if(navigator.share)navigator.share({title:"LA CRÓNICA — MUTA",text:txt}).then(done).catch(function(){done()});
   else{try{navigator.clipboard.writeText(txt);log("📋 Invitación copiada. Pégala donde quieras.")}catch(e){}done()}}
+
+/* ---------- LA FOGATA DE LOS VIAJEROS (Gen 28) ----------
+   Relevo asíncrono honesto: huellas reales de visitantes reales vía /fogata.
+   La memoria del campamento es temporal (se reinicia al desplegar) y se dice. */
+var FOG_KEY="muta_fogata_g28";
+function tiempoRel(min){if(!Number.isFinite(min)||min<0)return"";if(min<1)return"recién";if(min<60)return"hace "+Math.round(min)+" min";var h=Math.round(min/60);if(h<48)return"hace "+h+" h";return"hace "+Math.round(h/24)+" días"}
+function fogata(){
+  ev("camp_open");
+  var healed=false;
+  if(G.hero.hp<G.hero.maxhp){G.hero.hp=Math.min(G.hero.maxhp,G.hero.hp+6);healed=true;ev("camp_heal");hud();save()}
+  var dejada=LSg(FOG_KEY)==="1";
+  modal('<h3>🔥 La Fogata de los Viajeros</h3><div class="big">🔥</div>'+
+  '<p>'+(healed?"El calor del fuego te repara: <b>+6 PV</b>.":"El fuego crepita. Estás en plena forma.")+' El claro del Heraldo 🌑 queda al <b>sureste</b>.</p>'+
+  '<div id="c2Huellas" style="text-align:left"><p style="color:#9fd8b4">Leyendo las huellas junto al fuego…</p></div>'+
+  (dejada?'<p style="color:#b6ff9e">Tu huella ya está junto al fuego. 🐾</p><button id="c2HuSh">📤 Avisar que dejaste una huella</button>':
+   '<div style="border-top:1px solid rgba(190,255,205,.25);margin-top:10px;padding-top:10px"><p><b>Deja tu huella</b> para el próximo viajero real que pase por aquí:</p>'+
+   '<input id="c2HuIn" maxlength="80" placeholder="Un consejo, un saludo, una advertencia…" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.08);border:1px solid rgba(190,255,205,.35);border-radius:10px;color:#fff;padding:11px 12px;font-family:inherit;font-size:13px">'+
+   '<button id="c2HuGo">🐾 Dejarla firmada como '+esc(GEN)+'</button></div>')+
+  '<p style="font-size:11px;color:#9fd8b4">Las huellas son de visitantes reales. Viven en la memoria del campamento y pueden desaparecer cuando MUTA muta.</p>'+
+  '<button id="c2OkF" style="background:#123324">Volver al bosque</button>',
+  function(){
+    $("#c2OkF").addEventListener("click",closeModal);
+    var sh=$("#c2HuSh");if(sh)sh.addEventListener("click",fogataShare);
+    var box=$("#c2Huellas");
+    fetch("/fogata",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){
+      var hs=(d&&d.huellas)||[];
+      ev("camp_read",{n:hs.length});
+      if(!hs.length){box.innerHTML='<p style="color:#9fd8b4">Aún no hay huellas de otros viajeros en esta generación. La tuya puede ser la primera. 🐾</p>';return}
+      box.innerHTML=hs.map(function(h){return '<div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,220,140,.25);border-radius:10px;padding:8px 10px;margin:6px 0;font-size:12.5px;line-height:1.45">🐾 <b>'+esc(h.gen)+'</b> <span style="color:#9fd8b4">'+esc(tiempoRel(h.hace_min))+'</span><br>«'+esc(h.texto)+'»</div>'}).join("");
+    }).catch(function(){box.innerHTML='<p style="color:#ffb46a">El humo no deja leer las huellas ahora mismo. Intenta de nuevo en un rato.</p>'});
+    var go=$("#c2HuGo");
+    if(go)go.addEventListener("click",function(){
+      var inp=$("#c2HuIn"),txt=(inp&&inp.value||"").replace(/\s+/g," ").trim().slice(0,80);
+      if(txt.length<2){log("Escribe al menos un par de letras para tu huella.");return}
+      go.disabled=true;go.textContent="Dejando la huella…";
+      fetch("/fogata",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({gen:GEN,texto:txt})})
+      .then(function(r){return r.json()}).then(function(d){
+        if(d&&d.ok){LSs(FOG_KEY,"1");ev("camp_trace");addEnergy(3,"c2-fogata");haptic(12);blip(720,0.14,"triangle",0.09);
+          log("🐾 Tu huella quedó junto al fuego, firmada por "+GEN+".");closeModal();setTimeout(fogata,50)}
+        else{go.disabled=false;go.textContent="🐾 Dejarla firmada como "+GEN;log((d&&d.error)||"La fogata no aceptó la huella. Intenta de nuevo.")}
+      }).catch(function(){go.disabled=false;go.textContent="🐾 Dejarla firmada como "+GEN;log("No hay señal junto al fuego. Intenta de nuevo.")})})})}
+function fogataShare(){
+  var url="https://muta.revenuehub.cloud/?g="+encodeURIComponent(GEN);
+  var txt="Dejé una huella en la Fogata de los Viajeros de LA CRÓNICA (MUTA), un RPG que la gente escribe por partes y muta cada día. Pasa a leerla antes de que el fuego cambie: "+url;
+  try{if(navigator.share){navigator.share({title:"LA CRÓNICA — MUTA",text:txt}).then(function(){cap("muta_share",{red:"fogata",gen:GEN})}).catch(function(){})}
+  else{navigator.clipboard.writeText(txt);cap("muta_share",{red:"fogata",gen:GEN});log("📋 Aviso copiado: pégalo donde quieras para que alguien encuentre tu huella.")}}catch(e){}}
 
 /* ---------- combate por turnos (intenciones visibles, party activa) ---------- */
 function startCombat(f){
@@ -443,7 +499,7 @@ function intro(){
   var c1done=false;try{var d=JSON.parse(LSg("muta_rpg_c1")||"null");c1done=!!(d&&d.done)}catch(e){}
   modal('<h3>📖 LA CRÓNICA — Capítulo 2</h3><div class="big">🌲🏘🌲</div>'+
   '<p><b>Las Afueras de Villa Gen.</b> '+(c1done?"Venciste al Devorador allá abajo — tu 📖 cicatriz te da +1 ATQ — pero su <b>Heraldo</b> escapó a la superficie.":"En el Capítulo 1, alguien venció al Devorador en la Biblioteca Hundida. Su <b>Heraldo</b> escapó a la superficie.")+' Ahora caza ideas en el bosque que rodea la ciudad de los genes.</p>'+
-  '<p>Es <b>en primera persona</b>: avanza ▲, gira ↰ ↱ (o desliza el dedo). En la ciudad: la posada 🏠 cura y la plaza ⛲ recluta genes para tu party. El Heraldo solo emerge ante una expedición de 2+.</p>'+
+  '<p>Es <b>en primera persona</b>: avanza con ▲ (mantenlo presionado para caminar), gira ↰ ↱ o desliza el dedo. En la ciudad: la posada 🏠 cura y la plaza ⛲ recluta genes para tu party. Camino al Heraldo hay una <b>fogata 🔥</b> donde otros viajeros reales dejan huellas — y puedes dejar la tuya. El Heraldo solo emerge ante una expedición de 2+.</p>'+
   '<p style="color:#9fd8b4;font-size:12px">Nacida de <b>GEN Rebelde</b>: capítulo en primera persona con ciudad, monstruos alrededor y party por invitación — y el bosque con música pixel 🎵 también fue su susurro.</p>'+
   '<button id="c2Go">Salir al bosque</button>',
   function(){$("#c2Go").addEventListener("click",function(){closeModal();ev("start",{c1_scar:c1done});log("🌲 Estás en la puerta de Villa Gen, mirando al sur. La plaza ⛲ queda al norte, dentro.")})})}
@@ -462,6 +518,8 @@ function iniciar(fresh){
       var a=ALIADOS.filter(function(x){return x.id===id})[0];if(a)G.party.push(a)});
     G.cds={};G.party.forEach(function(a){G.cds[a.id]=0});
     ev("resume",{});
+    if(LSg("muta_c2_fog_aviso")!=="1"){LSs("muta_c2_fog_aviso","1");
+      setTimeout(function(){log("🔥 <b>Nuevo desde hoy:</b> una <b>Fogata de Viajeros</b> humea camino al claro del Heraldo (sureste, mira el 🗺️). Descansa, lee huellas de viajeros reales y deja la tuya. Y ahora puedes <b>mantener ▲</b> para caminar.")},900)}
   }else{
     G.hero=newHero();G.party=[];G.cds={};G.done=false;G.kills=0;G.deaths=0;G.invited=false;G.steps=0;G.dir=2;
     intro()}
@@ -477,8 +535,17 @@ function cerrar(){G.open=false;wrap.classList.remove("open");cancelAnimationFram
 $("#c2X").addEventListener("click",cerrar);
 $("#c2L").addEventListener("click",function(){turn(false)});
 $("#c2R").addEventListener("click",function(){turn(true)});
-$("#c2F").addEventListener("click",function(){tryMove(true)});
-$("#c2B").addEventListener("click",function(){tryMove(false)});
+/* Gen 28: avanzar/retroceder con mantener presionado (el mapa por casillas hacía
+   tediosa la caminata a un toque por paso; los ▲ repetidos de Gen 27 lo mostraron) */
+function holdMove(btn,fwd){
+  var rep=null;
+  function stop(){if(rep){clearInterval(rep);rep=null}}
+  btn.addEventListener("pointerdown",function(e){e.preventDefault();stop();tryMove(fwd);rep=setInterval(function(){if(G.combat||!G.open||$("#c2Modal").classList.contains("on")){stop();return}tryMove(fwd)},250)});
+  ["pointerup","pointercancel","pointerleave"].forEach(function(evn){btn.addEventListener(evn,stop)});
+  btn.addEventListener("click",function(e){e.preventDefault()});
+}
+holdMove($("#c2F"),true);
+holdMove($("#c2B"),false);
 $("#c2Mini").addEventListener("click",function(){G.mini=!G.mini;render();ev("minimap",{on:G.mini})});
 $("#c2Music").addEventListener("click",musicToggle);
 document.addEventListener("keydown",function(e){

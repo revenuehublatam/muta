@@ -8,6 +8,27 @@ const TTL=70000;
 const games=new Set(['actual','atlas','cyclops','snake','blackhole','reactor','laberinto','trance']);
 const PUBLIC_DIR=process.env.MUTA_PUBLIC||'/app/public';
 const htmlPath=process.env.MUTA_HTML||path.join(PUBLIC_DIR,'index.html');
+/* Gen 28: la generación se lee del muta-state del propio index.html al arrancar,
+   para que este archivo no necesite tocarse en cada ciclo. */
+let GEN_ACTUAL=0;
+try{const mg=/"generation":\s*(\d+)/.exec(fs.readFileSync(htmlPath,'utf8'));if(mg)GEN_ACTUAL=Number(mg[1])}catch(e){}
+/* Gen 28: LA FOGATA DE LOS VIAJEROS — huellas reales de visitantes reales.
+   Memoria temporal (se reinicia al desplegar) y la interfaz lo dice. Sin datos personales:
+   se enmascara cualquier cosa con forma de correo y se escapa todo en el cliente. */
+const fogata=[]; // {gen, texto, t}
+function cleanHuella(value){
+  return String(value||'').normalize('NFKC')
+    .replace(/[\u0000-\u001f\u007f]/g,'')
+    .replace(/[<>]/g,'')
+    .replace(/\S+@\S+/g,'[correo oculto]')
+    .replace(/https?:\/\/\S+/gi,'[enlace oculto]')
+    .replace(/\s+/g,' ').trim().slice(0,80);
+}
+function cleanGen(value){
+  const v=String(value||'').toUpperCase();
+  const m=/^GEN-[0-9A-F]{4}$/.exec(v);
+  return m?v:null;
+}
 const MIME={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.webp':'image/webp','.gif':'image/gif','.ico':'image/x-icon','.mp3':'audio/mpeg','.ogg':'audio/ogg','.wav':'audio/wav','.mp4':'video/mp4','.webm':'video/webm','.woff':'font/woff','.woff2':'font/woff2','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8','.wasm':'application/wasm','.glb':'model/gltf-binary'};
 
 function json(res,status,data){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify(data))}
@@ -101,7 +122,28 @@ const server=http.createServer(async(req,res)=>{
     try{const data=JSON.parse(await readBody(req,500)||'{}'),id=String(data.id||'').slice(0,64);if(id){if(activePresence()>=5000&&!sessions.has(id))return json(res,429,{ok:0});sessions.set(id,Date.now())}return json(res,200,{ok:1})}catch(e){return json(res,400,{ok:0})}
   }
   if(req.method==='GET'&&url.pathname==='/leaderboard'){
-    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:27,storage:'temporal-memory',game,scores:top(game)});
+    const game=String(url.searchParams.get('game')||'actual');if(!games.has(game))return json(res,400,{error:'Juego inválido'});return json(res,200,{generation:GEN_ACTUAL,storage:'temporal-memory',game,scores:top(game)});
+  }
+  if(req.method==='GET'&&url.pathname==='/fogata'){
+    const now=Date.now();
+    const huellas=fogata.slice(-8).reverse().map(h=>({gen:h.gen,texto:h.texto,hace_min:Math.round((now-h.t)/60000)}));
+    return json(res,200,{ok:true,storage:'temporal-memory',huellas});
+  }
+  if(req.method==='POST'&&url.pathname==='/fogata'){
+    const ip=String(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').split(',')[0].trim();
+    if(!allowed(ip))return json(res,429,{error:'La fogata necesita un respiro. Intenta en un minuto.'});
+    try{
+      const data=JSON.parse(await readBody(req,600)||'{}');
+      const gen=cleanGen(data.gen);
+      const texto=cleanHuella(data.texto);
+      if(!gen)return json(res,400,{error:'Gen inválido.'});
+      if(texto.length<2)return json(res,400,{error:'La huella quedó vacía.'});
+      const prev=fogata.findIndex(h=>h.gen===gen);
+      if(prev>=0)fogata.splice(prev,1); // una huella viva por gen
+      fogata.push({gen,texto,t:Date.now()});
+      while(fogata.length>200)fogata.shift();
+      return json(res,200,{ok:1});
+    }catch(e){return json(res,400,{error:'No se pudo leer la huella.'})}
   }
   if(req.method==='GET'&&url.pathname==='/cartelera'){
     const now=Date.now();
