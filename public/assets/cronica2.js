@@ -13,7 +13,16 @@
    campamento real en el camino al Heraldo donde descansas (+PV), lees las
    huellas que dejaron otros viajeros reales (endpoint /fogata, honesto sobre
    su memoria temporal) y dejas la tuya con tu gen. Avanzar ▲ ahora se puede
-   mantener presionado. Módulo lazy. Sin secretos. El Cap. 3 se escribe con susurros. */
+   mantener presionado. Módulo lazy. Sin secretos. El Cap. 3 se escribe con susurros.
+   Gen 29 (decisión autónoma sobre datos de Gen 28: el único viajero usó la fogata
+   completa, dejó la primera huella real y ganó 7 combates, pero cerró a ~5 casillas
+   del Heraldo tras abrir el minimapa 8 veces buscando el rumbo): EL SENDERO DE
+   BRASAS — al descansar en la fogata, brasas reales (BFS por el bosque) marcan el
+   camino al claro del Heraldo en primera persona y en el minimapa; si viajas sin
+   party, la BRASA VIAJERA se ofrece como aliada junto al fuego; y vencer al Heraldo
+   ahora genera LA CRÓNICA DEL VIAJERO: una carta personal firmada con tu gen,
+   descargable y compartible (lo único que la gente compartió orgánicamente fueron
+   objetos personales firmados). */
 (function(){
 "use strict";
 if(window.MUTA_C2)return;
@@ -84,14 +93,16 @@ var ALIADOS=[
 var SAVE_KEY="muta_rpg_c2";
 var DIRS=[[0,-1],[1,0],[0,1],[-1,0]]; /* N E S O */
 var DIRN=["norte","este","sur","oeste"];
-var G={open:false,raf:0,grid:[],W:23,Hh:23,x:11,y:12,dir:2,hero:null,foes:[],items:[],seen:{},combat:null,turnCount:0,msg:"",done:false,kills:0,deaths:0,t:0,bob:0,party:[],cds:{},invited:false,inviterGen:null,steps:0,mini:false,music:false};
+var G={open:false,raf:0,grid:[],W:23,Hh:23,x:11,y:12,dir:2,hero:null,foes:[],items:[],seen:{},combat:null,turnCount:0,msg:"",done:false,kills:0,deaths:0,t:0,bob:0,party:[],cds:{},invited:false,inviterGen:null,steps:0,mini:false,music:false,trailLit:false,trail:{}};
+/* Gen 29: la Brasa Viajera — aliada de la fogata para quien viaja sin party */
+var BRASA={id:"brasa",gen:"La Brasa Viajera",em:"🔥",skill:"Chispa",d:"5 de daño y +2 PV",cd:3,fx:function(H,F,lg){F.hp-=5;H.hp=Math.min(H.maxhp,H.hp+2);lg("🔥 La Brasa Viajera chisporrotea: 5 de daño y te abriga (+2 PV).")}};
 
 function newHero(){
   var h={hp:26,maxhp:26,atk:4,def:1,pots:2,xp:0,lvl:1,veil:false,dusted:false,scar:false};
   try{var c1=JSON.parse(LSg("muta_rpg_c1")||"null");
     if(c1&&c1.done){h.atk+=1;h.scar=true}}catch(e){}
   return h}
-function save(){try{LSs(SAVE_KEY,JSON.stringify({x:G.x,y:G.y,dir:G.dir,hero:G.hero,party:G.party.map(function(a){return a.id}),foesDead:G.foes.filter(function(f){return f.dead}).map(function(f){return f.ix}),itemsUsed:G.items.filter(function(i){return i.used}).map(function(i){return i.ix}),done:G.done,kills:G.kills,deaths:G.deaths,invited:G.invited,steps:G.steps}))}catch(e){}}
+function save(){try{LSs(SAVE_KEY,JSON.stringify({x:G.x,y:G.y,dir:G.dir,hero:G.hero,party:G.party.map(function(a){return a.id}),foesDead:G.foes.filter(function(f){return f.dead}).map(function(f){return f.ix}),itemsUsed:G.items.filter(function(i){return i.used}).map(function(i){return i.ix}),done:G.done,kills:G.kills,deaths:G.deaths,invited:G.invited,steps:G.steps,trailLit:G.trailLit}))}catch(e){}}
 function load(){try{var d=JSON.parse(LSg(SAVE_KEY)||"null");if(d&&d.hero)return d}catch(e){}return null}
 
 /* ---------- DOM ---------- */
@@ -178,6 +189,27 @@ function buildWorld(){
 function cell(x,y){if(x<0||y<0||x>=G.W||y>=G.Hh)return"T";return G.grid[y][x]}
 function walkable(c){return c==="."||c==="C"||c==="N"||c==="Q"||c==="G"||c==="F"}
 function foeAt(x,y){for(var i=0;i<G.foes.length;i++){var f=G.foes[i];if(!f.dead&&f.x===x&&f.y===y)return f}return null}
+/* Gen 29: EL SENDERO DE BRASAS — BFS real de la fogata al claro del Heraldo.
+   Se enciende al descansar en la fogata; sin teletransportes ni atajos falsos. */
+function computeTrail(){
+  var fx=-1,fy=-1,bx=-1,by=-1,y,x;
+  for(y=0;y<G.Hh;y++)for(x=0;x<G.W;x++){
+    if(cell(x,y)==="F"){fx=x;fy=y}}
+  for(var i=0;i<G.foes.length;i++)if(G.foes[i].t==="B"){bx=G.foes[i].x;by=G.foes[i].y}
+  G.trail={};
+  if(fx<0||bx<0)return;
+  var prev={},q=[[fx,fy]],seen={};seen[fx+"_"+fy]=true;
+  while(q.length){
+    var c=q.shift();
+    if(c[0]===bx&&c[1]===by)break;
+    for(var d=0;d<4;d++){
+      var nx=c[0]+DIRS[d][0],ny=c[1]+DIRS[d][1],k=nx+"_"+ny;
+      if(seen[k]||!walkable(cell(nx,ny)))continue;
+      seen[k]=true;prev[k]=c;q.push([nx,ny])}}
+  var cur=[bx,by],key=bx+"_"+by;
+  if(!prev[key]&&!(fx===bx&&fy===by))return;
+  while(cur&&!(cur[0]===fx&&cur[1]===fy)){G.trail[cur[0]+"_"+cur[1]]=true;cur=prev[cur[0]+"_"+cur[1]]}
+  G.trail[fx+"_"+fy]=true}
 function itemAt(x,y){for(var i=0;i<G.items.length;i++){var it=G.items[i];if(!it.used&&it.x===x&&it.y===y)return it}return null}
 
 /* ---------- render primera persona (pixel, 4 profundidades) ---------- */
@@ -222,6 +254,13 @@ function render(){
       else if(walkable(c)){ /* sendero */
         o.fillStyle=shade(PAL.path,0.55+0.14*z);var pw=cw*1.15;
         o.fillRect(centerX-pw/2,baseY-2,pw,3);
+        /* Gen 29: brasas del sendero encendido (parpadean, guían al claro del Heraldo) */
+        if(G.trailLit&&G.trail[cx0+"_"+cy0]){
+          var fl=REDUCED?1:((G.t>>2)+cx0+cy0)%2===0?1:0.55;
+          o.globalAlpha=fl;o.fillStyle="#ffb46a";
+          o.fillRect(centerX-2,baseY-5,4,3);
+          o.fillStyle="#ff8a5d";o.fillRect(centerX-1,baseY-7,2,2);
+          o.globalAlpha=1}
         if(c==="G"){o.fillStyle=PAL.wall[3-z];o.fillRect(centerX-cw*0.66,baseY-ch*0.9,cw*0.18,ch*0.9);o.fillRect(centerX+cw*0.48,baseY-ch*0.9,cw*0.18,ch*0.9);o.fillStyle=shade(PAL.wall[3-z],0.8);o.fillRect(centerX-cw*0.66,baseY-ch*0.98,cw*1.32,ch*0.14)}
         if(c==="N"){emoji(o,"🏠",centerX,baseY-ch*0.4,Math.max(8,ch*0.55))}
         if(c==="Q"){emoji(o,"⛲",centerX,baseY-ch*0.4,Math.max(8,ch*0.55))}
@@ -247,6 +286,13 @@ function render(){
       var ff=foeAt(xx,yy);if(ff){o.fillStyle=ff.t==="B"?"#ff5d7a":"#ffd98a";o.fillRect(mx+xx*ms,my+yy*ms,ms,ms)}}
     /* Gen 28: el humo de la fogata se ve por sobre los árboles aunque no hayas pasado */
     for(var fy=0;fy<G.Hh;fy++)for(var fx=0;fx<G.W;fx++)if(cell(fx,fy)==="F"){o.fillStyle="#ffb46a";o.fillRect(mx+fx*ms,my+fy*ms,ms,ms)}
+    /* Gen 29: sendero de brasas y claro del Heraldo visibles tras descansar en la fogata */
+    if(G.trailLit){
+      for(var tk in G.trail){var tp=tk.split("_");
+        o.fillStyle="rgba(255,150,90,.85)";o.fillRect(mx+(+tp[0])*ms,my+(+tp[1])*ms,ms,ms)}
+      for(var bi=0;bi<G.foes.length;bi++)if(G.foes[bi].t==="B"&&!G.foes[bi].dead){
+        o.fillStyle="#ff5d7a";o.fillRect(mx+G.foes[bi].x*ms,my+G.foes[bi].y*ms,ms,ms)}
+      o.fillStyle="#fff";o.fillRect(mx+G.x*ms,my+G.y*ms,ms,ms)}
     o.fillStyle="#fff";o.fillRect(mx+G.x*ms,my+G.y*ms,ms,ms);
   }
   ctx.imageSmoothingEnabled=false;
@@ -278,7 +324,7 @@ function tryMove(fwd){
   var c=cell(nx,ny);
   if(!walkable(c)){blip(120,0.06,"square",0.05);log(c==="~"?"🌊 El agua está helada. Mejor no.":"🌲 El bosque es demasiado denso por ahí.");render();return}
   var f=foeAt(nx,ny);
-  if(f){if(f.t==="B"&&G.party.length<1){log("🌑 El Heraldo ni te mira. <b>Solo emerge ante una expedición de 2 o más.</b> Recluta un gen en la plaza ⛲ de Villa Gen.");blip(150,0.1,"square",0.06);return}
+  if(f){if(f.t==="B"&&G.party.length<1){log("🌑 El Heraldo ni te mira. <b>Solo emerge ante una expedición de 2 o más.</b> Recluta un gen en la plaza ⛲ de Villa Gen o acepta a la Brasa Viajera en la fogata 🔥.");blip(150,0.1,"square",0.06);return}
     startCombat(f);return}
   G.x=nx;G.y=ny;G.steps++;G.bob=1;markSeen();
   var it=itemAt(nx,ny);
@@ -349,15 +395,21 @@ function invitar(){
 /* ---------- LA FOGATA DE LOS VIAJEROS (Gen 28) ----------
    Relevo asíncrono honesto: huellas reales de visitantes reales vía /fogata.
    La memoria del campamento es temporal (se reinicia al desplegar) y se dice. */
-var FOG_KEY="muta_fogata_g28";
+var FOG_KEY="muta_fogata_g29"; /* Gen 29: el fuego se renueva con cada generación (la memoria del server también) */
 function tiempoRel(min){if(!Number.isFinite(min)||min<0)return"";if(min<1)return"recién";if(min<60)return"hace "+Math.round(min)+" min";var h=Math.round(min/60);if(h<48)return"hace "+h+" h";return"hace "+Math.round(h/24)+" días"}
 function fogata(){
   ev("camp_open");
   var healed=false;
   if(G.hero.hp<G.hero.maxhp){G.hero.hp=Math.min(G.hero.maxhp,G.hero.hp+6);healed=true;ev("camp_heal");hud();save()}
+  /* Gen 29: descansar enciende el sendero de brasas hacia el claro del Heraldo */
+  var recienLit=false;
+  if(!G.trailLit){G.trailLit=true;computeTrail();recienLit=true;ev("path_lit");save()}
   var dejada=LSg(FOG_KEY)==="1";
+  var brasaEnParty=G.party.some(function(p){return p.id==="brasa"});
   modal('<h3>🔥 La Fogata de los Viajeros</h3><div class="big">🔥</div>'+
-  '<p>'+(healed?"El calor del fuego te repara: <b>+6 PV</b>.":"El fuego crepita. Estás en plena forma.")+' El claro del Heraldo 🌑 queda al <b>sureste</b>.</p>'+
+  '<p>'+(healed?"El calor del fuego te repara: <b>+6 PV</b>.":"El fuego crepita. Estás en plena forma.")+'</p>'+
+  '<p style="color:#ffd98a">'+(recienLit?"✨ <b>Las brasas saltan del fuego y marcan el sendero</b> hasta el claro del Heraldo 🌑. Síguelas por el suelo o míralas en el 🗺️.":"✨ Las brasas siguen marcando el sendero al claro del Heraldo 🌑 (míralo en el 🗺️).")+'</p>'+
+  (G.party.length===0&&!brasaEnParty?'<div style="background:rgba(60,35,8,.45);border:1px solid rgba(255,180,106,.4);border-radius:12px;padding:10px;margin:8px 0"><p style="margin:0 0 8px">🔥 <b>La Brasa Viajera</b> nota que viajas sin compañía y se ofrece a acompañarte: <i>Chispa</i> (5 de daño y +2 PV, cada 3 turnos). El Heraldo solo emerge ante expediciones de 2+.</p><button id="c2Brasa">Que me acompañe</button></div>':"")+
   '<div id="c2Huellas" style="text-align:left"><p style="color:#9fd8b4">Leyendo las huellas junto al fuego…</p></div>'+
   (dejada?'<p style="color:#b6ff9e">Tu huella ya está junto al fuego. 🐾</p><button id="c2HuSh">📤 Avisar que dejaste una huella</button>':
    '<div style="border-top:1px solid rgba(190,255,205,.25);margin-top:10px;padding-top:10px"><p><b>Deja tu huella</b> para el próximo viajero real que pase por aquí:</p>'+
@@ -367,6 +419,13 @@ function fogata(){
   '<button id="c2OkF" style="background:#123324">Volver al bosque</button>',
   function(){
     $("#c2OkF").addEventListener("click",closeModal);
+    var br=$("#c2Brasa");
+    if(br)br.addEventListener("click",function(){
+      if(G.party.some(function(p){return p.id==="brasa"}))return;
+      G.party.push(BRASA);G.cds[BRASA.id]=0;ev("brasa_join");haptic(12);blip(720,0.14,"triangle",0.09);
+      addEnergy(2,"c2-brasa");save();hud();
+      log("🔥 La Brasa Viajera se une a tu expedición. El Heraldo ya no podrá ignorarte.");
+      br.parentElement.style.display="none"});
     var sh=$("#c2HuSh");if(sh)sh.addEventListener("click",fogataShare);
     var box=$("#c2Huellas");
     fetch("/fogata",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){
@@ -476,21 +535,73 @@ function lose(){
   save()}
 
 /* ---------- final del capítulo ---------- */
+/* Gen 29: LA CRÓNICA DEL VIAJERO — carta personal firmada con tu gen al vencer
+   al Heraldo. Lo único que la gente compartió orgánicamente en 3 ventanas fueron
+   objetos personales firmados (la carta-receta): el final ahora produce uno. */
+function cronicaCard(){
+  var c=document.createElement("canvas");c.width=380;c.height=480;var o=c.getContext("2d");
+  var grd=o.createLinearGradient(0,0,0,480);grd.addColorStop(0,"#0e2b3f");grd.addColorStop(0.5,"#123821");grd.addColorStop(1,"#03100a");
+  o.fillStyle=grd;o.fillRect(0,0,380,480);
+  o.strokeStyle="#ffb46a";o.lineWidth=3;o.strokeRect(8,8,364,464);
+  o.strokeStyle="rgba(255,180,106,.35)";o.lineWidth=1;o.strokeRect(14,14,352,452);
+  o.textAlign="center";
+  o.fillStyle="#ffd98a";o.font="700 13px monospace";o.fillText("LA CRÓNICA — CAPÍTULO 2",190,44);
+  o.fillStyle="#9fd8b4";o.font="10px monospace";o.fillText("Las Afueras de Villa Gen · MUTA Gen 29",190,62);
+  o.font="54px serif";o.fillText("🌅",190,120);
+  o.font="30px serif";var ems="🦁"+(G.party.length?G.party.map(function(a){return a.em}).join(""):"");o.fillText(ems,190,165);
+  o.fillStyle="#eaffe9";o.font="700 15px monospace";o.fillText("CRÓNICA DEL VIAJERO",190,200);
+  o.fillStyle="#b6ff9e";o.font="700 14px monospace";o.fillText(GEN,190,222);
+  o.fillStyle="#d7f2df";o.font="11.5px monospace";
+  var dejada=LSg(FOG_KEY)==="1";
+  var lines=[
+    "venció al Heraldo del Devorador",
+    "— — —",
+    "Nivel alcanzado: "+G.hero.lvl,
+    "Combates ganados: "+G.kills,
+    (G.deaths?"Caídas en el bosque: "+G.deaths:"Sin caer ni una vez"),
+    (G.party.length?"Expedición: "+G.party.map(function(a){return a.gen}).join(" · "):"Expedición en solitario"),
+    (dejada?"Dejó su huella en la fogata 🐾":"El fuego aún espera su huella"),
+    (G.hero.scar?"Porta la cicatriz del Cap. 1 📖":"")];
+  var yy=252;lines.forEach(function(l){if(!l)return;
+    if(l.length>44)l=l.slice(0,43)+"…";
+    o.fillText(l,190,yy);yy+=20});
+  o.fillStyle="#ffd98a";o.font="11px monospace";o.fillText("El bosque respira de nuevo.",190,yy+8);
+  o.fillStyle="#9fd8b4";o.font="10px monospace";
+  o.fillText("El Capítulo 3 aún no está escrito.",190,436);
+  o.fillStyle="#ffb46a";o.font="700 11px monospace";o.fillText("muta.revenuehub.cloud",190,456);
+  return c}
 function ending(){
   var first=!G.done;G.done=true;save();
   if(first){addEnergy(12,"c2-capitulo");ev("complete",{deaths:G.deaths,kills:G.kills,level:G.hero.lvl,party:G.party.length})}
   var url="https://muta.revenuehub.cloud/?g="+encodeURIComponent(GEN);
-  var shareTxt="Mi expedición venció al Heraldo en el Capítulo 2 de LA CRÓNICA (MUTA): un RPG en primera persona que la gente escribe por partes. El Capítulo 3 aún no existe. "+url;
-  modal('<h3>🌅 El bosque respira de nuevo</h3><div class="big">🦁'+(G.party.length?G.party.map(function(a){return a.em}).join(""):"")+'</div>'+
-  '<p>El Heraldo se deshace en páginas en blanco. Sobre Villa Gen vuelven a encenderse las ventanas. Tu expedición — '+esc(GEN)+(G.party.length?" junto a "+esc(G.party.map(function(a){return a.gen}).join(", ")):" en solitario")+' — cerró el Capítulo 2 con '+G.kills+' combates ganados.</p>'+
+  var shareTxt="Mi expedición venció al Heraldo en el Capítulo 2 de LA CRÓNICA (MUTA): un RPG en primera persona que la gente escribe por partes. Esta es mi crónica firmada. El Capítulo 3 aún no existe. "+url;
+  var card=null,dataUrl="";
+  try{card=cronicaCard();dataUrl=card.toDataURL("image/png");ev("cronica_card",{level:G.hero.lvl,kills:G.kills})}catch(e){}
+  modal('<h3>🌅 El bosque respira de nuevo</h3>'+
+  (dataUrl?'<img src="'+dataUrl+'" alt="Tu Crónica del Viajero, firmada con tu gen" style="width:100%;max-width:280px;border-radius:12px;border:1px solid rgba(255,180,106,.45);margin:6px 0">':'<div class="big">🦁'+(G.party.length?G.party.map(function(a){return a.em}).join(""):"")+'</div>')+
+  '<p>El Heraldo se deshace en páginas en blanco. Tu expedición — '+esc(GEN)+(G.party.length?" junto a "+esc(G.party.map(function(a){return a.gen}).join(", ")):" en solitario")+' — cerró el Capítulo 2 con '+G.kills+' combates ganados. Esta crónica es tuya: llévatela.</p>'+
   '<p style="color:#b6ff9e"><b>El Capítulo 3 no está escrito.</b> ¿Qué hay más allá del bosque? ¿Quién manda al Devorador? Tu idea puede entrar con tu gen, como las de GEN Rebelde entraron en este.</p>'+
-  '<button id="c2Idea">💬 Proponer el Capítulo 3</button><button id="c2Share">📤 Compartir</button><button id="c2Again">↺ Rejugar</button>',
+  (dataUrl?'<button id="c2Dl">💾 Guardar mi crónica</button>':"")+
+  '<button id="c2Share">📤 Compartir</button><button id="c2Idea">💬 Proponer el Capítulo 3</button><button id="c2Again">↺ Rejugar</button>',
   function(){
     $("#c2Idea").addEventListener("click",function(){closeModal();cerrar();if(API.openProposal)API.openProposal("historia");ev("cta_chapter3")});
+    var dl=$("#c2Dl");
+    if(dl)dl.addEventListener("click",function(){
+      try{var a=document.createElement("a");a.href=dataUrl;a.download="cronica-del-viajero-"+GEN+".png";document.body.appendChild(a);a.click();a.remove();ev("cronica_save");log("💾 Tu crónica quedó guardada, firmada por "+GEN+".")}catch(e){log("Tu navegador no dejó guardar la imagen.")}});
     $("#c2Share").addEventListener("click",function(){
-      cap("muta_share",{red:"rpg2",gen:GEN});
-      if(navigator.share)navigator.share({title:"LA CRÓNICA — MUTA",text:shareTxt}).catch(function(){});
-      else{try{navigator.clipboard.writeText(shareTxt);log("📋 Copiado. Pégalo donde quieras.")}catch(e){}}
+      cap("muta_share",{red:"cronica_final",gen:GEN});
+      var shared=false;
+      try{
+        if(navigator.share&&card){
+          card.toBlob(function(b){
+            try{
+              var f=b?new File([b],"cronica-"+GEN+".png",{type:"image/png"}):null;
+              if(f&&navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({title:"LA CRÓNICA — MUTA",text:shareTxt,files:[f]}).catch(function(){});
+              else navigator.share({title:"LA CRÓNICA — MUTA",text:shareTxt}).catch(function(){})
+            }catch(e){navigator.share({title:"LA CRÓNICA — MUTA",text:shareTxt}).catch(function(){})}});
+          shared=true}
+      }catch(e){}
+      if(!shared){try{navigator.clipboard.writeText(shareTxt);log("📋 Copiado. Pégalo donde quieras junto a tu crónica guardada.")}catch(e){}}
       ev("share_end")});
     $("#c2Again").addEventListener("click",function(){try{localStorage.removeItem(SAVE_KEY)}catch(e){};closeModal();iniciar(true)})})}
 
@@ -499,7 +610,7 @@ function intro(){
   var c1done=false;try{var d=JSON.parse(LSg("muta_rpg_c1")||"null");c1done=!!(d&&d.done)}catch(e){}
   modal('<h3>📖 LA CRÓNICA — Capítulo 2</h3><div class="big">🌲🏘🌲</div>'+
   '<p><b>Las Afueras de Villa Gen.</b> '+(c1done?"Venciste al Devorador allá abajo — tu 📖 cicatriz te da +1 ATQ — pero su <b>Heraldo</b> escapó a la superficie.":"En el Capítulo 1, alguien venció al Devorador en la Biblioteca Hundida. Su <b>Heraldo</b> escapó a la superficie.")+' Ahora caza ideas en el bosque que rodea la ciudad de los genes.</p>'+
-  '<p>Es <b>en primera persona</b>: avanza con ▲ (mantenlo presionado para caminar), gira ↰ ↱ o desliza el dedo. En la ciudad: la posada 🏠 cura y la plaza ⛲ recluta genes para tu party. Camino al Heraldo hay una <b>fogata 🔥</b> donde otros viajeros reales dejan huellas — y puedes dejar la tuya. El Heraldo solo emerge ante una expedición de 2+.</p>'+
+  '<p>Es <b>en primera persona</b>: avanza con ▲ (mantenlo presionado para caminar), gira ↰ ↱ o desliza el dedo. En la ciudad: la posada 🏠 cura y la plaza ⛲ recluta genes para tu party. Camino al Heraldo hay una <b>fogata 🔥</b> donde otros viajeros reales dejan huellas — descansar ahí enciende un <b>sendero de brasas ✨</b> que marca el camino exacto al jefe, y si viajas sin compañía la Brasa Viajera se une a ti. Al vencerlo te llevas tu <b>Crónica del Viajero</b> firmada.</p>'+
   '<p style="color:#9fd8b4;font-size:12px">Nacida de <b>GEN Rebelde</b>: capítulo en primera persona con ciudad, monstruos alrededor y party por invitación — y el bosque con música pixel 🎵 también fue su susurro.</p>'+
   '<button id="c2Go">Salir al bosque</button>',
   function(){$("#c2Go").addEventListener("click",function(){closeModal();ev("start",{c1_scar:c1done});log("🌲 Estás en la puerta de Villa Gen, mirando al sur. La plaza ⛲ queda al norte, dentro.")})})}
@@ -515,11 +626,13 @@ function iniciar(fresh){
     (sv.itemsUsed||[]).forEach(function(ix){if(G.items[ix])G.items[ix].used=true});
     G.party=[];(sv.party||[]).forEach(function(id){
       if(id==="invitado"&&G.inviterGen){G.party.push({id:"invitado",gen:G.inviterGen,em:"💌",skill:"Eco del gen",d:"golpea 3 y cura 4",cd:3,fx:function(H,F,lg){H.hp=Math.min(H.maxhp,H.hp+4);F.hp-=3;lg("💌 El eco del gen golpea por 3 y te cura 4.")}});return}
+      if(id==="brasa"){G.party.push(BRASA);return}
       var a=ALIADOS.filter(function(x){return x.id===id})[0];if(a)G.party.push(a)});
+    G.trailLit=!!sv.trailLit;if(G.trailLit)computeTrail();
     G.cds={};G.party.forEach(function(a){G.cds[a.id]=0});
     ev("resume",{});
-    if(LSg("muta_c2_fog_aviso")!=="1"){LSs("muta_c2_fog_aviso","1");
-      setTimeout(function(){log("🔥 <b>Nuevo desde hoy:</b> una <b>Fogata de Viajeros</b> humea camino al claro del Heraldo (sureste, mira el 🗺️). Descansa, lee huellas de viajeros reales y deja la tuya. Y ahora puedes <b>mantener ▲</b> para caminar.")},900)}
+    if(LSg("muta_c2_sendero_aviso")!=="1"){LSs("muta_c2_sendero_aviso","1");
+      setTimeout(function(){log("✨ <b>Nuevo desde hoy:</b> descansar en la fogata 🔥 enciende un <b>sendero de brasas</b> que marca el camino exacto al claro del Heraldo. Si viajas sin party, la <b>Brasa Viajera</b> se ofrece a acompañarte. Y al vencerlo, tu <b>Crónica del Viajero</b> firmada es tuya para guardar y compartir.")},900)}
   }else{
     G.hero=newHero();G.party=[];G.cds={};G.done=false;G.kills=0;G.deaths=0;G.invited=false;G.steps=0;G.dir=2;
     intro()}
