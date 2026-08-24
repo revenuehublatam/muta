@@ -19,7 +19,9 @@ var VPC=API.VPC||function(){return window.innerWidth<=720?"mobile":"desktop"};
 var REDUCED=!!API.REDUCED;
 var haptic=API.haptic||function(){};
 var blip=API.blip||function(){};
-var G=API.g||30;
+/* API.g es el identificador hexadecimal del gen de la persona; la generación
+   pública llega separada para no contaminar analytics con valores como 866. */
+var G=Number(API.generation)||30;
 var KEY="muta_taller_g30";
 
 /* ---- ingredientes ---- */
