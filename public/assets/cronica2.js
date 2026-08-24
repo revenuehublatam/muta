@@ -395,7 +395,7 @@ function invitar(){
 /* ---------- LA FOGATA DE LOS VIAJEROS (Gen 28) ----------
    Relevo asíncrono honesto: huellas reales de visitantes reales vía /fogata.
    La memoria del campamento es temporal (se reinicia al desplegar) y se dice. */
-var FOG_KEY="muta_fogata_g29"; /* Gen 29: el fuego se renueva con cada generación (la memoria del server también) */
+var FOG_KEY="muta_fogata_g30"; /* Gen 30: el fuego se renueva con cada generación (la memoria del server también) */
 function tiempoRel(min){if(!Number.isFinite(min)||min<0)return"";if(min<1)return"recién";if(min<60)return"hace "+Math.round(min)+" min";var h=Math.round(min/60);if(h<48)return"hace "+h+" h";return"hace "+Math.round(h/24)+" días"}
 function fogata(){
   ev("camp_open");
